@@ -152,7 +152,10 @@ const columns = [
     title: '分组',
     key: 'fatherId',
     align: 'center',
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    render(row) {
+      return h('span', formatFatherId(row['fatherId'] ))
+    },
   },
   {
     title: '创建时间',
@@ -204,27 +207,12 @@ const columns = [
   },
 ]
 
-async function handleEnable(row) {
-  row.enableLoading = true
-  try {
-    await api.update({ id: row.id, enable: !row.enable })
-    row.enableLoading = false
-    $message.success('操作成功')
-    $table.value?.handleSearch()
-  } catch (error) {
-    row.enableLoading = false
-  }
+function formatFatherId(fatherId){
+  const group = paramGroup.value.find(group => group.value == fatherId);
+  return group ? group.label : '未知分组';
 }
 
-function handleOpenRolesSet(row) {
-  const roleIds = row.roles.map((item) => item.id)
-  handleOpen({
-    action: 'setRole',
-    title: '分配角色',
-    row: { id: row.id, username: row.username, roleIds },
-    onOk: onSave,
-  })
-}
+
 
 const {
   modalRef,
@@ -245,18 +233,5 @@ const {
   refresh: () => $table.value?.handleSearch(),
 })
 
-function onSave() {
-  if (modalAction.value === 'setRole') {
-    return handleSave({
-      api: () => api.update(modalForm.value),
-      cb: () => $message.success('分配成功'),
-    })
-  } else if (modalAction.value === 'reset') {
-    return handleSave({
-      api: () => api.resetPwd(modalForm.value.id, modalForm.value),
-      cb: () => $message.success('密码重置成功'),
-    })
-  }
-  handleSave()
-}
+
 </script>

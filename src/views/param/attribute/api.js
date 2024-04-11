@@ -18,5 +18,4 @@ export default {
   getAllParamType: () => request.get('/paramConfig/getAllParamType'),
   getAllParamGroup: () => request.get('/paramConfig/getAllParamGroup'),
 
-  getMenuTree: () => request.get('/permission/menu/tree'),
 }

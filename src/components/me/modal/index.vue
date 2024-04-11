@@ -35,6 +35,7 @@
             :loading="modalOptions.okLoading"
             class="ml-20"
             @click="handleOk()"
+            style="background-color: #67c23a;--n-border: 1px solid #67c23a;"
           >
             {{ modalOptions.okText }}
           </n-button>

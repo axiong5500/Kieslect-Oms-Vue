@@ -217,9 +217,12 @@ const columns = [
   { title: '默认值', key: 'paramValue',align: 'center', ellipsis: { tooltip: true } },
   {
     title: '所属模块',
-    key: 'paramTypeName',
+    key: 'paramType',
     align: 'center',
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    render(row) {
+      return h('span', formatParamType(row['paramType']))
+    },
   },
   {
     title: '分组',
@@ -288,7 +291,10 @@ async function handleEnable(row) {
     row.enableLoading = false
   }
 }
-
+function formatParamType(paramTypeId){
+  const group = paramType.value.find(type => type.value == paramTypeId);
+  return group ? group.label : '未知模块';
+}
 function handleOpenRolesSet(row) {
   const roleIds = row.roles.map((item) => item.id)
   handleOpen({
