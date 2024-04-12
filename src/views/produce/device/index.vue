@@ -3,7 +3,7 @@
  - @LastEditor: Ronnie Zhang
  - @LastEditTime: 2023/12/05 21:29:56
  - @Email: zclzone@outlook.com
- - Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ - Copyright © 2024 遥遥领先 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -46,8 +46,8 @@
 
 
 
-    <MeModal ref="modalRef" width="520px"  v-if="modalAction === 'edit'">
-      <div class="scroll-container">
+    <MeModal ref="modalRef" width="520px"  >
+      <div class="scroll-container" >
       <n-form
         ref="modalFormRef"
         label-placement="left"
@@ -55,8 +55,8 @@
         :label-width="80"
         :model="modalForm"
         :disabled="modalAction === 'view'"
-
       >
+        <div  v-if="modalAction === 'edit'">
         <n-form-item
           label="项目名称"
           path="projectName"
@@ -69,7 +69,7 @@
           <n-input v-model:value="modalForm.projectName" />
         </n-form-item>
         <n-form-item
-          label="固件id"
+          label="设备id"
           path="firmwareId"
 
         >
@@ -88,7 +88,7 @@
         </n-form-item>
 
         <n-form-item
-          label="类别"
+          label="产商"
           path="form"
 
         >
@@ -194,51 +194,34 @@
           </n-checkbox-group>
 
         </n-collapse>
+        </div>
+        <div v-if="modalAction === 'editParam'">
 
+          <n-collapse :default-expanded-names="defaultExpandedNames">
+
+            <n-collapse-item v-for="(item, index) in modalForm.paramCollectionObject" :key="index" :title="item.label" :name="item.label" >
+              <div>
+                <n-grid :y-gap="8" :cols="1">
+                  <n-gi v-for="(item2, index2) in item.contents" :key="index2">
+                    <n-form-item :label="item2.text"  label-width="200" >
+                      <n-input v-model:value="item2.value" />
+                    </n-form-item>
+                  </n-gi>
+                </n-grid>
+              </div>
+            </n-collapse-item>
+
+          </n-collapse>
+      </div>
       </n-form>
+
 
       </div>
 
 
     </MeModal>
 
-    <meModal ref="modalRef" width="520px" v-if="modalAction === 'setEditParamValue'">
-      <div class="scroll-container">
-        <n-form
-          ref="modalFormRef"
-          label-placement="left"
-          label-align="left"
-          :label-width="80"
-          :model="modalForm"
 
-
-        >
-
-
-          <n-collapse :default-expanded-names="defaultExpandedNames">
-
-            <n-checkbox-group v-model:value="modalForm.paramIdsArray">
-
-              <n-collapse-item v-for="(item, index) in items" :key="index" :title="item.label" :name="item.label" >
-                <div>
-                  <n-grid :y-gap="8" :cols="1">
-                    <n-gi v-for="(item2, index2) in item.contents" :key="index2">
-<!--                      <n-checkbox :label="item2.text" :value="item2.id" />-->
-                      <n-form-item :label="item2.text" path="inputValue" label-width="200" v-if="item2.isChecked">
-                        <n-input :value="item2.id"  />
-                      </n-form-item>
-                    </n-gi>
-                  </n-grid>
-                </div>
-              </n-collapse-item>
-
-            </n-checkbox-group>
-
-          </n-collapse>
-
-        </n-form>
-      </div>
-    </meModal>
 
   </CommonPage>
 </template>
@@ -298,6 +281,7 @@ const $table = ref(null)
 /** QueryBar筛选参数（可选） */
 const queryItems = ref({})
 const paramIds = ref([])
+const paramItems = ref([]);
 
 
 onMounted(() => {
@@ -307,10 +291,9 @@ onMounted(() => {
 const paramType = ref([])
 const paramGroup = ref([])
 const attributeType = ref([])
+// 默认展开
 const defaultExpandedNames = ref([])
-const previewFileList = ref([
-
-])
+const previewFileList = ref([])
 
 // api.getAllParamType().then(({ data = [] }) => (paramType.value = data))
 // api.getAllParamGroup().then(({ data = [] }) => (paramGroup.value = data))
@@ -333,7 +316,7 @@ Promise.all([
     const contents = groupAttributes.map((attr) => ({
       id: attr.id,
       text: attr.paramTitle, // 假设 attributeType 中有 text 字段作为内容的文本
-      isChecked: false
+      isChecked: true
     }));
 
     // 返回组合好的折叠项对象
@@ -357,7 +340,7 @@ const columns = [
   },
   { title: '蓝牙名称', key: 'bluetoothName', ellipsis: { tooltip: true } },
   {
-    title: '类别',
+    title: '产商',
     key: 'form',
     align: 'center',
     ellipsis: { tooltip: true },
@@ -369,7 +352,7 @@ const columns = [
     align: 'center'
 
   },
-  { title: '固件id', key: 'firmwareId', align: 'center', ellipsis: { tooltip: true } },
+  { title: '设备id', key: 'firmwareId', align: 'center', ellipsis: { tooltip: true } },
 
   {
     title: '创建时间',
@@ -395,7 +378,7 @@ const columns = [
             size: 'small',
             type: 'primary',
             style: 'margin-left: 12px;',
-            onClick: () => handleEditParamValue(row)
+            onClick: () => handleEditParam(row)
           },
           {
             default: () => '配置表',
@@ -483,15 +466,6 @@ async function handleUpload({ file, onFinish }) {
 }
 
 
-function handleEditParamValue(row) {
-  handleOpen({
-    action: 'setEditParamValue',
-    title: '参数配置',
-    row: { row },
-    onOk: handleSave,
-  })
-}
-
 const {
   modalRef,
   modalFormRef,
@@ -501,6 +475,7 @@ const {
   handleAdd,
   handleDelete,
   handleEdit,
+  handleEditParam,
   handleSave
 } = useCrud({
   name: '属性',
@@ -508,6 +483,7 @@ const {
   doCreate: api.create,
   doDelete: api.delete,
   doUpdate: api.update,
+  doUpdateParam :api.updateParam,
   refresh: () => $table.value?.handleSearch()
 })
 

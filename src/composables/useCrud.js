@@ -3,7 +3,7 @@
  * @LastEditor: Ronnie Zhang
  * @LastEditTime: 2023/12/12 09:03:00
  * @Email: zclzone@outlook.com
- * Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ * Copyright © 2024 遥遥领先 | https://www.kieslect.com
  **********************************/
 
 import { useModal, useForm } from '.'
@@ -12,9 +12,10 @@ const ACTIONS = {
   view: '查看',
   edit: '编辑',
   add: '新增',
+  editParam:'编辑参数'
 }
 
-export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate, refresh }) => {
+export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate,doUpdateParam, refresh }) => {
   const modalAction = ref('')
   const [modalRef, okLoading] = useModal()
   const [modalFormRef, modalForm, validation] = useForm(initForm)
@@ -27,6 +28,10 @@ export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate, ref
   /** 修改 */
   function handleEdit(row, title) {
     handleOpen({ action: 'edit', title, row })
+  }
+
+  function handleEditParam(row, title) {
+    handleOpen({ action: 'editParam', title, row })
   }
 
   /** 查看 */
@@ -54,7 +59,7 @@ export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate, ref
 
   /** 保存 */
   async function handleSave(action) {
-    if (!action && !['edit', 'add'].includes(modalAction.value)) {
+    if (!action && !['edit', 'add','editParam'].includes(modalAction.value)) {
       return false
     }
     await validation()
@@ -67,6 +72,10 @@ export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate, ref
         api: () => doUpdate(modalForm.value),
         cb: () => $message.success('保存成功'),
       },
+      editParam: {
+        api: () => doUpdateParam(modalForm.value),
+        cb: () => $message.success('保存成功'),
+      }
     }
 
     action = action || actions[modalAction.value]
@@ -117,6 +126,7 @@ export const useCrud = ({ name, initForm = {}, doCreate, doDelete, doUpdate, ref
     handleDelete,
     handleEdit,
     handleView,
+    handleEditParam,
     handleOpen,
     handleSave,
   }

@@ -3,7 +3,7 @@
  * @LastEditor: Ronnie Zhang
  * @LastEditTime: 2023/12/05 21:29:51
  * @Email: zclzone@outlook.com
- * Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ * Copyright © 2024 遥遥领先 | https://www.kieslect.com
  **********************************/
 
 import { request } from '@/utils'
@@ -12,6 +12,7 @@ export default {
   create: (data) => request.post('/device/sys/save', data),
   read: (params = {}) => request.get('/device/sys/getList', { params }),
   update: (data) => request.patch(`/device/sys/update/${data.id}`, data),
+  updateParam: (data) => request.patch(`/device/sys/updateParam/${data.id}`, data),
   delete: (id) => request.delete(`/device/sys/delete/${id}`),
 
   getAllParamType: () => request.get('/paramConfig/getAllParamType'),

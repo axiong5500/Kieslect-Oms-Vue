@@ -3,7 +3,7 @@
  - @LastEditor: Ronnie Zhang
  - @LastEditTime: 2024/03/04 16:09:47
  - @Email: zclzone@outlook.com
- - Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ - Copyright © 2024 遥遥领先 | https://www.kieslect.com
  --------------------------------->
 <template>
 <!--  <div class="h-40 w-40 rounded-full bg-primary p-1/100">-->
