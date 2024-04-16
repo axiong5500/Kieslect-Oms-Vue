@@ -15,9 +15,9 @@ export default {
   updateParam: (data) => request.patch(`/device/sys/updateParam/${data.id}`, data),
   delete: (id) => request.delete(`/device/sys/delete/${id}`),
 
-  getAllParamType: () => request.get('/paramConfig/getAllParamType'),
-  getAllParamGroup: () => request.get('/paramConfig/getAllParamGroup'),
-  getAllAttribute: () => request.get('/paramConfig/getAllAttribute'),
+  getAllParamType: () => request.get('/paramConfig/sys/getAllParamType'),
+  getAllParamGroup: () => request.get('/paramConfig/sys/getAllParamGroup'),
+  getAllAttribute: () => request.get('/paramConfig/sys/getAllAttribute'),
   uploadFile: (file) => {
     const formData = new FormData();
     formData.append('file', file);
