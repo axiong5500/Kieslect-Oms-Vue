@@ -1,15 +1,15 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/05 21:28:22
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
   <AppPage show-footer>
     <div class="flex">
-      <n-card class="min-w-200 w-30%">
+      <n-card class="min-w-200 w-25%">
         <div class="flex items-center">
           <n-avatar round :size="60" :src="userStore.avatar" class="flex-shrink-0" />
           <div class="ml-20 flex-col">
@@ -23,14 +23,47 @@
         <p class="mt-28 text-14 opacity-60">一个人几乎可以在任何他怀有无限热忱的事情上成功。</p>
         <p class="mt-12 text-right text-12 opacity-40">—— 查尔斯·史考伯</p>
       </n-card>
-      <n-card class="ml-12 w-70%" title="✨ 欢迎使用 Vue Naive Admin 2.0">
+      <n-card class="ml-12 w-25%">
+        <div class="flex items-center">
+          <n-avatar round :size="60" :src="userStore.avatar" class="flex-shrink-0" />
+          <div class="ml-20 flex-col">
+            <span class="text-20 opacity-80">
+              Hello, {{ userStore.nickName ?? userStore.username }}
+            </span>
+            <span class="mt-4 opacity-50">当前角色：{{ userStore.currentRole?.name }}</span>
+          </div>
+        </div>
+
+        <p class="mt-28 text-14 opacity-60">一个人几乎可以在任何他怀有无限热忱的事情上成功。</p>
+        <p class="mt-12 text-right text-12 opacity-40">—— 查尔斯·史考伯</p>
+      </n-card>
+      <n-card class="ml-12 w-25%">
+        <div class="flex items-center">
+          <n-avatar round :size="60" :src="userStore.avatar" class="flex-shrink-0" />
+          <div class="ml-20 flex-col">
+            <span class="text-20 opacity-80">
+              Hello, {{ userStore.nickName ?? userStore.username }}
+            </span>
+            <span class="mt-4 opacity-50">当前角色：{{ userStore.currentRole?.name }}</span>
+          </div>
+        </div>
+
+        <p class="mt-28 text-14 opacity-60">一个人几乎可以在任何他怀有无限热忱的事情上成功。</p>
+        <p class="mt-12 text-right text-12 opacity-40">—— 查尔斯·史考伯</p>
+      </n-card>
+      <n-card class="ml-12 w-25%" title="✨ 欢迎使用 Kieslect Admin 1.0">
         <template #header-extra>
-          <a
-            class="text-14 text-primary text-highlight hover:underline hover:opacity-80"
-            href="https://isme.top"
-            target="_blank"
-            @click.prevent="message?.info('官网正在火速开发中...')"
-          >
+<!--          <a-->
+<!--            class="text-14 text-primary text-highlight hover:underline hover:opacity-80"-->
+<!--            href="https://isme.top"-->
+<!--            target="_blank"-->
+<!--            @click.prevent="message?.info('官网正在火速开发中...')"-->
+<!--          >-->
+            <a
+              class="text-14 text-primary text-highlight hover:underline hover:opacity-80"
+              href="https://www.kieslect.com"
+              target="_blank"
+            >
             www.kieslect.com
           </a>
         </template>
@@ -41,31 +74,31 @@
           MySql，简单易用，赏心悦目，历经十几次重构和细节打磨，诚意满满！！
         </p>
         <footer class="mt-12 flex items-center justify-end">
-          <n-button
-            type="primary"
-            ghost
-            tag="a"
-            href="https://docs.isme.top/web/#/624306705/188522224"
-            target="__blank"
-          >
-            开发文档
-          </n-button>
-          <n-button
-            type="primary"
-            class="ml-12"
-            tag="a"
-            href="https://github.com/zclzone/vue-naive-admin/tree/2.x"
-            target="__blank"
-          >
-            代码仓库
-          </n-button>
+<!--          <n-button-->
+<!--            type="primary"-->
+<!--            ghost-->
+<!--            tag="a"-->
+<!--            href="https://docs.isme.top/web/#/624306705/188522224"-->
+<!--            target="__blank"-->
+<!--          >-->
+<!--            开发文档-->
+<!--          </n-button>-->
+<!--          <n-button-->
+<!--            type="primary"-->
+<!--            class="ml-12"-->
+<!--            tag="a"-->
+<!--            href="https://github.com/zclzone/vue-naive-admin/tree/2.x"-->
+<!--            target="__blank"-->
+<!--          >-->
+<!--            代码仓库-->
+<!--          </n-button>-->
         </footer>
       </n-card>
     </div>
     <div class="mt-12 flex">
       <n-card class="w-50%" title="💯 特性" segmented>
         <template #header-extra>
-          <span class="opacity-90 text-highlight">👏 历经十几次重构和细节打磨</span>
+          <span class="opacity-90 text-highlight">👏 历经几个月打磨</span>
         </template>
 
         <ul class="opacity-90">
@@ -147,9 +180,15 @@
       </n-card>
     </div>
 
-    <n-card class="mt-12" title="⚡️ 趋势" segmented>
+    <div class="mt-12 flex">
+    <n-card class="mt-12 w-50%" title="⚡️ 趋势" segmented>
       <VChart :option="trendOption" :init-options="{ height: 400 }" autoresize />
     </n-card>
+      <n-card class="mt-12 w-50%" title="⚡️ 趋势" segmented>
+        <VChart :option="trendOption" :init-options="{ height: 400 }" autoresize />
+      </n-card>
+    </div>
+
   </AppPage>
 </template>
 

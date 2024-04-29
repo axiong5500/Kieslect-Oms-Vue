@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/05 21:29:56
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -46,7 +46,7 @@
 
 
 
-    <MeModal ref="modalRef" width="520px"  >
+    <MeModal ref="modalRef" width="800px"  >
       <div class="scroll-container" >
       <n-form
         ref="modalFormRef"
@@ -56,7 +56,7 @@
         :model="modalForm"
         :disabled="modalAction === 'view'"
       >
-        <div  v-if="modalAction === 'edit'">
+        <div  v-if="modalAction === 'edit' ||  modalAction === 'add'">
         <n-form-item
           label="项目名称"
           path="projectName"
@@ -92,7 +92,15 @@
           path="form"
 
         >
-          <n-input v-model:value="modalForm.form" />
+          <n-select
+            v-model:value="modalForm.form"
+            :options="form"
+            label-field="label"
+            value-field="value"
+            clearable
+            filterable
+          />
+
         </n-form-item>
         <n-form-item
           label="表盘形状"
@@ -108,6 +116,19 @@
             filterable
           />
         </n-form-item>
+          <n-form-item
+            label="BT支持"
+            path="btStatus"
+          >
+            <n-select
+              v-model:value="modalForm.btStatus"
+              :options="btStatus"
+              label-field="label"
+              value-field="value"
+              clearable
+              filterable
+            />
+          </n-form-item>
         <n-form-item
           label="宽度"
           path="width"
@@ -130,36 +151,26 @@
         >
           <n-input v-model:value="modalForm.height" />
         </n-form-item>
-        <n-form-item
-          label="我是多余"
-          path="height"
-        >
-          <!--          <n-upload-->
-          <!--            :custom-request="handleUpload"-->
-          <!--            v-model:value = "modalForm.dialPhoto"-->
-          <!--            max = 1-->
-          <!--          >-->
-          <!--            <n-button>Upload file</n-button>-->
-          <!--          </n-upload>-->
-          <n-input v-model:value="modalForm.dialPhoto" />
-        </n-form-item>
+
         <n-form-item label="表盘图片" path="dialPhoto" >
 
           <n-upload v-model:value="modalForm.dialPhoto"
-            :custom-request="handleUpload"
-            max = 1
-            :default-file-list="previewFileList"
+                    :custom-request="handleUpload"
+                    :default-file-list="modalForm.dialPhoto ? [{ url: domain_url + modalForm.dialPhoto,status: 'finished' }] : []"
+                    max = 1
+                    list-type="image-card"
                     :show-download-button="true"
-            list-type="image-card"
           />
 
         </n-form-item>
         <n-form-item label="表带图片" path="strapsPhoto" >
-          <n-upload :value="modalForm.strapsPhoto"
+
+          <n-upload v-model:value="modalForm.strapsPhoto"
                     :custom-request="handleUpload"
+                    :default-file-list="modalForm.strapsPhoto ? [{ url: domain_url + modalForm.strapsPhoto,status: 'finished' }] : []"
                     max = 1
-                    :default-file-list="previewFileList"
                     list-type="image-card"
+                    :show-download-button="true"
           />
         </n-form-item>
 
@@ -273,16 +284,24 @@ defineOptions({ name: 'deviceManage' })
 
 
 const items = ref([]); // 定义 ref 类型的 items 数组
+const btStatus = [
+  { label: '不支持（数值：0）', value: 0 },
+  { label: '支持（数值：1）', value: 1 },
+]
 const dialShape = [
-  { label: '圆形', value: 0 },
-  { label: '方形', value: 1 },
+  { label: '圆形（数值：0）', value: 0 },
+  { label: '方形（数值：1）', value: 1 },
+]
+const form = [
+  { label: '爱都（数值：1）', value: 1 },
+  { label: '优创亿（数值：2）', value: 2 },
 ]
 const $table = ref(null)
 /** QueryBar筛选参数（可选） */
 const queryItems = ref({})
 const paramIds = ref([])
 const paramItems = ref([]);
-
+const domain_url = "http://192.168.0.106:9999"
 
 onMounted(() => {
   $table.value?.handleSearch()
@@ -338,13 +357,15 @@ const columns = [
     width: 80,
     ellipsis: { tooltip: true }
   },
-  { title: '蓝牙名称', key: 'bluetoothName', ellipsis: { tooltip: true } },
+  { title: '蓝牙名称',align: 'center', key: 'bluetoothName', ellipsis: { tooltip: true } },
   {
     title: '产商',
     key: 'form',
     align: 'center',
     ellipsis: { tooltip: true },
-
+    render(row) {
+      return h('span', formateForm(row['form']))
+    }
   },
   {
     title: '项目名称',
@@ -418,6 +439,12 @@ const columns = [
 ]
 
 
+function formateForm(formid) {
+  const foundItem = form.find(item => item.value === formid);
+  return foundItem ? foundItem.label : '未知';
+}
+
+
 async function handleUpload({ file, onFinish }) {
   console.log(file.file)
   if (!file || !file.type) {
@@ -441,25 +468,7 @@ async function handleUpload({ file, onFinish }) {
   // 提取上传成功后的文件信息
   const { fileUrl } = responseData.data;
 
-  // 将文件路径赋值给 modalForm.dialPhoto
-  modalForm.dialPhoto = fileUrl;
-
-  console.log(modalForm.dialPhoto);
-
-  // 提取文件信息
-  // const { fileUrl, filename, fileSize } = responseData.data;
-
-  // 创建新的文件对象
-  // const newFile = {
-  //   id: filename,
-  //   name: filename,
-  //   status: 'finished',
-  //   url: fileUrl,
-  //   size: fileSize
-  // };
-
-  // 将新文件对象添加到 previewFileList 中
-  // previewFileList.value.push(newFile);
+  console.log(fileUrl);
 
   $message.success('上传成功');
   onFinish(); // 调用上传完成的回调函数

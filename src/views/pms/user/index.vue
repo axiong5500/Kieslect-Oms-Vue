@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/05 21:29:56
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -108,7 +108,7 @@
 <script setup>
 import { NAvatar, NButton, NSwitch, NTag } from 'naive-ui'
 import { formatDateTime } from '@/utils'
-import { MeCrud, MeQueryItem, MeModal } from '@/components'
+import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 

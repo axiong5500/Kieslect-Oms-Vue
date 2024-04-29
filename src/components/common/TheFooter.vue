@@ -1,10 +1,10 @@
 <!--------------------------------
  - @Description: 底部
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/04 22:42:33
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -12,12 +12,12 @@
     <p>
       Copyright © 2024
       <a
-        href="https://github.com/zclzone"
+        href="https://www.kieslect.com"
         target="__blank"
         class="transition"
         hover="decoration-underline color-primary"
       >
-        遥遥领先 Kieslect
+        专一 Kieslect
       </a>
     </p>
   </footer>

@@ -1,10 +1,10 @@
 /**********************************
  * @FilePath: is.js
- * @Author: Ronnie Zhang
- * @LastEditor: Ronnie Zhang
+ * @Author: Kieslect Fashion
+ * @LastEditor: Kieslect Fashion
  * @LastEditTime: 2023/12/04 22:45:32
- * @Email: zclzone@outlook.com
- * Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ * @Email: Kieslect Fashion@gmail.com
+ * Copyright © 2024 专一 | https://www.kieslect.com
  **********************************/
 
 const toString = Object.prototype.toString

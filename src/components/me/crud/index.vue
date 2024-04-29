@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/04 22:51:42
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -32,6 +32,7 @@
     :scroll-x="scrollX"
     :columns="columns"
     :data="tableData"
+    :single-line="false"
     :row-key="(row) => row[rowKey]"
     :pagination="isPagination ? pagination : false"
     @update:checked-row-keys="onChecked"

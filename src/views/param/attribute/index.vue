@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/05 21:29:56
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -200,7 +200,12 @@ const columns = [
     width: 80,
     ellipsis: { tooltip: true }
   },
-  { title: '变量名', key: 'paramName',  ellipsis: { tooltip: true } },
+  {
+    title: '变量名',
+    key: 'paramName',
+    align: 'center',
+    ellipsis: { tooltip: true }
+  },
   {
     title: '变量标题',
     key: 'paramTitle',
@@ -214,7 +219,13 @@ const columns = [
     align: 'center',
 
   },
-  { title: '默认值', key: 'paramValue',align: 'center', ellipsis: { tooltip: true } },
+  {
+    title: '默认值',
+    key: 'paramValue',
+    align: 'center',
+    width: 80,
+    ellipsis: { tooltip: true }
+  },
   {
     title: '所属模块',
     key: 'paramType',

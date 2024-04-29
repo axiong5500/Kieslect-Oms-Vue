@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: Kieslect Fashion
+ - @LastEditor: Kieslect Fashion
  - @LastEditTime: 2023/12/05 21:28:02
- - @Email: zclzone@outlook.com
- - Copyright © 2024 遥遥领先 | https://www.kieslect.com
+ - @Email: Kieslect Fashion@gmail.com
+ - Copyright © 2024 专一 | https://www.kieslect.com
  --------------------------------->
 
 <template>
@@ -58,10 +58,11 @@ defineOptions({ name: 'ImgUpload' })
 const { copy, copied } = useClipboard()
 
 const imgList = reactive([
-  { url: 'https://cdn.isme.top/images/5c23d52f880511ebb6edd017c2d2eca2.jpg' },
-  { url: 'https://cdn.isme.top/images/5c23d52f880511ebb6edd017c2d2eca2.jpg' },
-  { url: 'https://cdn.isme.top/images/5c23d52f880511ebb6edd017c2d2eca2.jpg' },
-  { url: 'https://cdn.isme.top/images/5c23d52f880511ebb6edd017c2d2eca2.jpg' },
+  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/0/1.png' },
+  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/1.png' },
+  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/2.png' },
+  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/3.png' },
+  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/4.png' },
 ])
 
 watch(copied, (val) => {
