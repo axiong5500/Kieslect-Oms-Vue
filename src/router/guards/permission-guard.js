@@ -10,7 +10,7 @@ import { useAuthStore, usePermissionStore, useUserStore } from '@/store'
 import api from '@/api'
 import { getPermissions, getUserInfo } from '@/store/helper'
 
-const WHITE_LIST = ['/login', '/404']
+const WHITE_LIST = ['/login', '/404','/privacy']
 export function createPermissionGuard(router) {
   router.beforeEach(async (to) => {
     const authStore = useAuthStore()

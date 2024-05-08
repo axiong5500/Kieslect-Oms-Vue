@@ -13,4 +13,5 @@ export default {
   create: (data) => request.post('/article/sys/save', data),
   update: (data) => request.post(`/article/sys/update`, data),
   delete: (id) => request.delete(`/article/sys/delete/${id}`),
+  getMultilingualismList: (params = {}) => request.get('/article/sys/getMultilingualismList', { params })
 }

@@ -14,7 +14,12 @@
         <slot />
       </n-space>
       <div class="flex-shrink-0">
-        <n-button ghost type="primary" @click="handleReset">
+        <!-- 可配置的按钮 -->
+        <n-button v-if="isCustomButtonVisible" :type="buttonType" class="ml-20" @click="handleButtonClick" :loading="isButtonLoading">
+          {{ buttonText }}
+        </n-button>
+        <!-- 结束可配置的按钮 -->
+        <n-button ghost type="primary" class="ml-20" @click="handleReset">
           <i class="i-fe:rotate-ccw mr-4" />
           重置
         </n-button>
@@ -41,8 +46,11 @@
 </template>
 
 <script setup>
-import { NDataTable } from 'naive-ui'
+import { NButton, NDataTable } from 'naive-ui'
 import { utils, writeFile } from 'xlsx'
+import { message } from 'ant-design-vue'
+import { request } from '@/utils'
+const isButtonLoading = ref(false);
 
 const props = defineProps({
   /**
@@ -91,6 +99,28 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+
+
+  // 按钮文本
+  buttonText: {
+    type: String,
+    default: 'Copy Json', // 默认按钮文本
+  },
+  // 按钮类型
+  buttonType: {
+    type: String,
+    default: 'primary', // 默认按钮类型
+  },
+  // 点击按钮执行的函数
+  handleButtonClick: {
+    type: Function,
+    required: true,
+  },
+  // 控制按钮显示与隐藏的 prop，默认为 false，即默认隐藏
+  showCustomButton: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:queryItems', 'onChecked', 'onDataChange'])
@@ -98,6 +128,8 @@ const loading = ref(false)
 const initQuery = { ...props.queryItems }
 const tableData = ref([])
 const pagination = reactive({ page: 1, pageSize: 10 })
+// 是否显示自定义按钮
+const isCustomButtonVisible = ref(props.showCustomButton);
 
 async function handleQuery() {
   try {
@@ -158,9 +190,64 @@ function handleExport(columns = props.columns, data = tableData.value) {
   writeFile(workBook, '数据报表.xlsx')
 }
 
+async function handleButtonClick(){
+  console.log('自定义按钮被点击了');
+  try {
+    isButtonLoading.value = true;
+    let result = await  request.get('https://app.kieslect.top/kieslect-device/device/getList')
+    if (result) {
+      const jsonData = JSON.stringify(result, null, 2);
+      console.log(jsonData)
+
+      // navigator clipboard 需要https等安全上下文
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard 向剪贴板写文本
+        navigator.clipboard.writeText(jsonData)
+          .then(() => {
+            message.success('JSON 数据已成功复制到剪贴板');
+          })
+          .catch((error) => {
+            console.error('复制 JSON 数据失败:', error);
+            message.error('复制 JSON 数据失败，请手动复制');
+          });
+      } else {
+        // 创建text area
+        let textArea = document.createElement("textarea");
+        textArea.value = jsonData;
+        // 使text area不在viewport，同时设置不可见
+        textArea.style.position = "absolute";
+        textArea.style.opacity = 0;
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+          // 执行复制命令并移除文本框
+          message.success('JSON 数据已成功复制到剪贴板');
+          document.execCommand('copy') ? res() : rej();
+          textArea.remove();
+        });
+
+      }
+    }
+
+
+
+    console.log('结束')
+  } catch (error) {
+    console.error('获取数据失败:', error);
+    message.error('获取数据失败，请稍后重试');
+  }finally {
+    isButtonLoading.value = false; // 不管请求成功与否，都要将按钮加载状态设置为false，隐藏加载中效果
+  }
+}
+
+
 defineExpose({
   handleSearch,
   handleReset,
   handleExport,
+  isCustomButtonVisible,
 })
 </script>

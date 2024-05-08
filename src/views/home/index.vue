@@ -87,7 +87,7 @@
 <!--            type="primary"-->
 <!--            class="ml-12"-->
 <!--            tag="a"-->
-<!--            href="https://github.com/zclzone/vue-naive-admin/tree/2.x"-->
+<!--            href="https://gitee.com/kieslect_service/vue-naive-admin.git"-->
 <!--            target="__blank"-->
 <!--          >-->
 <!--            代码仓库-->

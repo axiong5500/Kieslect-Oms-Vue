@@ -130,6 +130,7 @@
           />
         </n-form-item>
 
+
 <!--        <n-form-item v-if="['add', 'setRole'].includes(modalAction)" label="角色" path="roleIds">-->
 <!--          <n-select-->
 <!--            v-model:value="modalForm.roleIds"-->
@@ -163,6 +164,7 @@ import { MeCrud, MeQueryItem, MeModal } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 import { h } from 'vue'
+import { CommonPage } from '@/components/index.js'
 
 defineOptions({ name: 'UserMgt' })
 
@@ -192,6 +194,7 @@ api.getAllRoles().then(({ data = [] }) => (roles.value = data))
 api.getAllParamType().then(({ data = [] }) => (paramType.value = data))
 api.getAllParamGroup().then(({ data = [] }) => (paramGroup.value = data))
 
+
 const columns = [
   {
     title: 'ID',
@@ -203,6 +206,7 @@ const columns = [
   {
     title: '变量名',
     key: 'paramName',
+    width: 250,
     align: 'center',
     ellipsis: { tooltip: true }
   },
@@ -273,19 +277,19 @@ const columns = [
           }
         ),
 
-        h(
-          NButton,
-          {
-            size: 'small',
-            type: 'error',
-            style: 'margin-left: 12px;',
-            onClick: () => handleDelete(row.id),
-          },
-          {
-            default: () => '删除',
-            icon: () => h('i', { class: 'i-material-symbols:delete-outline text-14' }),
-          }
-        ),
+        // h(
+        //   NButton,
+        //   {
+        //     size: 'small',
+        //     type: 'error',
+        //     style: 'margin-left: 12px;',
+        //     onClick: () => handleDelete(row.id),
+        //   },
+        //   {
+        //     default: () => '删除',
+        //     icon: () => h('i', { class: 'i-material-symbols:delete-outline text-14' }),
+        //   }
+        // ),
       ]
     },
   },

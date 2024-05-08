@@ -133,6 +133,7 @@ api.getAllRoles().then(({ data = [] }) => (roles.value = data))
 api.getAllParamType().then(({ data = [] }) => (paramType.value = data))
 api.getAllParamGroup().then(({ data = [] }) => (paramGroup.value = data))
 
+
 const columns = [
   {
     title: 'ID',

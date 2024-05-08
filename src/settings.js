@@ -109,6 +109,16 @@ export const basePermissions = [
         enable: true,
         show: true,
       },
+      {
+        code: 'YCYIOS',
+        name: '优创亿IOS文档',
+        type: 'MENU',
+        path: 'https://showdoc.ute-tech.com.cn:48303/web/#/user/login',
+        icon: 'i-simple-icons:juejin',
+        order: 6,
+        enable: true,
+        show: true,
+      },
     ],
   },
 ]

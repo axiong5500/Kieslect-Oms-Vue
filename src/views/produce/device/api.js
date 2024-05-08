@@ -18,6 +18,7 @@ export default {
   getAllParamType: () => request.get('/paramConfig/sys/getAllParamType'),
   getAllParamGroup: () => request.get('/paramConfig/sys/getAllParamGroup'),
   getAllAttribute: () => request.get('/paramConfig/sys/getAllAttribute'),
+  getAllApp: () => request.get('/app/sys/getList'),
   uploadFile: (file) => {
     const formData = new FormData();
     formData.append('file', file);

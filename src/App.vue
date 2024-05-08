@@ -21,7 +21,7 @@
         </KeepAlive>
       </component>
 
-      <LayoutSetting class="fixed right-12 top-1/2 z-999" />
+      <LayoutSetting v-if="shouldShowLayoutSetting" class="fixed right-12 top-1/2 z-999" />
     </router-view>
   </n-config-provider>
 </template>
@@ -62,5 +62,17 @@ setupCssVar()
 const tabStore = useTabStore()
 const keepAliveNames = computed(() => {
   return tabStore.tabs.filter((item) => item.keepAlive).map((item) => item.name)
+})
+
+// 定义白名单数组，包含允许显示 LayoutSetting 的路由名称
+const whitelist = ['/login', '/404','/privacy']
+
+// 根据白名单判断是否应该显示 LayoutSetting
+const shouldShowLayoutSetting = computed(() => {
+  // 获取当前路由名称
+  const currentRoutePath = route.path
+
+  // 判断当前路由名称是否在白名单中
+  return !whitelist.some(path => currentRoutePath.startsWith(path))
 })
 </script>

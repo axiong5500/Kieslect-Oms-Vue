@@ -7,7 +7,12 @@
  --------------------------------->
 
 <template>
-  <CommonPage>
+  <CommonPage back>
+    <template #title-suffix>
+      <n-tag class="ml-12" type="warning">{{ route.params.id }}</n-tag>
+      <n-tag class="ml-12" type="warning">{{ route.query.title }}</n-tag>
+
+    </template>
     <template #action>
       <n-button type="primary" @click="handleAdd()">
         <i class="i-material-symbols:add mr-4 text-18" />
@@ -20,9 +25,8 @@
       v-model:query-items="queryItems"
       :scroll-x="1200"
       :columns="columns"
-      :get-data="api.read"
+      :get-data="api.getMultilingualismList"
     >
-
     </MeCrud>
 
     <MeModal ref="modalRef" width="800px">
@@ -39,13 +43,9 @@
             <n-form-item
               label="标题"
               path="title"
-              :rule="{
-            required: true,
-            message: '请输入标题',
-            trigger: ['input', 'blur'],
-            }"
+
             >
-              <n-input v-model:value="modalForm.title" />
+              <n-input v-model:value="modalForm.title" :disabled="true"/>
             </n-form-item>
             <n-form-item
               label="语言"
@@ -55,34 +55,6 @@
               <n-select
                 v-model:value="modalForm.language"
                 :options="language"
-                label-field="label"
-                value-field="value"
-                clearable
-                filterable
-              />
-            </n-form-item>
-            <n-form-item
-              label="文章分类"
-              path="articleTypeId"
-
-            >
-              <n-select
-                v-model:value="modalForm.articleTypeId"
-                :options="articleType"
-                label-field="label"
-                value-field="value"
-                clearable
-                filterable
-              />
-            </n-form-item>
-            <n-form-item
-              label="所属App"
-              path="appId"
-
-            >
-              <n-select
-                v-model:value="modalForm.appId"
-                :options="appManage"
                 label-field="label"
                 value-field="value"
                 clearable
@@ -99,8 +71,6 @@
             </n-form-item>
           </div>
 
-
-
         </n-form>
 
       </div>
@@ -115,21 +85,24 @@
 
 
 <script setup>
-import {  NButton } from 'naive-ui'
+import { NButton, NTag } from 'naive-ui'
 import { formatDateTime } from '@/utils'
-import { MeCrud, MeModal, MeQueryItem } from '@/components'
+import { MeCrud, MeModal } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 import { h } from 'vue'
 import { CommonPage } from '@/components/index.js'
-import { router } from '@/router/index.js'
 
 
-defineOptions({ name: 'articleManage' })
+defineOptions({ name: 'multitableManage' })
+
+const route = useRoute()
 
 const $table = ref(null)
 /** QueryBar筛选参数（可选） */
-const queryItems = ref({})
+const queryItems = ref({
+  id : route.params.id,
+})
 
 const language = [
   { label: 'zh', value: 0 },
@@ -142,11 +115,8 @@ const appManage = [
   { label: 'fashion', value: 2 },
 ]
 
-
-
 onMounted(() => {
   $table.value?.handleSearch()
-
 })
 
 const formatType = (id, type) => {
@@ -156,11 +126,7 @@ const formatType = (id, type) => {
 
 
 const columns = [
-  {
-    title: 'Id',
-    key: 'id',
-    align: 'center'
-  },
+
 
   {
     title: '标题',
@@ -207,20 +173,7 @@ const columns = [
     hideInExcel: true,
     render(row) {
       return [
-        h(
-          NButton,
-          {
-            size: 'small',
-            type: 'primary',
-            style: 'margin-left: 12px;',
-            onClick: () =>
-              router.push({ path: `/content/article/multitable/${row.id}`, query: { title: row.title,articleTypeId:row.articleTypeId,appId:row.appId,language:row.language} }),
-          },
-          {
-            default: () => '多语言',
-            icon: () => h('i', { class: 'i-material-symbols:edit-outline text-14' })
-          }
-        ),
+
         h(
           NButton,
           {
@@ -264,8 +217,14 @@ const {
   handleEdit,
   handleDelete,
 } = useCrud({
-  name: 'Article',
-  initForm: { enable: true },
+  name: 'ArticleMultilingualism',
+  initForm: {
+    enable: true ,
+    title: route.query.title,
+    articleTypeId:route.query.articleTypeId,
+    appId:route.query.appId,
+    fatherId:route.params.id
+  },
   doCreate: api.create,
   doDelete: api.delete,
   doUpdate: api.update,

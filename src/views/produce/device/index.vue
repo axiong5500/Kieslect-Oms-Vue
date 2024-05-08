@@ -25,6 +25,7 @@
       :scroll-x="1200"
       :columns="columns"
       :get-data="api.read"
+      :show-custom-button=true
     >
       <MeQueryItem label="变量标题" :label-width="70">
         <n-input
@@ -42,7 +43,10 @@
       <MeQueryItem label="分组" :label-width="50">
         <n-select v-model:value="queryItems.paramGroup" clearable :options="paramGroup" />
       </MeQueryItem>
+
+
     </MeCrud>
+
 
 
 
@@ -52,13 +56,20 @@
         ref="modalFormRef"
         label-placement="left"
         label-align="left"
-        :label-width="80"
+        :label-width="220"
         :model="modalForm"
         :disabled="modalAction === 'view'"
       >
         <div  v-if="modalAction === 'edit' ||  modalAction === 'add'">
+          <n-form-item
+            label="内部Id（innerId）"
+            path="id"
+
+          >
+            <n-input v-model:value="modalForm.id" disabled />
+          </n-form-item>
         <n-form-item
-          label="项目名称"
+          label="项目名称（projectName）"
           path="projectName"
           :rule="{
             required: true,
@@ -69,14 +80,14 @@
           <n-input v-model:value="modalForm.projectName" />
         </n-form-item>
         <n-form-item
-          label="设备id"
+          label="设备id（deviceId）"
           path="firmwareId"
 
         >
           <n-input  v-model:value="modalForm.firmwareId" />
         </n-form-item>
         <n-form-item
-          label="蓝牙名称"
+          label="蓝牙名称（bluetoothName）"
           path="bluetoothName"
           :rule="{
             required: true,
@@ -86,9 +97,17 @@
         >
           <n-input v-model:value="modalForm.bluetoothName" />
         </n-form-item>
+          <n-form-item
+            label="兼容App（appIds）"
+            path="appIds"
+
+          >
+
+            <n-select v-model:value="modalForm.appIdsOptions" multiple :options="appIdsOptions" />
+          </n-form-item>
 
         <n-form-item
-          label="产商"
+          label="产商（producers）"
           path="form"
 
         >
@@ -103,7 +122,7 @@
 
         </n-form-item>
         <n-form-item
-          label="表盘形状"
+          label="表盘形状（dialShape）"
           path="dialShape"
 
         >
@@ -117,12 +136,12 @@
           />
         </n-form-item>
           <n-form-item
-            label="BT支持"
-            path="btStatus"
+            label="OTA升级（otaUpgrade）"
+            path="otaUpgrade"
           >
             <n-select
               v-model:value="modalForm.btStatus"
-              :options="btStatus"
+              :options="otaUpgrade"
               label-field="label"
               value-field="value"
               clearable
@@ -130,7 +149,7 @@
             />
           </n-form-item>
         <n-form-item
-          label="宽度"
+          label="宽度（width）"
           path="width"
           :rule="{
             required: true,
@@ -141,7 +160,7 @@
           <n-input v-model:value="modalForm.width" />
         </n-form-item>
         <n-form-item
-          label="高度"
+          label="高度（height）"
           path="height"
           :rule="{
             required: true,
@@ -152,7 +171,7 @@
           <n-input v-model:value="modalForm.height" />
         </n-form-item>
 
-        <n-form-item label="表盘图片" path="dialPhoto" >
+        <n-form-item label="表盘图片（dialPhoto）" path="dialPhoto" >
 
           <n-upload v-model:value="modalForm.dialPhoto"
                     :custom-request="handleUpload"
@@ -163,7 +182,7 @@
           />
 
         </n-form-item>
-        <n-form-item label="表带图片" path="strapsPhoto" >
+        <n-form-item label="表带图片（strapsPhoto）" path="strapsPhoto" >
 
           <n-upload v-model:value="modalForm.strapsPhoto"
                     :custom-request="handleUpload"
@@ -176,7 +195,7 @@
 
 
         <n-form-item
-          label="产品描述"
+          label="产品描述（productDesc）"
           path="productDesc"
           :rule="{
             required: true,
@@ -196,7 +215,8 @@
               <div>
                 <n-grid :y-gap="8" :cols="2">
                   <n-gi v-for="(item2, index2) in item.contents" :key="index2">
-                    <n-checkbox :label="item2.text" :value="item2.id" />
+
+                    <n-checkbox :label="item2.text" :value="item2.id"/>
                   </n-gi>
                 </n-grid>
               </div>
@@ -214,7 +234,7 @@
               <div>
                 <n-grid :y-gap="8" :cols="1">
                   <n-gi v-for="(item2, index2) in item.contents" :key="index2">
-                    <n-form-item :label="item2.text"  label-width="200" >
+                    <n-form-item :label="item2.text + '('+ item2.paramName + ')'"  label-width="200" >
                       <n-input v-model:value="item2.value" />
                     </n-form-item>
                   </n-gi>
@@ -238,6 +258,7 @@
 </template>
 
 <style scoped>
+
 .scroll-container {
   height: 600px; /* 固定高度 */
   overflow-y: auto; /* 垂直滚动条 */
@@ -284,9 +305,9 @@ defineOptions({ name: 'deviceManage' })
 
 
 const items = ref([]); // 定义 ref 类型的 items 数组
-const btStatus = [
-  { label: '不支持（数值：0）', value: 0 },
-  { label: '支持（数值：1）', value: 1 },
+const otaUpgrade = [
+  { label: '爱都（数值：0）', value: 0 },
+  { label: '瑞昱RTK（数值：1）', value: 1 },
 ]
 const dialShape = [
   { label: '圆形（数值：0）', value: 0 },
@@ -300,7 +321,11 @@ const $table = ref(null)
 /** QueryBar筛选参数（可选） */
 const queryItems = ref({})
 const paramIds = ref([])
-const paramItems = ref([]);
+const paramItems = ref([])
+const appIdsOptions = ref([
+  { label: '圆形（数值：0）', value: 0 },
+  { label: '方形（数值：1）', value: 1 },
+])
 const domain_url = "http://192.168.0.106:9999"
 
 onMounted(() => {
@@ -312,16 +337,12 @@ const paramGroup = ref([])
 const attributeType = ref([])
 // 默认展开
 const defaultExpandedNames = ref([])
-const previewFileList = ref([])
 
-// api.getAllParamType().then(({ data = [] }) => (paramType.value = data))
-// api.getAllParamGroup().then(({ data = [] }) => (paramGroup.value = data))
-// api.getAllAttribute().then(({ data = [] }) => (attributeType.value = data))
 
 // 等待 paramGroup 和 paramType 数组的数据获取完成后，再进行组合生成 items 数组
 Promise.all([
   api.getAllParamType().then(({ data = [] }) => (paramType.value = data)),
-  api.getAllAttribute().then(({ data = [] }) => (attributeType.value = data))
+  api.getAllAttribute().then(({ data = [] }) => (attributeType.value = data)),
 ]).then(() => {
   // 遍历 paramGroup 数组，生成 items 数组
   items.value = paramType.value.map((type) => {
@@ -334,7 +355,7 @@ Promise.all([
     // 将筛选出的 attributeType 转换成 contents 数组的格式
     const contents = groupAttributes.map((attr) => ({
       id: attr.id,
-      text: attr.paramTitle, // 假设 attributeType 中有 text 字段作为内容的文本
+      text: attr.paramTitle +" （"+ attr.paramName +"）", // 假设 attributeType 中有 text 字段作为内容的文本
       isChecked: true
     }));
 
@@ -473,6 +494,7 @@ async function handleUpload({ file, onFinish }) {
   $message.success('上传成功');
   onFinish(); // 调用上传完成的回调函数
 }
+
 
 
 const {
