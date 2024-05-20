@@ -72,7 +72,7 @@
             </n-form-item>
 
             <template v-for="(item, index) in modalForm.appUrls" :key="index" v-if="modalAction === 'edit'">
-              <n-form-item :label="item.appChannel.toString()">
+              <n-form-item :label="formatType(item.appChannel,appChannelDic)">
                 <n-input v-model:value="item.appDownloadLink" />
               </n-form-item>
             </template>
@@ -115,7 +115,7 @@
 
 
             <template v-for="(item, index) in modalForm.appDescriptions" :key="index" v-if="modalAction === 'edit'">
-              <n-form-item :label="item.languageVersion.toString()">
+              <n-form-item :label="formatType(item.languageVersion,appDescriptionDic)">
                 <n-input v-model:value="item.appProductDescription" />
               </n-form-item>
             </template>
@@ -182,6 +182,41 @@ onMounted(() => {
 const domain_url = 'http://192.168.0.106:9999'
 const showQrCodeModal = ref(false) // 定义模态框显示状态
 const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
+const appChannelDic = ref([]) // app下载路径
+const appDescriptionDic = ref([])
+
+Promise.all([
+  api.getAllDicData().then(({ data = [] }) => {
+    if (Array.isArray(data)) {
+      appChannelDic.value = data
+        .filter(item => item.type === 'app_manage_title')
+        .map(item => ({
+        label: `${item.name}`,
+        value: Number(item.value),
+      }));
+      appDescriptionDic.value = data
+        .filter(item => item.type === 'app_manage_desc_title')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+    } else {
+      appChannelDic.value = [];
+      appDescriptionDic.value = [];
+    }
+
+  }),
+]).then(() => {
+  console.log(11,appChannelDic.value);
+  console.log(22,appDescriptionDic.value);
+});
+
+
+
+const formatType = (id, type) => {
+  const foundType = type.find(item => item.value === id);
+  return foundType ? foundType.label : '';
+}
 
 
 const columns = [

@@ -13,4 +13,5 @@ export default {
   create: (data) => request.post('/app/sys/save', data),
   update: (data) => request.post(`/app/sys/update`, data),
   delete: (id) => request.delete(`/app/sys/delete/${id}`),
+  getAllDicData: (params = {}) => request.get('/dic', { params }),
 }

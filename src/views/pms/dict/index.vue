@@ -21,7 +21,7 @@
       :scroll-x="1200"
       :columns="columns"
       :get-data="api.read"
-    >
+      >
       <MeQueryItem></MeQueryItem>
     </MeCrud>
 
@@ -36,40 +36,35 @@
       >
         <n-form-item
           label="字典名"
-          path="dictName"
+          path="name"
           :rule="{
             required: true,
             message: '请输入用户名',
             trigger: ['input', 'blur'],
           }"
         >
-          <n-input v-model:value="modalForm.dictName" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.name" :disabled="modalAction !== 'add'" />
         </n-form-item>
         <n-form-item
           label="字典值"
-          path="dictValue"
+          path="value"
           :rule="{
             required: true,
             message: '请输入字典值',
             trigger: ['input', 'blur'],
           }"
         >
-          <n-input v-model:value="modalForm.dictValue" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.value" :disabled="modalAction !== 'add'" />
         </n-form-item>
 
         <n-form-item
           label="字典分组"
-          path="dictParent"
+          path="type"
         >
-          <n-input v-model:value="modalForm.dictParent" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.type" :disabled="modalAction !== 'add'" />
         </n-form-item>
 
-        <n-form-item v-if="modalAction === 'add'" label="状态" path="enable">
-          <n-switch v-model:value="modalForm.enable">
-            <template #checked>启用</template>
-            <template #unchecked>停用</template>
-          </n-switch>
-        </n-form-item>
+
       </n-form>
 
     </MeModal>
@@ -77,13 +72,12 @@
 </template>
 
 <script setup>
-import { NAvatar, NButton, NSwitch, NTag } from 'naive-ui'
-import { formatDateTime } from '@/utils'
+import { NButton } from 'naive-ui'
 import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 
-defineOptions({ name: 'DictMgt' })
+defineOptions({ name: 'Dic' })
 
 const $table = ref(null)
 /** QueryBar筛选参数（可选） */
@@ -93,12 +87,7 @@ onMounted(() => {
   $table.value?.handleSearch()
 })
 
-const genders = [
-  { label: '男', value: 1 },
-  { label: '女', value: 2 },
-]
-const roles = ref([])
-api.getAllRoles().then(({ data = [] }) => (roles.value = data))
+
 
 const columns = [
   {
@@ -108,45 +97,26 @@ const columns = [
   },
   {
     title: '字典名',
-    key: 'dictName',
+    key: 'name',
     ellipsis: { tooltip: true }
   },
   {
     title: '字典值',
-    key: 'dictValue',
+    key: 'value',
     ellipsis: { tooltip: true },
   },
   {
     title: '字典分组',
-    key: 'dictParent',
+    key: 'type',
     ellipsis: { tooltip: true },
   },
-  {
-    title: '状态',
-    key: 'enable',
-    width: 120,
-    render: (row) =>
-      h(
-        NSwitch,
-        {
-          size: 'small',
-          rubberBand: false,
-          value: row.enable,
-          loading: !!row.enableLoading,
-          onUpdateValue: () => handleEnable(row),
-        },
-        {
-          checked: () => '启用',
-          unchecked: () => '停用',
-        }
-      ),
-  },
+
   {
     title: '操作',
     key: 'actions',
     width: 320,
-    align: 'right',
-    fixed: 'right',
+    align: 'center',
+    fixed: 'center',
     hideInExcel: true,
     render(row) {
       return [
@@ -155,7 +125,6 @@ const columns = [
           {
             size: 'small',
             type: 'error',
-            style: 'margin-left: 12px;',
             onClick: () => handleDelete(row.id),
           },
           {
@@ -168,17 +137,6 @@ const columns = [
   },
 ]
 
-async function handleEnable(row) {
-  row.enableLoading = true
-  try {
-    await api.update({ id: row.id, enable: !row.enable })
-    row.enableLoading = false
-    $message.success('操作成功')
-    $table.value?.handleSearch()
-  } catch (error) {
-    row.enableLoading = false
-  }
-}
 
 
 const {
@@ -191,7 +149,7 @@ const {
   handleOpen,
   handleSave,
 } = useCrud({
-  name: '用户',
+  name: 'Dic',
   initForm: { enable: true },
   doCreate: api.create,
   doDelete: api.delete,

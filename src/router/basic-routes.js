@@ -38,15 +38,15 @@ export const basicRoutes = [
     },
   },
 
-  {
-    name: '隐私政策',
-    path: '/privacy/:articleId?/:languageType?',
-    component: () => import('@/views/content/privacy/index.vue'),
-    meta: {
-      title: '隐私政策',
-      layout: 'empty',
-    },
-  },
+  // {
+  //   name: '隐私政策',
+  //   path: '/privacy/:articleId?/:languageType?',
+  //   component: () => import('@/views/content/privacy/index.vue'),
+  //   meta: {
+  //     title: '隐私政策',
+  //     layout: 'empty',
+  //   },
+  // },
 
 
 ]
