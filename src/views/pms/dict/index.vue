@@ -43,7 +43,7 @@
             trigger: ['input', 'blur'],
           }"
         >
-          <n-input v-model:value="modalForm.name" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.name"  />
         </n-form-item>
         <n-form-item
           label="字典值"
@@ -54,14 +54,14 @@
             trigger: ['input', 'blur'],
           }"
         >
-          <n-input v-model:value="modalForm.value" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.value"  />
         </n-form-item>
 
         <n-form-item
           label="字典分组"
           path="type"
         >
-          <n-input v-model:value="modalForm.type" :disabled="modalAction !== 'add'" />
+          <n-input v-model:value="modalForm.type"  />
         </n-form-item>
 
 
@@ -76,6 +76,7 @@ import { NButton } from 'naive-ui'
 import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
+import { h } from 'vue'
 
 defineOptions({ name: 'Dic' })
 
@@ -124,7 +125,21 @@ const columns = [
           NButton,
           {
             size: 'small',
+            type: 'primary',
+            style: 'margin-left: 12px;',
+            onClick: () => handleEdit(row),
+          },
+          {
+            default: () => '编辑',
+            icon: () => h('i', { class: 'i-material-symbols:edit-outline text-14' }),
+          }
+        ),
+        h(
+          NButton,
+          {
+            size: 'small',
             type: 'error',
+            style: 'margin-left: 12px;',
             onClick: () => handleDelete(row.id),
           },
           {
@@ -147,6 +162,7 @@ const {
   handleAdd,
   handleDelete,
   handleOpen,
+  handleEdit,
   handleSave,
 } = useCrud({
   name: 'Dic',
