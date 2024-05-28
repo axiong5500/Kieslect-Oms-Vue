@@ -174,9 +174,9 @@
         <n-form-item label="表盘图片（dialPhoto）" path="dialPhoto" >
 
           <n-upload v-model:value="modalForm.dialPhoto"
-                    :custom-request="handleUpload"
+                    :custom-request="handleUploadDialPhoto"
                     :default-file-list="modalForm.dialPhoto ? [{ url: domain_url + modalForm.dialPhoto,status: 'finished' }] : []"
-                    max = 1
+                    :max="1"
                     list-type="image-card"
                     :show-download-button="true"
           />
@@ -185,9 +185,9 @@
         <n-form-item label="表带图片（strapsPhoto）" path="strapsPhoto" >
 
           <n-upload v-model:value="modalForm.strapsPhoto"
-                    :custom-request="handleUpload"
+                    :custom-request="handleUploadStrapsPhoto"
                     :default-file-list="modalForm.strapsPhoto ? [{ url: domain_url + modalForm.strapsPhoto,status: 'finished' }] : []"
-                    max = 1
+                    :max="1"
                     list-type="image-card"
                     :show-download-button="true"
           />
@@ -206,16 +206,22 @@
           <n-input v-model:value="modalForm.productDesc" />
         </n-form-item>
 
+        <!-- 折叠面板 Collapse default-expanded-names 非受控模式下展开的面板 name -->
+        <n-collapse :default-expanded-names="defaultExpandedNames" >
 
-        <n-collapse :default-expanded-names="defaultExpandedNames">
-
+          <!-- 复选框 Checkbox组 绑定选中的值到 modalForm.paramIdsArray -->
           <n-checkbox-group v-model:value="modalForm.paramIdsArray">
 
+            <!--  循环生成折叠面板项 Collapse Item，根据 items 数组生成每一项 -->
             <n-collapse-item v-for="(item, index) in items" :key="index" :title="item.label" :name="item.label">
               <div>
+                <!-- 网格布局，用于排列复选框 -->
                 <n-grid :y-gap="8" :cols="2">
+
+                  <!-- 循环生成网格项 Grid Item，根据 item.contents 数组生成每一项 -->
                   <n-gi v-for="(item2, index2) in item.contents" :key="index2">
 
+                    <!-- 复选框 Checkbox，绑定 label 和 value -->
                     <n-checkbox :label="item2.text" :value="item2.id"/>
                   </n-gi>
                 </n-grid>
@@ -326,7 +332,7 @@ const appIdsOptions = ref([
   { label: '圆形（数值：0）', value: 0 },
   { label: '方形（数值：1）', value: 1 },
 ])
-const domain_url = "http://192.168.0.106:9999"
+const domain_url = "http://localhost:9999"
 
 onMounted(() => {
   $table.value?.handleSearch()
@@ -466,8 +472,8 @@ function formateForm(formid) {
 }
 
 
-async function handleUpload({ file, onFinish }) {
-  console.log(file.file)
+async function handleUploadStrapsPhoto({ file,photoType}) {
+  console.log(photoType)
   if (!file || !file.type) {
     $message.error('请选择文件')
   }
@@ -491,8 +497,39 @@ async function handleUpload({ file, onFinish }) {
 
   console.log(fileUrl);
 
+  modalForm.value.strapsPhoto = fileUrl;
+
   $message.success('上传成功');
-  onFinish(); // 调用上传完成的回调函数
+}
+
+async function handleUploadDialPhoto({ file,photoType}){
+  console.log(photoType)
+  if (!file || !file.type) {
+    $message.error('请选择文件')
+  }
+
+  // 创建 FormData 对象，用于包装要上传的文件
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await api.uploadFile(file.file);
+
+  console.log(response);
+
+
+  // 处理上传成功后的逻辑
+  const responseData = await response;
+  if (responseData.code !== 200) {
+    throw new Error('文件上传失败');
+  }
+  // 提取上传成功后的文件信息
+  const { fileUrl } = responseData.data;
+
+  console.log(fileUrl);
+
+  modalForm.value.dialPhoto = fileUrl;
+
+  $message.success('上传成功');
 }
 
 
