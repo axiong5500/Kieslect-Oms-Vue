@@ -58,11 +58,11 @@ defineOptions({ name: 'ImgUpload' })
 const { copy, copied } = useClipboard()
 
 const imgList = reactive([
-  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/0/1.png' },
-  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/1.png' },
-  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/2.png' },
-  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/3.png' },
-  { url: 'http://192.168.0.106:9999/kieslect-file/file/download/headimage/init/1/4.png' },
+  { url: 'http://localhost:9999/kieslect-file/file/download/headimage/init/0/1.png' },
+  { url: 'http://localhost:9999/kieslect-file/file/download/headimage/init/1/1.png' },
+  { url: 'http://localhost:9999/kieslect-file/file/download/headimage/init/1/2.png' },
+  { url: 'http://localhost:9999/kieslect-file/file/download/headimage/init/1/3.png' },
+  { url: 'http://localhost:9999/kieslect-file/file/download/headimage/init/1/4.png' },
 ])
 
 watch(copied, (val) => {

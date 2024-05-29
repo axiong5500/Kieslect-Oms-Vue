@@ -24,7 +24,7 @@
                 @click="router.back()"
               >
                 <i class="i-material-symbols:arrow-left-alt" />
-                <span class="ml-4">返回</span>
+<!--                <span class="ml-4">返回</span>-->
               </div>
             </template>
             <div class="mr-12 h-16 w-4 rounded-l-2 bg-primary"></div>
@@ -42,7 +42,7 @@
     </div>
   </main>
 
-  <footer class="bg-#f5f6fb dark:bg-#121212">
+  <footer class="bg-#f5f6fb dark:bg-#121212" >
     <slot v-if="$slots.footer" name="footer" />
     <AppCard v-else-if="showFooter" class="py-12">
       <TheFooter />
