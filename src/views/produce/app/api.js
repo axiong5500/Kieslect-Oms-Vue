@@ -25,15 +25,17 @@ export default {
   getAllAttribute: () => request.get('/paramConfig/sys/getAllAttribute'),
   updateParam: (data) => request.patch(`/app/sys/updateParam/${data.id}`, data),
 
+  getAppDownload: (appMark) => request.get(`/public/app/sys/getAppDownload/${appMark}`, { noNeedToken: true }),
+
 
   uploadFile: (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
+    const formData = new FormData()
+    formData.append('file', file)
 
     return request.post('/file/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data' // 设置请求头，告诉后端是文件上传
       }
-    });
+    })
   }
 }

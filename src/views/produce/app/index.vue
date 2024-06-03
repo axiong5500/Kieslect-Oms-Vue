@@ -74,88 +74,63 @@
 
 
             <!-- 新增时 下载地址  -->
-            <template v-if="modalAction === 'add'">
+
               <n-form-item
                 label="ios下载地址"
                 path="iosUrl"
-                :rule="{
-            required: true,
-            message: '请输入ios下载地址',
-            trigger: ['input', 'blur'],
-            }"
+
               >
                 <n-input v-model:value="modalForm.iosUrl" />
               </n-form-item>
               <n-form-item
                 label="google下载地址"
                 path="androidUrl"
-                :rule="{
-            required: true,
-            message: '请输入google下载地址',
-            trigger: ['input', 'blur'],
-            }"
+
               >
                 <n-input v-model:value="modalForm.androidUrl" />
               </n-form-item>
               <n-form-item
                 label="鸿蒙下载地址"
                 path="harmonyUrl"
-                :rule="{
-            required: true,
-            message: '请输入鸿蒙下载地址',
-            trigger: ['input', 'blur'],
-            }"
+
               >
                 <n-input v-model:value="modalForm.harmonyUrl" />
               </n-form-item>
-            </template>
+
 
             <!-- 新增时 App描述  -->
-            <template v-if="modalAction === 'add'">
+
               <n-form-item
                 label="产品描述（中文版）"
                 path="appDescCh"
-                :rule="{
-            required: true,
-            message: '请输入产品描述（中文版）',
-            trigger: ['input', 'blur'],
-            }"
+
               >
                 <n-input v-model:value="modalForm.appDescCh" />
               </n-form-item>
               <n-form-item
                 label="产品描述（英文版）"
                 path="appDescEn"
-                :rule="{
-            required: true,
-            message: '请输入产品描述（英文版）',
-            trigger: ['input', 'blur'],
-            }"
+
               >
                 <n-input v-model:value="modalForm.appDescEn" />
               </n-form-item>
-
-            </template>
-
-
-
 
 
 
 
             <!-- 编辑时 下载地址  -->
-            <template v-for="(item, index) in modalForm.appUrls" :key="index" v-if="modalAction === 'edit'">
-              <n-form-item :label="formatType(item.appChannel,appChannelDic)">
-                <n-input v-model:value="item.appDownloadLink" />
-              </n-form-item>
-            </template>
+<!--            <template v-for="(item, index) in modalForm.appUrls" :key="index" v-if="modalAction === 'edit'">-->
+<!--              <n-form-item :label="formatType(item.appChannel,appChannelDic)">-->
+<!--                <n-input v-model:value="item.appDownloadLink" />-->
+<!--              </n-form-item>-->
+<!--            </template>-->
 
             <!-- 编辑时 App描述  -->
-            <template v-for="(item, index) in modalForm.appDescriptions" :key="index" v-if="modalAction === 'edit'">
-              <n-form-item :label="formatType(item.languageVersion,appDescriptionDic)">
-                <n-input v-model:value="item.appProductDescription" />
-              </n-form-item>
-            </template>
+<!--            <template v-for="(item, index) in modalForm.appDescriptions" :key="index" v-if="modalAction === 'edit'">-->
+<!--              <n-form-item :label="formatType(item.languageVersion,appDescriptionDic)">-->
+<!--                <n-input v-model:value="item.appProductDescription" />-->
+<!--              </n-form-item>-->
+<!--            </template>-->
 
 
             <!-- 折叠面板 Collapse default-expanded-names 非受控模式下展开的面板 name -->
@@ -186,6 +161,7 @@
 
           </div>
 
+          <!-- 配置表 -->
           <div v-if="modalAction === 'editParam'">
 
             <n-collapse :default-expanded-names="defaultExpandedNames">
@@ -220,13 +196,14 @@
 
 <script setup>
 import {  NButton, NQrCode } from 'naive-ui'
-import { formatDateTime } from '@/utils'
+import { formatDateTime, request } from '@/utils'
 import { MeCrud, MeModal } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 import { h } from 'vue'
 import { CommonPage } from '@/components/index.js'
 import { router } from '@/router/index.js'
+import { message } from 'ant-design-vue'
 
 defineOptions({ name: 'AppManage' })
 
@@ -294,8 +271,8 @@ const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
 const largeQrCodeIconSrc = ref('') // 放大后的二维码图标
 const appChannelDic = ref([]) // app下载路径
 const appDescriptionDic = ref([])
-// const qrCodeValue = 'https://admin.kieslect.top/public/produce/app/qrcode'
-const qrCodeValue = 'http://192.168.0.106:3200/#/public/produce/app/qrcode'
+const qrCodeValue = 'https://admin.kieslect.top/public/produce/app/qrcode'
+// const qrCodeValue = 'http://192.168.0.106:3200/#/public/produce/app/qrcode'
 
 Promise.all([
   api.getAllDicData().then(({ data = [] }) => {
@@ -361,6 +338,8 @@ async function handleUpload({ file, onFinish }) {
   onFinish({ url: fileUrl }); // 调用上传完成的回调函数并传递文件 URL
 }
 
+const isButtonLoading = ref(false);
+
 
 const columns = [
   {
@@ -386,13 +365,14 @@ const columns = [
     title: 'app二维码',
     key: 'qrCodeUrl',
     align: 'center',
-    render: ({ appLogo }) =>
+    render: ( row ) =>
+
       h(NQrCode, {
         value: qrCodeValue,
-        iconSrc: domain_url + appLogo,
+        iconSrc: domain_url + row.appLogo,
         iconSize: 20,
         size: 50,
-        onClick: () => handleQrCodeClick(qrCodeValue,domain_url + appLogo),
+        onClick: () => handleQrCodeClick(qrCodeValue+"/"+row.appMark,domain_url + row.appLogo),
         style: { padding: '0px' }
       })
 
@@ -420,12 +400,26 @@ const columns = [
             size: 'small',
             type: 'primary',
             style: 'margin-left: 10px;',
+            loading: row.loading,
+            onClick: () => handleCopyJson(row),
+          },
+          {
+            default: () => 'Copy',
+            // icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
+          }
+        ),
+        h(
+          NButton,
+          {
+            size: 'small',
+            type: 'primary',
+            style: 'margin-left: 10px;',
             onClick: () =>
               router.push({ path: `/produce/app/apk/${row.id}`, query: { title: row.appName,} }),
           },
           {
             default: () => 'App包管理',
-            icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
+            // icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
           }
         ),
         h(
@@ -438,7 +432,7 @@ const columns = [
           },
           {
             default: () => '配置表',
-            icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
+            // icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
           }
         ),
         h(
@@ -451,7 +445,7 @@ const columns = [
           },
           {
             default: () => '编辑',
-            icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
+            // icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
           }
         ),
 
@@ -465,13 +459,64 @@ const columns = [
           },
           {
             default: () => '删除',
-            icon: () => h('i', { class: 'i-material-symbols:delete-outline text-10' })
+            // icon: () => h('i', { class: 'i-material-symbols:delete-outline text-10' })
           }
         )
       ]
     }
   }
 ]
+
+async function handleCopyJson(row) {
+  console.log('自定义按钮被点击了');
+  try {
+    row.loading = true; // 设置该行的 loading 状态为 true
+    let result = await  request.get(`https://app.kieslect.top/kieslect-device/device/appManage/getApp?appMark=${row.appMark}`)
+    if (result) {
+      const jsonData = JSON.stringify(result, null, 2);
+      console.log(jsonData)
+
+      // navigator clipboard 需要https等安全上下文
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard 向剪贴板写文本
+        navigator.clipboard.writeText(jsonData)
+          .then(() => {
+            message.success('JSON 数据已成功复制到剪贴板');
+          })
+          .catch((error) => {
+            console.error('复制 JSON 数据失败:', error);
+            message.error('复制 JSON 数据失败，请手动复制');
+          });
+      } else {
+        // 创建text area
+        let textArea = document.createElement("textarea");
+        textArea.value = jsonData;
+        // 使text area不在viewport，同时设置不可见
+        textArea.style.position = "absolute";
+        textArea.style.opacity = 0;
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+          // 执行复制命令并移除文本框
+          message.success('JSON 数据已成功复制到剪贴板');
+          document.execCommand('copy') ? res() : rej();
+          textArea.remove();
+        });
+
+      }
+    }
+
+    console.log('结束')
+  } catch (error) {
+    console.error('获取数据失败:', error);
+    message.error('获取数据失败，请稍后重试');
+  }finally {
+    row.loading = false; // 恢复该行的 loading 状态为 false
+  }
+}
 
 function handleQrCodeClick(qrCodeUrl, qrCodeIconSrc) {
   // 在这里打开一个模态框或者弹出层来展示放大后的二维码
@@ -493,6 +538,7 @@ const {
   name: 'App',
   initForm: {
     enable: true,
+    loading: false,
   },
   doCreate: api.create,
   doDelete: api.delete,

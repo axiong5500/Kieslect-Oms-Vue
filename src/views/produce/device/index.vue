@@ -351,30 +351,35 @@ Promise.all([
   api.getAllAttribute().then(({ data = [] }) => (attributeType.value = data)),
 ]).then(() => {
   // 遍历 paramGroup 数组，生成 items 数组
-  items.value = paramType.value.map((type) => {
+  items.value = paramType.value
+    .filter(type => type.label !== "文章管理")
+    .map((type) => {
     // 获取当前 paramGroup 对应的 label
     const label = type.label;
 
 
-    // 根据 param 的 groupId 筛选出对应的 attributeType
-    const groupAttributes = attributeType.value.filter((attr) => attr.paramType == type.value);
-    // 将筛选出的 attributeType 转换成 contents 数组的格式
-    const contents = groupAttributes.map((attr) => ({
-      id: attr.id,
-      text: attr.paramTitle +" （"+ attr.paramName +"）", // 假设 attributeType 中有 text 字段作为内容的文本
-      isChecked: true
-    }));
+      // 根据 param 的 groupId 筛选出对应的 attributeType
+      const groupAttributes = attributeType.value.filter((attr) => attr.paramType == type.value);
+      // 将筛选出的 attributeType 转换成 contents 数组的格式
+      const contents = groupAttributes.map((attr) => ({
+        id: attr.id,
+        text: attr.paramTitle +" （"+ attr.paramName +"）", // 假设 attributeType 中有 text 字段作为内容的文本
+        isChecked: true
+      }));
 
-    // 返回组合好的折叠项对象
-    return {
-      label: label,
-      contents: contents,
-      selected: [] // 初始为空数组
-    };
+      // 返回组合好的折叠项对象
+      return {
+        label: label,
+        contents: contents,
+        selected: [] // 初始为空数组
+      };
+
+
+
   });
-  defaultExpandedNames.value = paramType.value.map((type) => {
-    return type.label;
-  })
+  defaultExpandedNames.value = paramType.value
+    .filter(type => type.label !== "文章管理")
+    .map(type => type.label);
 });
 const columns = [
   {

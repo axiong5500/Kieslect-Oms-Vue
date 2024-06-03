@@ -118,7 +118,7 @@ export const basePermissions = [
         order: 6,
         enable: true,
         show: true,
-      },
+      }
     ],
   },
 ]

@@ -40,7 +40,7 @@ export const basicRoutes = [
 
   {
     name: 'qrcode',
-    path: '/public/produce/app/qrcode',
+    path: '/public/produce/app/qrcode/:appMark?',
     component: () => import('@/views/produce/app/qrcode.vue'),
     meta: {
       title: 'QrCode',
