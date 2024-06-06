@@ -1,7 +1,7 @@
 <template>
   <div class="download-page">
     <!-- 你的模板代码 -->
-    <p v-if="!loading">App标识: {{ appMark }}</p>
+<!--    <p v-if="!loading">App标识: {{ appMark }}</p>-->
     <div v-if="loading">
       <p>加载中...</p>
     </div>
