@@ -35,6 +35,11 @@ export default {
     return request.post('/file/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data' // 设置请求头，告诉后端是文件上传
+      },
+      timeout: 60000, // 自定义上传文件的超时时间为 60 秒
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        console.log(`Upload progress: ${percentCompleted}%`)
       }
     })
   }

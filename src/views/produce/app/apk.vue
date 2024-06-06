@@ -62,32 +62,36 @@
                 </n-upload-dragger>
               </n-upload>
             </n-form-item>
-            <n-form-item label="应用系统（apkSystem）" path="apkSystem" >
-              <n-select v-model:value="modalForm.apkSystem" :options="apkSystemDic" label-field="label" value-field="value" clearable filterable />
+            <n-form-item label="应用系统（apkSystem）" path="apkSystem">
+              <n-select v-model:value="modalForm.apkSystem" :options="apkSystemDic" label-field="label"
+                        value-field="value" clearable filterable />
             </n-form-item>
-            <n-form-item label="升级方式（updateStatus）" path="updateStatus" >
-              <n-select v-model:value="modalForm.updateStatus" :options="apkUpdateStatusDic" label-field="label" value-field="value" clearable filterable />
+            <n-form-item label="升级方式（updateStatus）" path="updateStatus">
+              <n-select v-model:value="modalForm.updateStatus" :options="apkUpdateStatusDic" label-field="label"
+                        value-field="value" clearable filterable />
             </n-form-item>
-            <n-form-item label="发布渠道（channel）" path="channel" >
-              <n-select v-model:value="modalForm.channel" :options="apkChannelDic" label-field="label" value-field="value" clearable filterable />
+            <n-form-item label="发布渠道（channel）" path="channel">
+              <n-select v-model:value="modalForm.channel" :options="apkChannelDic" label-field="label"
+                        value-field="value" clearable filterable />
             </n-form-item>
-            <n-form-item label="弹窗提示（prompt）" path="prompt" >
-              <n-select v-model:value="modalForm.prompt" :options="apkPromptDic" label-field="label" value-field="value" clearable filterable />
+            <n-form-item label="弹窗提示（prompt）" path="prompt">
+              <n-select v-model:value="modalForm.prompt" :options="apkPromptDic" label-field="label" value-field="value"
+                        clearable filterable />
             </n-form-item>
-            <n-form-item label="安装包名（packageName）" path="packageName" >
+            <n-form-item label="安装包名（packageName）" path="packageName">
               <n-input v-model:value="modalForm.packageName" />
             </n-form-item>
-            <n-form-item label="版本Code（versionCode）" path="versionCode" >
+            <n-form-item label="版本Code（versionCode）" path="versionCode">
               <n-input v-model:value="modalForm.versionCode" />
             </n-form-item>
-            <n-form-item label="apk文件大小（apkSize）" path="apkSize" >
+            <n-form-item label="apk文件大小（apkSize）" path="apkSize">
               <n-input v-model:value="modalForm.apkSize" />
             </n-form-item>
-            <n-form-item label="版本名称（versionName）" path="versionName" >
+            <n-form-item label="版本名称（versionName）" path="versionName">
               <n-input v-model:value="modalForm.versionName" />
             </n-form-item>
-            <n-form-item label="升级内容（upgradeContent）" path="upgradeContent" >
-              <n-input v-model:value="modalForm.upgradeContent"  />
+            <n-form-item label="升级内容（upgradeContent）" path="upgradeContent">
+              <n-input v-model:value="modalForm.upgradeContent" />
             </n-form-item>
           </div>
 
@@ -96,7 +100,6 @@
       </div>
 
     </MeModal>
-
 
 
   </CommonPage>
@@ -118,10 +121,10 @@ const route = useRoute()
 const $table = ref(null)
 /** QueryBar筛选参数（可选） */
 const queryItems = ref({
-    appId : parseInt( route.params.id),
+  appId: parseInt(route.params.id)
 })
 
-const domain_url = "http://localhost:9999"
+const domain_url = 'http://localhost:9999'
 
 onMounted(() => {
   $table.value?.handleSearch()
@@ -141,81 +144,84 @@ Promise.all([
         .filter(item => item.type === 'app_apk_system_value')
         .map(item => ({
           label: `${item.name}`,
-          value: Number(item.value),
-        }));
+          value: Number(item.value)
+        }))
       apkUpdateStatusDic.value = data
         .filter(item => item.type === 'app_apk_updateStatus_value')
         .map(item => ({
           label: `${item.name}`,
-          value: Number(item.value),
-        }));
+          value: Number(item.value)
+        }))
       apkChannelDic.value = data
         .filter(item => item.type === 'app_apk_channel_value')
         .map(item => ({
           label: `${item.name}`,
-          value: item.value,
-        }));
+          value: item.value
+        }))
       apkPromptDic.value = data
         .filter(item => item.type === 'app_apk_prompt_value')
         .map(item => ({
           label: `${item.name}`,
-          value: Number(item.value),
-        }));
+          value: Number(item.value)
+        }))
     } else {
-      apkSystemDic.value = [];
-      apkUpdateStatusDic.value = [];
-      apkChannelDic.value = [];
-      apkPromptDic.value = [];
+      apkSystemDic.value = []
+      apkUpdateStatusDic.value = []
+      apkChannelDic.value = []
+      apkPromptDic.value = []
     }
 
-  }),
+  })
 ]).then(() => {
-  console.log(11,apkSystemDic.value);
-  console.log(22,apkUpdateStatusDic.value);
-  console.log(33,apkChannelDic.value);
-  console.log(44,apkPromptDic.value);
-});
-
+  console.log(11, apkSystemDic.value)
+  console.log(22, apkUpdateStatusDic.value)
+  console.log(33, apkChannelDic.value)
+  console.log(44, apkPromptDic.value)
+})
 
 
 const formatType = (id, type) => {
-  const foundType = type.find(item => item.value === id);
-  return foundType ? foundType.label : '';
+  const foundType = type.find(item => item.value === id)
+  return foundType ? foundType.label : ''
 }
 
 async function handleUpload({ file, onFinish }) {
-  const packageDownloadUrl = modalForm.value.packageDownloadUrl;
-  console.log(packageDownloadUrl,file.file)
+  const packageDownloadUrl = modalForm.value.packageDownloadUrl
+  console.log(packageDownloadUrl, file.file)
   if (!file || !file.type) {
     $message.error('请选择文件')
   }
 
   // 创建 FormData 对象，用于包装要上传的文件
-  const formData = new FormData();
-  formData.append('file', file);
+  const formData = new FormData()
+  formData.append('file', file)
+  try {
+    const response = await api.uploadFile(file.file)
 
-  const response = await api.uploadFile(file.file);
-
-  console.log(response);
+    console.log(response)
 
 
-  // 处理上传成功后的逻辑
-  const responseData = await response;
-  if (responseData.code !== 200) {
-    throw new Error('文件上传失败');
+    // 处理上传成功后的逻辑
+    const responseData = await response
+    if (responseData.code !== 200) {
+      throw new Error('文件上传失败')
+    }
+    // 提取上传成功后的文件信息
+    const { fileUrl, fileSize } = responseData.data
+
+    console.log(fileUrl)
+
+    modalForm.value.packageDownloadUrl = fileUrl // 赋值给 modalForm.packageDownloadUrl
+    modalForm.value.apkSize = fileSize
+
+    console.log('modalForm.packageDownloadUrl 更新为：', modalForm.value.packageDownloadUrl)
+
+    $message.success('上传成功')
+    onFinish({ url: fileUrl }) // 调用上传完成的回调函数并传递文件 URL
+  } catch (error) {
+    console.error('文件上传失败', error)
+    $message.error('文件上传失败')
   }
-  // 提取上传成功后的文件信息
-  const { fileUrl,fileSize } = responseData.data;
-
-  console.log(fileUrl);
-
-  modalForm.value.packageDownloadUrl = fileUrl; // 赋值给 modalForm.packageDownloadUrl
-  modalForm.value.apkSize = fileSize;
-
-  console.log('modalForm.packageDownloadUrl 更新为：',modalForm.value.packageDownloadUrl);
-
-  $message.success('上传成功');
-  onFinish({ url: fileUrl }); // 调用上传完成的回调函数并传递文件 URL
 }
 
 
@@ -239,18 +245,18 @@ const columns = [
   {
     title: '版本名称',
     key: 'versionName',
-    align: 'center',
+    align: 'center'
   },
   {
     title: '发布渠道',
     key: 'channel',
-    align: 'center',
+    align: 'center'
 
   },
   {
     title: '安装包名',
     key: 'packageName',
-    align: 'center',
+    align: 'center'
   },
   {
     title: '操作',
@@ -293,7 +299,6 @@ const columns = [
 ]
 
 
-
 const {
   modalRef,
   modalFormRef,
@@ -301,16 +306,16 @@ const {
   modalAction,
   handleAdd,
   handleEdit,
-  handleDelete,
+  handleDelete
 } = useCrud({
   name: 'Apk',
   initForm: {
     enable: true,
-    appId:route.params.id,
-    apkSystem:0,
-    updateStatus:0,
-    channel:0,
-    prompt:0,
+    appId: route.params.id,
+    apkSystem: 0,
+    updateStatus: 0,
+    channel: 0,
+    prompt: 0
   },
   doCreate: api.apkCreate,
   doDelete: api.apkDelete,
