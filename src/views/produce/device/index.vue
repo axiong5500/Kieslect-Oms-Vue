@@ -206,6 +206,15 @@
           <n-input v-model:value="modalForm.productDesc" />
         </n-form-item>
 
+          <n-form-item
+            label="模板标识（templateFlag）"
+            path="templeFlag"
+          >
+            <n-space>
+              <n-switch v-model:value="modalForm.templateFlag" />
+            </n-space>
+          </n-form-item>
+
         <!-- 折叠面板 Collapse default-expanded-names 非受控模式下展开的面板 name -->
         <n-collapse :default-expanded-names="defaultExpandedNames" >
 
@@ -298,7 +307,7 @@
 </style>
 
 <script setup>
-import { NButton } from 'naive-ui'
+import { NButton,NTag  } from 'naive-ui'
 import { formatDateTime } from '@/utils'
 import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
@@ -396,7 +405,15 @@ const columns = [
     align: 'center',
     ellipsis: { tooltip: true },
     render(row) {
-      return h('span', formateForm(row['form']))
+      if (row.templateFlag) {
+        return h(
+          NTag,
+          { type: 'error', round: true },
+          { default: () => formateForm(row['form']) }
+        )
+      } else {
+        return h('span', formateForm(row['form']))
+      }
     }
   },
   {

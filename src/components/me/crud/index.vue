@@ -30,7 +30,18 @@
       </div>
     </form>
   </AppCard>
-
+  <n-watermark
+    content="Kieslect内部系统"
+    cross
+    selectable
+    :font-size="16"
+    :line-height="16"
+    :width="192"
+    :height="128"
+    :x-offset="12"
+    :y-offset="28"
+    :rotate="-15"
+  >
   <n-data-table
     :remote="remote"
     :loading="loading"
@@ -43,6 +54,7 @@
     @update:checked-row-keys="onChecked"
     @update:page="onPageChange"
   />
+  </n-watermark>
 </template>
 
 <script setup>
