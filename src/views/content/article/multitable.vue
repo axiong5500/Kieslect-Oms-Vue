@@ -232,7 +232,7 @@ const columns = [
             size: 'small',
             type: 'error',
             style: 'margin-left: 12px;',
-            onClick: () => handleDelete(row.id)
+            onClick: () => handleDelete(row)
           },
           {
             default: () => '删除',

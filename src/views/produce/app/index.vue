@@ -390,7 +390,7 @@ const columns = [
     title: '操作',
     key: 'actions',
     align: 'center',
-    width: 450,
+    width: 550,
     hideInExcel: true,
     render(row) {
       return [
@@ -405,7 +405,18 @@ const columns = [
           },
           {
             default: () => 'Copy',
-            // icon: () => h('i', { class: 'i-material-symbols:edit-outline text-10' })
+          }
+        ),
+        h(
+          NButton,
+          {
+            size: 'small',
+            type: 'primary',
+            style: 'margin-left: 10px;',
+            onClick: () => window.open(qrCodeValue + "/" + row.appMark, '_blank'),
+          },
+          {
+            default: () => 'QR跳转',
           }
         ),
         h(
