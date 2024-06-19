@@ -341,7 +341,7 @@ const appIdsOptions = ref([
   { label: '圆形（数值：0）', value: 0 },
   { label: '方形（数值：1）', value: 1 },
 ])
-const domain_url = "http://localhost:9999"
+const domain_url = "https://app.kieslect.top"
 
 onMounted(() => {
   $table.value?.handleSearch()

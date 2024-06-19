@@ -265,7 +265,7 @@ onMounted(() => {
   $table.value?.handleSearch()
 })
 
-const domain_url = 'http://localhost:9999'
+const domain_url = 'https://app.kieslect.top'
 const showQrCodeModal = ref(false) // 定义模态框显示状态
 const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
 const largeQrCodeIconSrc = ref('') // 放大后的二维码图标

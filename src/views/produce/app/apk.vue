@@ -124,7 +124,7 @@ const queryItems = ref({
   appId: parseInt(route.params.id)
 })
 
-const domain_url = 'http://localhost:9999'
+const domain_url = 'https://app.kieslect.top'
 
 onMounted(() => {
   $table.value?.handleSearch()
