@@ -87,11 +87,11 @@
           <n-input  v-model:value="modalForm.firmwareId" />
         </n-form-item>
         <n-form-item
-          label="蓝牙名称（bluetoothName）"
+          label="设备名（bluetoothName）"
           path="bluetoothName"
           :rule="{
             required: true,
-            message: '请输入蓝牙名称',
+            message: '请输入设备名',
             trigger: ['input', 'blur'],
           }"
         >
@@ -320,27 +320,15 @@ defineOptions({ name: 'deviceManage' })
 
 
 const items = ref([]); // 定义 ref 类型的 items 数组
-const otaUpgrade = [
-  { label: '爱都（数值：0）', value: 0 },
-  { label: '瑞昱RTK（数值：1）', value: 1 },
-]
-const dialShape = [
-  { label: '圆形（数值：0）', value: 0 },
-  { label: '方形（数值：1）', value: 1 },
-]
-const form = [
-  { label: '爱都（数值：1）', value: 1 },
-  { label: '优创亿（数值：2）', value: 2 },
-]
+const otaUpgrade = ref([]);
+const dialShape = ref([]);
+const form = ref([]);
 const $table = ref(null)
 /** QueryBar筛选参数（可选） */
 const queryItems = ref({})
 const paramIds = ref([])
 const paramItems = ref([])
-const appIdsOptions = ref([
-  { label: '圆形（数值：0）', value: 0 },
-  { label: '方形（数值：1）', value: 1 },
-])
+const appIdsOptions = ref([])
 const domain_url = "https://app.kieslect.top"
 
 onMounted(() => {
@@ -353,7 +341,47 @@ const attributeType = ref([])
 // 默认展开
 const defaultExpandedNames = ref([])
 
+Promise.all([
+  api.getAllDicData().then(({ data = [] }) => {
+    if (Array.isArray(data)) {
+      otaUpgrade.value = data
+        .filter(item => item.type === 'device_manage_otaUpgrade_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+      dialShape.value = data
+        .filter(item => item.type === 'device_manage_dialShape_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+      form.value = data
+        .filter(item => item.type === 'device_manage_form_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+      appIdsOptions.value = data
+        .filter(item => item.type === 'device_manage_appIdsOptions_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+    } else {
+      otaUpgrade.value = [];
+      dialShape.value = [];
+      form.value = [];
+      appIdsOptions.value = [];
+    }
 
+  }),
+]).then(() => {
+  console.log(11,otaUpgrade.value);
+  console.log(22,dialShape.value);
+  console.log(33,form.value);
+  console.log(44,appIdsOptions.value);
+});
 // 等待 paramGroup 和 paramType 数组的数据获取完成后，再进行组合生成 items 数组
 Promise.all([
   api.getAllParamType().then(({ data = [] }) => (paramType.value = data)),
@@ -398,7 +426,11 @@ const columns = [
     width: 80,
     ellipsis: { tooltip: true }
   },
-  { title: '蓝牙名称',align: 'center', key: 'bluetoothName', ellipsis: { tooltip: true } },
+  { title: '设备名',
+    align: 'center',
+    key: 'bluetoothName',
+    ellipsis: { tooltip: true }
+  },
   {
     title: '产商',
     key: 'form',
@@ -420,7 +452,6 @@ const columns = [
     title: '项目名称',
     key: 'projectName',
     align: 'center'
-
   },
   { title: '设备id', key: 'firmwareId', align: 'center', ellipsis: { tooltip: true } },
 
@@ -489,7 +520,7 @@ const columns = [
 
 
 function formateForm(formid) {
-  const foundItem = form.find(item => item.value === formid);
+  const foundItem = form.value.find(item => item.value === formid);
   return foundItem ? foundItem.label : '未知';
 }
 

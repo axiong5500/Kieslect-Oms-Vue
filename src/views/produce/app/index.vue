@@ -302,10 +302,6 @@ Promise.all([
 
 
 
-const formatType = (id, type) => {
-  const foundType = type.find(item => item.value === id);
-  return foundType ? foundType.label : '';
-}
 
 async function handleUpload({ file, onFinish }) {
   console.log(file.file)
@@ -338,15 +334,10 @@ async function handleUpload({ file, onFinish }) {
   onFinish({ url: fileUrl }); // 调用上传完成的回调函数并传递文件 URL
 }
 
-const isButtonLoading = ref(false);
 
 
 const columns = [
-  {
-    title: 'Id',
-    key: 'id',
-    align: 'center'
-  },
+
 
   {
     title: 'app名称',
@@ -372,7 +363,7 @@ const columns = [
         iconSrc: domain_url + row.appLogo,
         iconSize: 20,
         size: 50,
-        onClick: () => handleQrCodeClick(qrCodeValue+"/"+row.appMark,domain_url + row.appLogo),
+        onClick: () => handleQrCodeClick(qrCodeValue+"/"+row.appMark,domain_url ),
         style: { padding: '0px' }
       })
 

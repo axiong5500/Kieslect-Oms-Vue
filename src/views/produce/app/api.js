@@ -14,6 +14,8 @@ export default {
   update: (data) => request.post(`/app/sys/update`, data),
   delete: (id) => request.delete(`/app/sys/delete/${id}`),
   getAllDicData: (params = {}) => request.get('/dic', { params }),
+  getAllHelperData: (params = {}) => request.get('/appHelpInfo/sys/getList', { params }),
+  getAllHelperGuideData: (params = {}) => request.get('/helpGuide/findAll', { params }),
 
 
   apkRead: (data) => request.post('/apk/sys/getList', data),

@@ -68,14 +68,4 @@ export const basicRoutes = [
     },
   },
 
-  {
-    name: 'helpDetail',
-    path: '/public/produce/app/help/detail/:id?',
-    component: () => import('@/views/produce/app/helper-detail.vue'),
-    meta: {
-      title: 'helper',
-      layout: 'empty',
-    },
-  },
-
 ]

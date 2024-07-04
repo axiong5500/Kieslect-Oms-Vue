@@ -1,101 +1,37 @@
 <template>
   <div class="download-page">
-    <div v-if="loading">
-      <p>加载中...</p>
-    </div>
-    <div v-else>
-<!--      <div class="header">-->
-<!--        <img src="@/assets/images/title.png" alt="标题" class="title-img">-->
-<!--      </div>-->
+<!--    <div v-if="loading">-->
+<!--      <p>加载中...</p>-->
+<!--    </div>-->
+    <div v-if="!loading">
+
 
       <div class="logo-center">
-        <img :src=appLogo alt="logo" class="logo-img">
+<!--        <img :src=appLogo alt="logo" class="logo-img">-->
+        <img src="@/assets/images/kstyleoslogo.jpg" alt="logo" class="logo-img">
         <h2>{{ appName }}</h2>
       </div>
 
 
-      <div v-if="isDarkMode">
-        <div v-if="isAndroid">
-          <div>
-            <img src="@/assets/images/201.png" alt="下载 Android 版" @click="redirectTo(androidDownloadLink)"
-                 style="cursor: pointer;" class="download-img">
-          </div>
-          <div>
-            <img src="@/assets/images/203.png" alt="华为应用商城下载" @click="redirectTo(harmonyDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/204.png" alt="KISLECT应用商城下载" @click="redirectTo(localDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-        </div>
-        <div v-if="isIOS">
-          <img src="@/assets/images/202.png" alt="下载 iOS 版" @click="redirectTo(iosDownloadLink)"
-               style="cursor: pointer;" class="download-img">
-        </div>
-      </div>
-      <div v-if="!isDarkMode">
-        <div v-if="isAndroid">
-          <div>
-            <img src="@/assets/images/101.png" alt="下载 Android 版" @click="redirectTo(androidDownloadLink)"
-                 style="cursor: pointer;" class="download-img">
-          </div>
-          <div>
-            <img src="@/assets/images/103.png" alt="华为应用商城下载" @click="redirectTo(harmonyDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/104.png" alt="KIESLECT应用商城下载" @click="redirectTo(localDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-        </div>
-        <div v-if="isIOS">
-          <img src="@/assets/images/102.png" alt="下载 iOS 版" @click="redirectTo(iosDownloadLink)"
-               style="cursor: pointer;" class="download-img">
-        </div>
-      </div>
-      <div v-if="!isAndroid && !isIOS">
-        <div v-if="!isDarkMode">
-          <div>
-            <img src="@/assets/images/101.png" alt="下载 Android 版" @click="redirectTo(androidDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/102.png" alt="下载 iOS 版" @click="redirectTo(iosDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/103.png" alt="华为应用商城下载" @click="redirectTo(harmonyDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/104.png" alt="KIESLECT应用商城下载" @click="redirectTo(localDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-        </div>
-        <div v-if="isDarkMode">
-          <div>
-            <img src="@/assets/images/201.png" alt="下载 Android 版" @click="redirectTo(androidDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/202.png" alt="下载 iOS 版" @click="redirectTo(iosDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/203.png" alt="华为应用商城下载" @click="redirectTo(harmonyDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-          <div>
-            <img src="@/assets/images/204.png" alt="KIESLECT应用商城下载" @click="redirectTo(localDownloadLink)"
-                 style="cursor: pointer;" class="download-img ">
-          </div>
-        </div>
-      </div>
 
-<!--      <div class="foot">-->
-<!--        <img src='@/assets/images/foot.png' alt="foot" class="foot-img">-->
-<!--      </div>-->
+        <div v-if="isAndroid || !isAndroid && !isIOS">
+          <div>
+            <img src="@/assets/images/101.png" alt="下载 Android 版" @click="redirectTo(androidDownloadLink)"
+                 style="cursor: pointer;" class="download-img">
+          </div>
+          <div v-if="isIOS || !isAndroid && !isIOS">
+            <img src="@/assets/images/102.png" alt="下载 iOS 版" @click="redirectTo(iosDownloadLink)"
+                 style="cursor: pointer;" class="download-img">
+          </div>
+<!--          <div>-->
+<!--            <img src="@/assets/images/103.png" alt="华为应用商城下载" @click="redirectTo(harmonyDownloadLink)"-->
+<!--                 style="cursor: pointer;" class="download-img ">-->
+<!--          </div>-->
+          <div>
+            <img src="@/assets/images/104.png" alt="KISLECT应用商城下载" @click="redirectTo(localDownloadLink)"
+                 style="cursor: pointer;" class="download-img ">
+          </div>
+        </div>
     </div>
 
   </div>
@@ -114,7 +50,6 @@ export default {
     return {
       isIOS: false,
       isAndroid: false,
-      isDarkMode: false,
       appMark: '',
       autoJump: false,
       iosDownloadLink: 'https://apps.apple.com/us/app/ks-os/id6451134361?platform=iphone',
@@ -186,7 +121,7 @@ export default {
         }
       }
 
-      this.loading = false
+
 
 
       // 如果是 iOS 设备，则跳转到 App Store
@@ -201,16 +136,9 @@ export default {
         }
       }
 
-
+      this.loading = false
     })
 
-    // 判断当前时间，自动切换日夜模式
-    const currentHour = new Date().getHours()
-    if (currentHour >= 6 && currentHour < 18) {
-      this.isDarkMode = false // 白天
-    } else {
-      this.isDarkMode = true // 晚上
-    }
 
   }
 }

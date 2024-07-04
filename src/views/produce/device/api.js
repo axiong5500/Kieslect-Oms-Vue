@@ -14,6 +14,7 @@ export default {
   update: (data) => request.patch(`/device/sys/update/${data.id}`, data),
   updateParam: (data) => request.patch(`/device/sys/updateParam/${data.id}`, data),
   delete: (id) => request.delete(`/device/sys/delete/${id}`),
+  getAllDicData: (params = {}) => request.get('/dic', { params }),
 
   getAllParamType: () => request.get('/paramConfig/sys/getAllParamType'),
   getAllParamGroup: () => request.get('/paramConfig/sys/getAllParamGroup'),

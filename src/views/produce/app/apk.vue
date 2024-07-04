@@ -81,7 +81,13 @@
             <n-form-item label="安装包名（packageName）" path="packageName">
               <n-input v-model:value="modalForm.packageName" />
             </n-form-item>
-            <n-form-item label="版本Code（versionCode）" path="versionCode">
+            <n-form-item label="版本Code（versionCode）" path="versionCode"
+                         :rule="{
+                    required: true,
+                    message: '请输入版本Code',
+                    trigger: ['input', 'blur'],
+                    }"
+            >
               <n-input v-model:value="modalForm.versionCode" />
             </n-form-item>
             <n-form-item label="apk文件大小（apkSize）" path="apkSize">
