@@ -60,7 +60,7 @@ export const basicRoutes = [
 
   {
     name: 'helper',
-    path: '/public/produce/app/helper',
+    path: '/public/produce/app/helper/:langId?',
     component: () => import('@/views/produce/app/helper.vue'),
     meta: {
       title: 'helper',

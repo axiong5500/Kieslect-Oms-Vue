@@ -1,20 +1,21 @@
-<template>
-  <CommonPage :showHeader=false :back="selectedHelpItem !== null">
-    <div :class="{ 'rtl': isRtl }" class="mb-12">
+<template >
+  <CommonPage :showHeader=false :back="selectedHelpItem !== null" :class="{ 'rtl': isRtl }">
+    <div  class="mb-12">
       <n-input type="text" placeholder="Search" v-model:value="searchQuery" class="mb-8" />
-      <h4 class="mb-8">{{helpGuideParentTitle}}</h4>
+      <h4 class="mb-8" :class="{ 'rtl': isRtl }">{{helpGuideParentTitle}}</h4>
     </div>
 
     <div v-if="!searchQuery && showDivId === 0">
       <n-grid x-gap="12" :cols="2" :y-gap="8">
         <n-gi v-for="(item, index) in helpGuideItems" :key="index">
           <n-card hoverable @click="selectGuideItem(item)">
-            <div style="display: flex; justify-content: center;" class="mb-12">
+            <div style="display: flex; justify-content: center;"  >
               <!-- 放置图标并使其居中 -->
-              <img :src="item.iconPath" alt="Icon" style="width: 40px; height: 40px;">
+              <img :src="getIconPath(item.iconPath)" alt="Icon" style="width: 40px; height: 40px;">
             </div>
-            <div style="display: flex; justify-content: center;">
-              <h5 style="min-height: 38px;">{{ item.guideTitle }}</h5>
+
+            <div class="title-container" >
+              <h5  class="guide-title" >{{ item.guideTitle }}</h5>
             </div>
           </n-card>
         </n-gi>
@@ -23,8 +24,9 @@
     </div>
 
     <div v-else-if="showDivId === 1">
-      <n-collapse arrowPlacement="right">
+      <n-collapse class="no-arrow" >
         <n-collapse-item
+          :class="{ 'rtl': isRtl }"
           v-for="(item, index) in filteredHelpItems"
           :key="index"
           @click="selectHelpItem(item)"
@@ -37,9 +39,9 @@
     </div>
 
     <div v-else-if="showDivId === 2">
-      <h3>{{ selectedHelpItem.title }}</h3>
+      <h3 :class="{ 'rtl': isRtl }">{{ selectedHelpItem.title }}</h3>
       <n-divider />
-      <p class="content" v-html="selectedHelpItem.content.replace(/\n/g, '<br><br>')"></p>
+      <p class="content" :class="{ 'rtl': isRtl }" v-html="selectedHelpItem.content.replace(/\n/g, '<br><br>')"></p>
     </div>
 
   </CommonPage>
@@ -47,9 +49,10 @@
 
 <script>
 import api from './api'
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { NCollapse, NCollapseItem } from 'naive-ui'
 import { CommonPage } from '@/components/index.js'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -58,9 +61,66 @@ export default defineComponent({
     NCollapseItem
   },
   setup() {
-    const userLanguage = navigator.language || navigator.userLanguage;
+    const languageArray = ref([
+      { label: 'invalid', value: 0 },
+      { label: 'zh', value: 1 },
+      { label: 'en', value: 2 },
+      { label: 'fr', value: 3 },
+      { label: 'de', value: 4 },
+      { label: 'it', value: 5 },
+      { label: 'es', value: 6 },
+      { label: 'ja', value: 7 },
+      { label: 'pl', value: 8 },
+      { label: 'cs', value: 9 },
+      { label: 'ro', value: 10 },
+      { label: 'lt', value: 11 },
+      { label: 'nl', value: 12 },
+      { label: 'sl', value: 13 },
+      { label: 'hu', value: 14 },
+      { label: 'ru', value: 15 },
+      { label: 'uk', value: 16 },
+      { label: 'sk', value: 17 },
+      { label: 'da', value: 18 },
+      { label: 'hr', value: 19 },
+      { label: 'id', value: 20 },
+      { label: 'ko', value: 21 },
+      { label: 'hi', value: 22 },
+      { label: 'pt', value: 23 },
+      { label: 'tr', value: 24 },
+      { label: 'th', value: 25 },
+      { label: 'vi', value: 26 },
+      { label: 'my', value: 27 },
+      { label: 'fil', value: 28 },
+      { label: 'zh_Hant', value: 29 },
+      { label: 'el', value: 30 },
+      { label: 'ar', value: 31 },
+      { label: 'sv', value: 32 },
+      { label: 'fi', value: 33 },
+      { label: 'fa', value: 34 },
+      { label: 'nb', value: 35 },
+      { label: 'km', value: 36 },
+      { label: 'bn', value: 37 },
+      { label: 'ms', value: 38 },
+      { label: 'he', value: 39 },
+    ]);
+    const route = useRoute()
+    // 获取路由参数,找不到默认为英文
+    const routerLanguageId = route.params.langId || 2;
+    const routerLanguage = languageArray.value.find(item => item.value === Number(routerLanguageId))?.label;
+
+    const userLanguage = routerLanguage;
+    console.log('routerLanguageId:', routerLanguageId)
+    console.log('routerLanguage:', routerLanguage)
+    console.log('userLanguage:', userLanguage)
+
+    // const userLanguage = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
+    // console.log('navigator.language:', navigator.language);
+    // console.log('navigator.userLanguage:', navigator.userLanguage);
+    // console.log('navigator.languages:', navigator.languages);
+
     // const userLanguage = 'ar';
-    const isRtl = computed(() => ['ar', 'fa'].includes(userLanguage.split('-')[0]))
+    const isRtl = computed(() => ['ar', 'fa','he'].includes(userLanguage.split('-')[0]))
+    console.log('isRtl:', isRtl.value);
     const helpItems = ref([])// 存储帮助条目
     const helpGuideParentTitle = ref(null)
     const helpGuideItems = ref([])// 存储帮助指南条目
@@ -133,6 +193,19 @@ export default defineComponent({
       console.log(11,helpItems.value);
       console.log(22,helpGuideItems.value);
     });
+
+    const iconPaths = {
+      '@/assets/images/helper/lanya.png': new URL('@/assets/images/helper/lanya.png', import.meta.url).href,
+      '@/assets/images/helper/shandian.png': new URL('@/assets/images/helper/shandian.png', import.meta.url).href,
+      '@/assets/images/helper/app.png': new URL('@/assets/images/helper/app.png', import.meta.url).href,
+      '@/assets/images/helper/y.png': new URL('@/assets/images/helper/y.png', import.meta.url).href,
+      '@/assets/images/helper/tongji.png': new URL('@/assets/images/helper/tongji.png', import.meta.url).href,
+      '@/assets/images/helper/shizhong.png': new URL('@/assets/images/helper/shizhong.png', import.meta.url).href,
+      '@/assets/images/helper/liaotian.png': new URL('@/assets/images/helper/liaotian.png', import.meta.url).href,
+      '@/assets/images/helper/xuanhuan.png': new URL('@/assets/images/helper/xuanhuan.png', import.meta.url).href
+    };
+
+    const getIconPath = (path) => iconPaths[path] || '';
 
     /**
      * 搜索命中高亮字
@@ -215,6 +288,7 @@ export default defineComponent({
       selectHelpItem,
       helpGuideItems,
       helpGuideParentTitle,
+      getIconPath,
       showDivId,
       searchQuery,
       filteredHelpItems,
@@ -226,6 +300,11 @@ export default defineComponent({
 </script>
 
 <style>
+/* 隐藏箭头 */
+.no-arrow .n-collapse-item-arrow .n-base-icon{
+  display: none;
+}
+
 button {
   margin-top: 20px;
 }
@@ -239,9 +318,31 @@ button {
   white-space: pre-wrap;
 }
 
+.title-container {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  width: 100%; /* 确保容器宽度填满卡片 */
+  min-height: 55.78px;
+  line-height: 1.3;
+}
+
+.guide-title {
+  margin: 0; /* 去掉默认的 margin */
+  text-align: center; /* 确保文本居中对齐 */
+  display: inline-block; /* 使文本可水平居中 */
+}
+
 /* RTL Styles */
 .rtl {
   direction: rtl;
   text-align: right;
+}
+.rtl .title-container {
+  justify-content: flex-end; /* 在 RTL 时右对齐 */
+}
+
+.rtl .guide-title {
+  text-align: right; /* 在 RTL 时文本右对齐 */
 }
 </style>
