@@ -219,6 +219,8 @@ const defaultExpandedNames= ref([])
 const paramIdsArray= ref([])
 //加载面板所有选择项
 const items= ref([])
+//管理后台URL
+const back_domain_url = ref('');
 
 
 // 等待 paramGroup 和 paramType 数组的数据获取完成后，再进行组合生成 items 数组
@@ -262,6 +264,9 @@ Promise.all([
 });
 
 onMounted(() => {
+  const currentUrl = window.location.href;
+  const url = new URL(currentUrl);
+  back_domain_url.value = url.origin;
   $table.value?.handleSearch()
 })
 
@@ -271,7 +276,7 @@ const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
 const largeQrCodeIconSrc = ref('') // 放大后的二维码图标
 const appChannelDic = ref([]) // app下载路径
 const appDescriptionDic = ref([])
-const qrCodeValue = 'https://admin.kieslect.top/public/produce/app/qrcode'
+const qrCodeValue = back_domain_url.value + '/public/produce/app/qrcode'
 // const qrCodeValue = 'http://192.168.0.106:3200/#/public/produce/app/qrcode'
 
 Promise.all([
