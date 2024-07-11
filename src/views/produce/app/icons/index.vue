@@ -144,8 +144,8 @@ const columns = [
     ellipsis: { tooltip: true }
 
   },{
-    title: 'value',
-    key: 'value',
+    title: 'uteValue',
+    key: 'uteValue',
     align: 'center',
     ellipsis: { tooltip: true }
 
