@@ -8,7 +8,8 @@
 
       <div class="logo-center">
 <!--        <img :src=appLogo alt="logo" class="logo-img">-->
-        <img src="@/assets/images/kstyleoslogo.jpg" alt="logo" class="logo-img">
+        <img v-if="appMark === 'KSTYLEOS'" src="@/assets/images/kstyleos.webp" alt="logo" class="logo-img">
+        <img v-if="appMark === 'CKOS'" src="@/assets/images/ckos.webp" alt="logo" class="logo-img">
         <h2>{{ appName }}</h2>
       </div>
 
@@ -28,7 +29,9 @@
 <!--                 style="cursor: pointer;" class="download-img ">-->
 <!--          </div>-->
           <div>
-            <img src="@/assets/images/104.png" alt="KISLECT应用商城下载" @click="redirectTo(localDownloadLink)"
+            <img v-if="appMark === 'KSTYLEOS'" src="@/assets/images/104.png" alt="KISLECT应用商城下载" @click="redirectTo(localDownloadLink)"
+                 style="cursor: pointer;" class="download-img ">
+            <img v-if="appMark === 'CKOS'" src="@/assets/images/105.png" alt="CK OS应用商城下载" @click="redirectTo(localDownloadLink)"
                  style="cursor: pointer;" class="download-img ">
           </div>
         </div>

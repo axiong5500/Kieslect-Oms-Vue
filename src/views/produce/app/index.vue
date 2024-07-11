@@ -21,7 +21,7 @@
       :scroll-x="1200"
       :columns="columns"
       :get-data="api.read"
-    >
+     handle-button-click="false">
     </MeCrud>
 
     <MeModal ref="modalRef" width="800px">
@@ -219,8 +219,7 @@ const defaultExpandedNames= ref([])
 const paramIdsArray= ref([])
 //加载面板所有选择项
 const items= ref([])
-//管理后台URL
-const back_domain_url = ref('');
+
 
 
 // 等待 paramGroup 和 paramType 数组的数据获取完成后，再进行组合生成 items 数组
@@ -264,19 +263,20 @@ Promise.all([
 });
 
 onMounted(() => {
-  const currentUrl = window.location.href;
-  const url = new URL(currentUrl);
-  back_domain_url.value = url.origin;
   $table.value?.handleSearch()
 })
 
 const domain_url = 'https://app.kieslect.top'
+const back_domain_url = 'https://admin.kieslect.top'
+const ck_back_domain_url = 'https://admin.stylish-wearable.com'
 const showQrCodeModal = ref(false) // 定义模态框显示状态
 const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
 const largeQrCodeIconSrc = ref('') // 放大后的二维码图标
 const appChannelDic = ref([]) // app下载路径
 const appDescriptionDic = ref([])
-const qrCodeValue = back_domain_url.value + '/public/produce/app/qrcode'
+const qrCodeDomainUrl = (appMark) => {
+  return appMark.includes('kstyleos') ? back_domain_url : ck_back_domain_url;
+};
 // const qrCodeValue = 'http://192.168.0.106:3200/#/public/produce/app/qrcode'
 
 Promise.all([
@@ -362,13 +362,12 @@ const columns = [
     key: 'qrCodeUrl',
     align: 'center',
     render: ( row ) =>
-
       h(NQrCode, {
-        value: qrCodeValue,
+        value: qrCodeDomainUrl(row.appMark) + "/public/produce/app/qrcode",
         iconSrc: domain_url + row.appLogo,
         iconSize: 20,
         size: 50,
-        onClick: () => handleQrCodeClick(qrCodeValue+"/"+row.appMark,domain_url ),
+        onClick: () => handleQrCodeClick(qrCodeDomainUrl(row.appMark)+"/public/produce/app/qrcode/"+row.appMark,domain_url ),
         style: { padding: '0px' }
       })
 
@@ -409,7 +408,7 @@ const columns = [
             size: 'small',
             type: 'primary',
             style: 'margin-left: 10px;',
-            onClick: () => window.open(qrCodeValue + "/" + row.appMark, '_blank'),
+            onClick: () => window.open(qrCodeDomainUrl(row.appMark) + "/public/produce/app/qrcode/" + row.appMark, '_blank'),
           },
           {
             default: () => 'QR跳转',
