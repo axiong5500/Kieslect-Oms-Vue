@@ -42,7 +42,7 @@
             <n-input v-model:value="modalForm.savePackName" placeholder="请输入应用包名" />
           </n-form-item>
           <n-form-item label="value" >
-            <n-input v-model:value="modalForm.value" placeholder="请输入标识" />
+            <n-input v-model:value="modalForm.uteValue" placeholder="请输入标识" />
           </n-form-item>
           <n-form-item label="desc" >
             <n-input v-model:value="modalForm.desc" placeholder="请输入应用描述" />
