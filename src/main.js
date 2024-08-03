@@ -1,12 +1,4 @@
-/**********************************
- * @Description: 入口文件
- * @FilePath: main.js
- * @Author: Kieslect Fashion
- * @LastEditor: Kieslect Fashion
- * @LastEditTime: 2023/12/04 22:41:32
- * @Email: Kieslect Fashion@gmail.com
- * Copyright © 2024 专一 | https://www.kieslect.com
- **********************************/
+
 
 import '@/styles/reset.css'
 import '@/styles/global.scss'

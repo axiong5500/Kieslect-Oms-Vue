@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:29:56
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
 <template>
   <CommonPage>
     <template #action>
@@ -22,22 +14,7 @@
       :columns="columns"
       :get-data="api.read"
     >
-<!--      <MeQueryItem label="变量标题" :label-width="70">
-        <n-input
-          v-model:value="queryItems.paramTitle"
-          type="text"
-          placeholder="请输入变量标题"
-          clearable
-        />
-      </MeQueryItem>
 
-      <MeQueryItem label="所属模块" :label-width="70">
-        <n-select v-model:value="queryItems.paramType" clearable :options="paramType" />
-      </MeQueryItem>
-
-      <MeQueryItem label="分组" :label-width="50">
-        <n-select v-model:value="queryItems.paramGroup" clearable :options="paramGroup" />
-      </MeQueryItem>-->
     </MeCrud>
 
     <MeModal ref="modalRef" width="520px">

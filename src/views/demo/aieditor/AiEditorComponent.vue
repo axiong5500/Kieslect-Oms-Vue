@@ -1,5 +1,5 @@
 <template>
-  <div ref="divRef" style="height: 600px"/>
+  <div ref="divRef" style="height: 400px"/>
 </template>
 
 <script setup lang="ts">
@@ -7,6 +7,7 @@ import { AiEditor } from "aieditor";
 import "aieditor/dist/style.css";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { defineProps, defineEmits } from "vue";
+import { debounce } from 'lodash-es';
 
 // 定义 props 和 emits
 const props = defineProps<{
@@ -19,6 +20,8 @@ const emit = defineEmits<{
 
 const divRef = ref<HTMLElement>();
 let aiEditor: AiEditor | null = null;
+let isUpdatingContent = false;
+let isComposing = false;
 
 // AiEditorOptions 类型定义
 interface AiEditorOptions {
@@ -38,6 +41,12 @@ interface AiEditorOptions {
   onChange?: (editor: AiEditor) => void;
 }
 
+// 防抖函数
+const debounceEmit = debounce((content: string) => {
+  emit('update:modelValue', content);
+}, 300);
+
+
 onMounted(() => {
   const options: AiEditorOptions = {
     element: divRef.value as Element,
@@ -46,34 +55,49 @@ onMounted(() => {
     ai: {
       models: {
         custom: {
-          url: "http://localhost:11434/api/chat",
+          url: "/aiChat/api/chat",
           wrapPayload: (message: string) => {
-            return JSON.stringify({ model: "llama2-chinese:latest", messages: [{ role: "user", content: message }] });
+            return JSON.stringify({ model: "qwen2:latest", messages: [{ role: "user", content: message }] });
           },
           parseMessage: (message: string) => {
             const parsed = JSON.parse(message);
             return {
               role: parsed.message.role,
               content: parsed.message.content,
-              index: 0,
-              status: parsed.done ? 2 : 1
-            };
+              index: 0, // 你可以根据实际需要设置 index 的值
+              status: parsed.done ? 2 : 1 // 根据 done 状态设置 status，假设 2 表示完成，1 表示进行中
+            }
           },
           protocol: "sse"
         }
       }
     },
     onChange: (editor: AiEditor) => {
-      const newContent = editor.getText(); // Assuming getContent method exists to get the current content
-      emit('update:modelValue', newContent);
+      if (!isUpdatingContent && !isComposing) {
+        const newContent = editor.getText(); // Assuming getText method exists to get the current content
+        if (newContent !== props.modelValue) {
+          debounceEmit(newContent);
+        }
+      }
     }
   };
 
   aiEditor = new AiEditor(options);
 
-  watch(() => props.modelValue, (newContent) => {
+
+
+  // 监听输入法输入的开始和结束事件
+  const editorElement = divRef.value as Element;
+  editorElement.addEventListener('compositionstart', () => {
+    isComposing = true;
+  });
+  editorElement.addEventListener('compositionend', () => {
+    isComposing = false;
     if (aiEditor) {
-      aiEditor.setContent(newContent);
+      const newContent = aiEditor.getText();
+      if (newContent !== props.modelValue) {
+        debounceEmit(newContent);
+      }
     }
   });
 });
@@ -82,3 +106,5 @@ onUnmounted(() => {
   aiEditor && aiEditor.destroy();
 });
 </script>
+
+

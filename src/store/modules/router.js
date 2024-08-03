@@ -1,10 +1,4 @@
-/**********************************
- * @Author: Kieslect Fashion
- * @LastEditor: Kieslect Fashion
- * @LastEditTime: 2024/01/06 17:18:40
- * @Email: Kieslect Fashion@gmail.com
- * Copyright © 2024 专一 | https://www.kieslect.com
- **********************************/
+
 
 import { defineStore } from 'pinia'
 

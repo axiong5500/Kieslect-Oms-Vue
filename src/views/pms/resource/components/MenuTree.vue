@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2024/04/01 15:51:34
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <div>
+<template>  <div>
     <n-space vertical :size="12">
       <h3>菜单</h3>
       <div class="flex">

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="335d3510-bab8-479c-bce6-4930fbcdd215" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../assets/images/apk/yingyongbao_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../assets/images/login_banner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../assets/images/zip.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../issue/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../issue/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/guide.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build/plugin-isme/icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build/plugin-isme/icons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build/plugin-isme/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build/plugin-isme/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build/plugin-isme/page-pathes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build/plugin-isme/page-pathes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../public/resource/loading.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../public/resource/loading.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../public/resource/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../public/resource/loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../assets/icons/dynamic-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../assets/icons/dynamic-icons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/AppCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/AppCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/AppPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/AppPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/CommonPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/CommonPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/LayoutSetting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/LayoutSetting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/TheFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/TheFooter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/common/TheLogo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/common/TheLogo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/me/crud/QueryItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/me/crud/QueryItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/me/crud/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/me/crud/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/me/modal/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/me/modal/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/me/modal/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/me/modal/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../composables/useAliveData.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../composables/useAliveData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../composables/useCrud.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../composables/useCrud.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../composables/useForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../composables/useForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../composables/useModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../composables/useModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../directives/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../directives/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/BreadCrumb.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/BreadCrumb.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/MenuCollapse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/MenuCollapse.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/RoleSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/RoleSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/SideLogo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/SideLogo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/SideMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/SideMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/UserAvatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/UserAvatar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/tab/ContextMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/tab/ContextMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/components/tab/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/components/tab/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/empty/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/empty/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/full/header/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/full/header/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/full/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/full/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/full/sidebar/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/full/sidebar/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/normal/header/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/normal/header/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/normal/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/normal/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/normal/sidebar/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/normal/sidebar/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/simple/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/simple/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../layouts/simple/sidebar/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../../layouts/simple/sidebar/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/basic-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/basic-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/guards/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/guards/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/guards/page-loading-guard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/guards/page-loading-guard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/guards/page-title-guard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/guards/page-title-guard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/guards/permission-guard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/guards/permission-guard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/guards/tab-guard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/guards/tab-guard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/tab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/tab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../store/modules/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../store/modules/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../styles/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../../styles/global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../styles/reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../styles/reset.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/http/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/http/helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/http/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/http/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/http/interceptors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/http/interceptors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/is.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/is.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/naiveTools.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/naiveTools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/storage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/storage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../utils/storage/storage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../utils/storage/storage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../base/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../base/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../base/keep-alive.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../base/keep-alive.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../base/test-modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../base/test-modal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../base/unocss-icon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../base/unocss-icon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../base/unocss.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../base/unocss.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../article/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../article/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article/multitable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../article/multitable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../helper/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helper/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../helper/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../helper/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../privacy/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../privacy/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../privacy/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../privacy/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../demo/aieditor/AiEditorComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../demo/aieditor/AiEditorComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../demo/aieditor/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../demo/aieditor/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../demo/upload/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../demo/upload/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../error-page/403.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../error-page/403.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../error-page/404.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../error-page/404.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../home/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../home/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../login/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../login/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../login/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../param/attribute/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../param/attribute/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../param/attribute/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../param/attribute/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../param/module/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../param/module/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../param/module/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../param/module/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/dict/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/dict/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/dict/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/dict/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/resource/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/resource/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/resource/components/MenuTree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/resource/components/MenuTree.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/resource/components/QuestionLabel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/resource/components/QuestionLabel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/resource/components/ResAddOrEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/resource/components/ResAddOrEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/resource/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/resource/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/role/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/role/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/role/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/role/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/role/role-user.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/role/role-user.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/user/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/user/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pms/user/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../pms/user/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/apk.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/apk.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/helper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/helper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/icons/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/icons/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/icons/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/icons/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/app/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/app/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/device/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/device/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../produce/device/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../produce/device/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../profile/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../profile/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../profile/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../profile/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../uno.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../uno.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../vite.config.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2jzU4bNY06puBv0CAF9IUVNkWkq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/WebStomProjects/vue-naive-admin/src/views/content/video",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="335d3510-bab8-479c-bce6-4930fbcdd215" name="更改" comment="" />
+      <created>1722389208406</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722389208406</updated>
+      <workItem from="1722389209451" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

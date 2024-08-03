@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:29:56
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
 <template>
 
   <CommonPage>
@@ -26,23 +18,14 @@
       :columns="columns"
       :get-data="api.read"
       :show-custom-button=true
+      :handleButtonClick ="handleButtonClick"
+      :tableMaxHeight="550"
     >
-      <MeQueryItem label="变量标题" :label-width="70">
-        <n-input
-          v-model:value="queryItems.paramTitle"
-          type="text"
-          placeholder="请输入变量标题"
-          clearable
-        />
+      <MeQueryItem>
+
       </MeQueryItem>
 
-      <MeQueryItem label="所属模块" :label-width="70">
-        <n-select v-model:value="queryItems.paramType" clearable :options="paramType" />
-      </MeQueryItem>
 
-      <MeQueryItem label="分组" :label-width="50">
-        <n-select v-model:value="queryItems.paramGroup" clearable :options="paramGroup" />
-      </MeQueryItem>
 
 
     </MeCrud>
@@ -107,7 +90,7 @@
           </n-form-item>
 
         <n-form-item
-          label="产商（producers）"
+          label="方案商（producers）"
           path="form"
 
         >
@@ -182,16 +165,16 @@
           />
 
         </n-form-item>
-        <n-form-item label="表带图片（strapsPhoto）" path="strapsPhoto" >
+<!--        <n-form-item label="表带图片（strapsPhoto）" path="strapsPhoto" >-->
 
-          <n-upload v-model:value="modalForm.strapsPhoto"
-                    :custom-request="handleUploadStrapsPhoto"
-                    :default-file-list="modalForm.strapsPhoto ? [{ url: domain_url + modalForm.strapsPhoto,status: 'finished' }] : []"
-                    :max="1"
-                    list-type="image-card"
-                    :show-download-button="true"
-          />
-        </n-form-item>
+<!--          <n-upload v-model:value="modalForm.strapsPhoto"-->
+<!--                    :custom-request="handleUploadStrapsPhoto"-->
+<!--                    :default-file-list="modalForm.strapsPhoto ? [{ url: domain_url + modalForm.strapsPhoto,status: 'finished' }] : []"-->
+<!--                    :max="1"-->
+<!--                    list-type="image-card"-->
+<!--                    :show-download-button="true"-->
+<!--          />-->
+<!--        </n-form-item>-->
 
 
         <n-form-item
@@ -304,16 +287,18 @@
 .scroll-container::-webkit-scrollbar {
   background: #bfbfbf;
 }
+
 </style>
 
 <script setup>
 import { NButton,NTag  } from 'naive-ui'
-import { formatDateTime } from '@/utils'
+import { formatDateTime, request } from '@/utils'
 import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 import { h } from 'vue'
 import { CommonPage } from '@/components/index.js'
+import { message } from 'ant-design-vue'
 
 
 defineOptions({ name: 'deviceManage' })
@@ -376,12 +361,7 @@ Promise.all([
     }
 
   }),
-]).then(() => {
-  console.log(11,otaUpgrade.value);
-  console.log(22,dialShape.value);
-  console.log(33,form.value);
-  console.log(44,appIdsOptions.value);
-});
+])
 // 等待 paramGroup 和 paramType 数组的数据获取完成后，再进行组合生成 items 数组
 Promise.all([
   api.getAllParamType().then(({ data = [] }) => (paramType.value = data)),
@@ -432,7 +412,7 @@ const columns = [
     ellipsis: { tooltip: true }
   },
   {
-    title: '产商',
+    title: '方案商',
     key: 'form',
     align: 'center',
     ellipsis: { tooltip: true },
@@ -449,12 +429,25 @@ const columns = [
     }
   },
   {
-    title: '项目名称',
-    key: 'projectName',
-    align: 'center'
+    title: '设备id',
+    key: 'firmwareId',
+    align: 'center',
+    ellipsis: { tooltip: true }
   },
-  { title: '设备id', key: 'firmwareId', align: 'center', ellipsis: { tooltip: true } },
-
+  {
+    title: '表盘',
+    key: 'dialPhoto',
+    align: 'center',
+    render(row) {
+      return h('div', { style: { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' } },
+        h('img', {
+          src: `${domain_url}${row.dialPhoto}`,
+          alt: 'Image',
+          style: { maxWidth: '100px', maxHeight: '100px', objectFit: 'cover' },
+        })
+      );
+    }
+  },
   {
     title: '创建时间',
     key: 'createTime',
@@ -500,19 +493,6 @@ const columns = [
           }
         ),
 
-        h(
-          NButton,
-          {
-            size: 'small',
-            type: 'error',
-            style: 'margin-left: 12px;',
-            onClick: () => handleDelete(row.id)
-          },
-          {
-            default: () => '删除',
-            icon: () => h('i', { class: 'i-material-symbols:delete-outline text-14' })
-          }
-        )
       ]
     }
   }
@@ -524,6 +504,51 @@ function formateForm(formid) {
   return foundItem ? foundItem.label : '未知';
 }
 
+async function handleButtonClick(){
+  console.log('自定义按钮被点击了');
+  try {
+    let result = await  request.get('https://app.kieslect.top/kieslect-device/device/getList')
+    if (result) {
+      const jsonData = JSON.stringify(result, null, 2);
+      console.log(jsonData)
+
+      // navigator clipboard 需要https等安全上下文
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard 向剪贴板写文本
+        navigator.clipboard.writeText(jsonData)
+          .then(() => {
+            message.success('JSON 数据已成功复制到剪贴板');
+          })
+          .catch((error) => {
+            console.error('复制 JSON 数据失败:', error);
+            message.error('复制 JSON 数据失败，请手动复制');
+          });
+      } else {
+        // 创建text area
+        let textArea = document.createElement("textarea");
+        textArea.value = jsonData;
+        // 使text area不在viewport，同时设置不可见
+        textArea.style.position = "absolute";
+        textArea.style.opacity = 0;
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+          // 执行复制命令并移除文本框
+          message.success('JSON 数据已成功复制到剪贴板');
+          document.execCommand('copy') ? res() : rej();
+          textArea.remove();
+        });
+      }
+    }
+    console.log('结束')
+  } catch (error) {
+    console.error('获取数据失败:', error);
+    message.error('获取数据失败，请稍后重试');
+  }
+}
 
 async function handleUploadStrapsPhoto({ file,photoType}) {
   console.log(photoType)

@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:27:49
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
 <template>
   <CommonPage show-footer>
     <template #title-suffix>
@@ -40,6 +32,7 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 import icons from 'isme:icons'
+import { CommonPage } from '@/components/index.js'
 
 const { copy, copied } = useClipboard()
 

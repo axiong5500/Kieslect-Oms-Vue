@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/04 22:51:42
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-<!--  <AppCard v-if="$slots.default" bordered bg="#fafafc dark:black" class="mb-30 min-h-60 rounded-4">-->
+<template><!--  <AppCard v-if="$slots.default" bordered bg="#fafafc dark:black" class="mb-30 min-h-60 rounded-4">-->
   <AppCard v-if="$slots.default"  bg=" dark:black" class="min-h-60 rounded-4">
     <form class="flex justify-between p-16" @submit.prevent="handleSearch()">
       <n-space wrap :size="[32, 16]">
@@ -30,18 +21,18 @@
       </div>
     </form>
   </AppCard>
-  <n-watermark
-    content="Kieslect内部系统"
-    cross
-    selectable
-    :font-size="16"
-    :line-height="16"
-    :width="192"
-    :height="128"
-    :x-offset="12"
-    :y-offset="28"
-    :rotate="-15"
-  >
+<!--  <n-watermark-->
+<!--    content="Kieslect内部系统"-->
+<!--    cross-->
+<!--    selectable-->
+<!--    :font-size="16"-->
+<!--    :line-height="16"-->
+<!--    :width="192"-->
+<!--    :height="128"-->
+<!--    :x-offset="12"-->
+<!--    :y-offset="28"-->
+<!--    :rotate="-15"-->
+<!--  >-->
   <n-data-table
     :remote="remote"
     :loading="loading"
@@ -53,8 +44,11 @@
     :pagination="isPagination ? pagination : false"
     @update:checked-row-keys="onChecked"
     @update:page="onPageChange"
+    :max-height="tableMaxHeight"
+    :virtual-scroll="isVirtualScroll"
+    :striped="isStriped"
   />
-  </n-watermark>
+<!--  </n-watermark>-->
 </template>
 
 <script setup>
@@ -79,6 +73,7 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // 表格最大宽度
   scrollX: {
     type: Number,
     default: 1200,
@@ -91,32 +86,22 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  /** queryBar中的参数 */
+  // 查询参数
   queryItems: {
     type: Object,
     default() {
       return {}
     },
   },
-  /**
-   * ! 约定接口入参出参
-   * * 分页模式需约定分页接口入参
-   *    @pageSize 分页参数：一页展示多少条，默认10
-   *    @pageNo   分页参数：页码，默认1
-   * * 需约定接口出参
-   *    @pageData 分页模式必须,非分页模式如果没有pageData则取上一层data
-   *    @total    分页模式必须，非分页模式如果没有total则取上一层data.length
-   */
+  // 获取数据
   getData: {
     type: Function,
     required: true,
   },
-
-
   // 按钮文本
   buttonText: {
     type: String,
-    default: 'Copy Json', // 默认按钮文本
+    default: '复制JSON',
   },
   // 按钮类型
   buttonType: {
@@ -126,20 +111,35 @@ const props = defineProps({
   // 点击按钮执行的函数
   handleButtonClick: {
     type: Function,
-    required: true,
+    default: () => {}, // 默认值为空函数
   },
   // 控制按钮显示与隐藏的 prop，默认为 false，即默认隐藏
   showCustomButton: {
     type: Boolean,
     default: false,
   },
+  // 表格最大高度
+  tableMaxHeight: {
+    type: Number,
+    default: null,
+  },
+  // 是否虚拟滚动
+  isVirtualScroll: {
+    type: Boolean,
+    default: false,
+  },
+  // 是否斑马纹
+  isStriped: {
+    type: Boolean,
+    default: true,
+  }
 })
 
 const emit = defineEmits(['update:queryItems', 'onChecked', 'onDataChange'])
 const loading = ref(false)
 const initQuery = { ...props.queryItems }
 const tableData = ref([])
-const pagination = reactive({ page: 1, pageSize: 10 })
+const pagination = reactive({ page: 1, pageSize: 1000 })
 // 是否显示自定义按钮
 const isCustomButtonVisible = ref(props.showCustomButton);
 
@@ -202,58 +202,21 @@ function handleExport(columns = props.columns, data = tableData.value) {
   writeFile(workBook, '数据报表.xlsx')
 }
 
-async function handleButtonClick(){
-  console.log('自定义按钮被点击了');
-  try {
+async function handleButtonClick() {
+  if (typeof props.handleButtonClick === 'function') {
     isButtonLoading.value = true;
-    let result = await  request.get('https://app.kieslect.top/kieslect-device/device/getList')
-    if (result) {
-      const jsonData = JSON.stringify(result, null, 2);
-      console.log(jsonData)
-
-      // navigator clipboard 需要https等安全上下文
-      if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard 向剪贴板写文本
-        navigator.clipboard.writeText(jsonData)
-          .then(() => {
-            message.success('JSON 数据已成功复制到剪贴板');
-          })
-          .catch((error) => {
-            console.error('复制 JSON 数据失败:', error);
-            message.error('复制 JSON 数据失败，请手动复制');
-          });
-      } else {
-        // 创建text area
-        let textArea = document.createElement("textarea");
-        textArea.value = jsonData;
-        // 使text area不在viewport，同时设置不可见
-        textArea.style.position = "absolute";
-        textArea.style.opacity = 0;
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        return new Promise((res, rej) => {
-          // 执行复制命令并移除文本框
-          message.success('JSON 数据已成功复制到剪贴板');
-          document.execCommand('copy') ? res() : rej();
-          textArea.remove();
-        });
-
-      }
+    try {
+      await props.handleButtonClick();
+    } catch (error) {
+      console.error('按钮点击处理失败:', error);
+      message.error('处理失败，请稍后重试');
+    } finally {
+      isButtonLoading.value = false;
     }
-
-
-
-    console.log('结束')
-  } catch (error) {
-    console.error('获取数据失败:', error);
-    message.error('获取数据失败，请稍后重试');
-  }finally {
-    isButtonLoading.value = false; // 不管请求成功与否，都要将按钮加载状态设置为false，隐藏加载中效果
   }
 }
+
+
 
 
 defineExpose({
@@ -261,5 +224,6 @@ defineExpose({
   handleReset,
   handleExport,
   isCustomButtonVisible,
+  handleButtonClick
 })
 </script>

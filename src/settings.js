@@ -1,17 +1,11 @@
-/**********************************
- * @Author: Kieslect Fashion
- * @LastEditor: Kieslect Fashion
- * @LastEditTime: 2023/12/13 20:54:36
- * @Email: Kieslect Fashion@gmail.com
- * Copyright © 2024 专一 | https://www.kieslect.com
- **********************************/
+
 
 export const defaultLayout = 'normal'
 
 export const naiveThemeOverrides = {
   common: {
-    // primaryColor: '#316C72FF',
-    // primaryColorHover: '#316C72E3',
+    // primaryColor: '#18a058',
+    // primaryColorHover: '#67c23a',
     // primaryColorPressed: '#2B4C59FF',
     // primaryColorSuppl: '#316C72E3',
     //

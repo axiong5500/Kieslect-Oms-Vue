@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/16 18:51:10
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <AppCard class="flex items-center px-12" border-b="1px solid light_border dark:dark_border">
+<template>  <AppCard class="flex items-center px-12" border-b="1px solid light_border dark:dark_border">
     <MenuCollapse />
 
     <BreadCrumb />
@@ -24,14 +15,14 @@
         @click="toggle"
       />
 
-      <i
-        class="i-fe:github mr-16 cursor-pointer"
-        @click="handleLinkClick('https://gitee.com/kieslect_service/vue-naive-admin.git')"
-      />
-      <i
-        class="i-me:gitee mr-16 cursor-pointer"
-        @click="handleLinkClick('https://gitee.com/kieslect_service/vue-naive-admin.git')"
-      />
+<!--      <i-->
+<!--        class="i-fe:github mr-16 cursor-pointer"-->
+<!--        @click="handleLinkClick('https://gitee.com/kieslect_service/vue-naive-admin.git')"-->
+<!--      />-->
+<!--      <i-->
+<!--        class="i-me:gitee mr-16 cursor-pointer"-->
+<!--        @click="handleLinkClick('https://gitee.com/kieslect_service/vue-naive-admin.git')"-->
+<!--      />-->
       <UserAvatar />
     </div>
   </AppCard>

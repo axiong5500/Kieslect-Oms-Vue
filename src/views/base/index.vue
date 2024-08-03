@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/04 22:46:57
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage show-footer>
+<template>  <CommonPage show-footer>
     <n-space size="large">
       <n-card title="按钮 Button">
         <n-space>

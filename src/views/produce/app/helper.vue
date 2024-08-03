@@ -106,19 +106,8 @@ export default defineComponent({
     const route = useRoute()
     // 获取路由参数,找不到默认为英文
     const routerLanguageId = route.params.langId || 2;
-    const routerLanguage = languageArray.value.find(item => item.value === Number(routerLanguageId))?.label;
+    const userLanguage = languageArray.value.find(item => item.value === Number(routerLanguageId))?.label;
 
-    const userLanguage = routerLanguage;
-    console.log('routerLanguageId:', routerLanguageId)
-    console.log('routerLanguage:', routerLanguage)
-    console.log('userLanguage:', userLanguage)
-
-    // const userLanguage = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
-    // console.log('navigator.language:', navigator.language);
-    // console.log('navigator.userLanguage:', navigator.userLanguage);
-    // console.log('navigator.languages:', navigator.languages);
-
-    // const userLanguage = 'ar';
     const isRtl = computed(() => ['ar', 'fa','he'].includes(userLanguage.split('-')[0]))
     console.log('isRtl:', isRtl.value);
     const helpItems = ref([])// 存储帮助条目
@@ -189,7 +178,6 @@ export default defineComponent({
 
       }),
     ]).then(() => {
-
       console.log(11,helpItems.value);
       console.log(22,helpGuideItems.value);
     });
@@ -220,10 +208,7 @@ export default defineComponent({
       );
     }
 
-    /**
-     * 搜索命中title后的问题
-     * @type {ComputedRef<[UnwrapRefSimple<{guideId: number, title: string, content: string}>, UnwrapRefSimple<{guideId: number, title: string, content: string}>, UnwrapRefSimple<{guideId: number, title: string, content: string}>, UnwrapRefSimple<{guideId: number, title: string, content: string}>, UnwrapRefSimple<{guideId: number, title: string, content: string}>, null, null, null]|*>}
-     */
+    // 搜索命中title结果
     const filteredHelpItems = computed(() => {
       if (!searchQuery.value) {
         return helpItems.value.filter(item => item.guideId === selectedGuideId.value);
@@ -233,6 +218,7 @@ export default defineComponent({
     })
 
 
+    // 监听搜索框输入变化
     watch(searchQuery, () => {
       console.log(showDivId.value, selectedGuideId.value)
       if (!searchQuery.value) {
@@ -254,6 +240,7 @@ export default defineComponent({
       history.pushState({ divId: 2, id: item.guideId }, null, '');
     }
 
+    // 监听浏览器前进后退事件
     function handlePopState(event) {
       const state = event.state || {};
       if (state && state.id) {
@@ -272,10 +259,12 @@ export default defineComponent({
       searchQuery.value = ''; // 回退时清除输入框的值
     }
 
+    // 在组件挂载时监听浏览器前进后退事件
     onMounted(() => {
       window.addEventListener('popstate', handlePopState)
     })
 
+    // 在组件卸载时移除监听
     onBeforeUnmount(() => {
       window.removeEventListener('popstate', handlePopState)
     })

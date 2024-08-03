@@ -15,8 +15,9 @@
       :scroll-x="1200"
       :columns="columns"
       :get-data="api.read"
-      virtual-scroll
-      handle-button-click="">
+      :isVirtualScroll="true"
+      :tableMaxHeight="620"
+      >
     </MeCrud>
 <!--    <div ref="divRef" style="height: 600px"></div>-->
     <MeModal ref="modalRef" width="800px">
@@ -38,15 +39,15 @@
 <!--            <n-input v-model:value="modalForm.helpDetail" placeholder="请输入解决步骤" />-->
             <AiEditorComponent v-model="modalForm.helpDetail" placeholder="请输入内容"/>
           </n-form-item>
-          <n-form-item label="语言" >
-            <n-input v-model:value="modalForm.language" placeholder="请输入语言" />
-          </n-form-item>
-          <n-form-item label="问题归类类别" >
-            <n-input v-model:value="modalForm.helpTypeId" placeholder="请输入问题归类类别" />
-          </n-form-item>
-          <n-form-item label="所属App" >
-            <n-input v-model:value="modalForm.appId" placeholder="请输入所属App" />
-          </n-form-item>
+<!--          <n-form-item label="语言" >-->
+<!--            <n-input v-model:value="modalForm.language" placeholder="请输入语言" />-->
+<!--          </n-form-item>-->
+<!--          <n-form-item label="问题归类类别" >-->
+<!--            <n-input v-model:value="modalForm.helpTypeId" placeholder="请输入问题归类类别" />-->
+<!--          </n-form-item>-->
+<!--          <n-form-item label="所属App" >-->
+<!--            <n-input v-model:value="modalForm.appId" placeholder="请输入所属App" />-->
+<!--          </n-form-item>-->
 
 
         </n-form>
@@ -68,6 +69,7 @@ import { CommonPage } from '@/components/index.js'
 import api from './api'
 
 import AiEditorComponent from '../../demo/aieditor/AiEditorComponent.vue';
+import { cleanUpInnerHTML } from '@iconify/utils'
 
 
 
@@ -87,50 +89,36 @@ onMounted(() => {
 
 
 const columns = [
-  {
-    title: 'id',
-    key: 'id',
-    align: 'center',
-    ellipsis: { tooltip: true }
 
+  {
+    title: '序号',
+    key: 'index',
+    align: 'center',
+    width: 60,
+    render(row, index) {
+      return h('span', index + 1)
+    }
   },
   {
-    title: 'appId',
-    key: 'appId',
-    align: 'center',
-    ellipsis: { tooltip: true }
-  },{
-    title: 'helpTitle',
+    title: '标题',
     key: 'helpTitle',
     align: 'center',
+    width: 200,
     ellipsis: { tooltip: true }
 
   },
- {
-    title: 'helpTypeId',
-    key: 'helpTypeId',
-    align: 'center',
-    ellipsis: { tooltip: true }
-
-  },{
-    title: 'language',
-    key: 'language',
-    align: 'center',
-    ellipsis: { tooltip: true }
-
-  },
-
   {
-    title: 'createTime',
-    key: 'createTime',
+    title: '内容',
+    key: 'helpDetail',
     align: 'center',
-    ellipsis: { tooltip: true }
 
   },
+
   {
     title: '操作',
     key: 'actions',
     align: 'center',
+    width: 200,
     hideInExcel: true,
     render(row) {
       return [
@@ -185,3 +173,5 @@ const {
 })
 
 </script>
+
+

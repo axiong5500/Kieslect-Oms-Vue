@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:29:56
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
 <template>
   <CommonPage>
     <template #action>
@@ -21,7 +13,8 @@
       :scroll-x="1200"
       :columns="columns"
       :get-data="api.read"
-     handle-button-click="false">
+     >
+
     </MeCrud>
 
     <MeModal ref="modalRef" width="800px">
@@ -274,8 +267,13 @@ const largeQrCodeUrl = ref('') // 定义放大后的二维码地址
 const largeQrCodeIconSrc = ref('') // 放大后的二维码图标
 const appChannelDic = ref([]) // app下载路径
 const appDescriptionDic = ref([])
+const appIdsOptions = ref([
+  {label: 'KSTYLEOS', value: 0},
+  {label: 'KSOS', value: 1},
+  {label: 'CKOS', value: 2},
+])
 const qrCodeDomainUrl = (appMark) => {
-  return appMark.includes('kstyleos') ? back_domain_url : ck_back_domain_url;
+  return appMark.includes('KSTYLEOS') ? back_domain_url : ck_back_domain_url;
 };
 // const qrCodeValue = 'http://192.168.0.106:3200/#/public/produce/app/qrcode'
 
@@ -294,16 +292,14 @@ Promise.all([
           label: `${item.name}`,
           value: Number(item.value),
         }));
+
     } else {
       appChannelDic.value = [];
       appDescriptionDic.value = [];
     }
 
   }),
-]).then(() => {
-  console.log(11,appChannelDic.value);
-  console.log(22,appDescriptionDic.value);
-});
+])
 
 
 
@@ -358,16 +354,30 @@ const columns = [
 
   },
   {
-    title: 'app二维码',
+    title: 'app二维码(带标)',
     key: 'qrCodeUrl',
     align: 'center',
     render: ( row ) =>
       h(NQrCode, {
-        value: qrCodeDomainUrl(row.appMark) + "/public/produce/app/qrcode",
+        value: qrCodeDomainUrl(row.appMark) + "/public/produce/app/qrcode/"+row.appMark,
         iconSrc: domain_url + row.appLogo,
         iconSize: 20,
-        size: 50,
-        onClick: () => handleQrCodeClick(qrCodeDomainUrl(row.appMark)+"/public/produce/app/qrcode/"+row.appMark,domain_url ),
+        size: 65,
+        onClick: () => handleQrCodeClick(qrCodeDomainUrl(row.appMark)+"/public/produce/app/qrcode/"+row.appMark,domain_url+ row.appLogo ),
+        style: { padding: '0px' }
+      })
+
+  },
+  {
+    title: 'app二维码(不带标)',
+    key: 'qrCodeUrl',
+    align: 'center',
+    render: ( row ) =>
+      h(NQrCode, {
+        value: qrCodeDomainUrl(row.appMark) + "/public/produce/app/qrcode/"+row.appMark,
+        iconSize: 20,
+        size: 65,
+        onClick: () => handleQrCodeClick(qrCodeDomainUrl(row.appMark)+"/public/produce/app/qrcode/"+row.appMark ),
         style: { padding: '0px' }
       })
 
@@ -421,7 +431,7 @@ const columns = [
             type: 'primary',
             style: 'margin-left: 10px;',
             onClick: () =>
-              router.push({ path: `/produce/app/apk/${row.id}`, query: { title: row.appName,} }),
+              router.push({ path: `/produce/app/apk/${row.id}`, query: { title: row.appName} }),
           },
           {
             default: () => 'App包管理',
@@ -473,11 +483,19 @@ const columns = [
   }
 ]
 
+function formatTypeGetValue(type,label) {
+  console.log(type)
+  console.log(label)
+  const status = type.value.find(item => item.label === label)
+  console.log(status)
+  return status ? status.value : 0
+}
+
 async function handleCopyJson(row) {
   console.log('自定义按钮被点击了');
   try {
     row.loading = true; // 设置该行的 loading 状态为 true
-    let result = await  request.get(`https://app.kieslect.top/kieslect-device/device/appManage/getApp?appMark=${row.appMark}`)
+    let result = await  request.get(`https://app.kieslect.top/kieslect-device/device/appManage/getApp?appName=`+formatTypeGetValue(appIdsOptions,row.appMark))
     if (result) {
       const jsonData = JSON.stringify(result, null, 2);
       console.log(jsonData)

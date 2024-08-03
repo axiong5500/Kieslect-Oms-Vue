@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/16 18:51:02
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <div class="wh-full flex">
+<template>  <div class="wh-full flex">
     <aside
       class="flex-col flex-shrink-0 transition-width-300"
       :class="appStore.collapsed ? 'w-64' : 'w-250'"

@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/16 18:50:42
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <n-dropdown :options="options" @select="handleSelect">
+<template>  <n-dropdown :options="options" @select="handleSelect">
     <div class="flex cursor-pointer items-center">
       <n-avatar round :size="36" :src="userStore.avatar" />
       <div v-if="userStore.userInfo" class="ml-12 flex-col flex-shrink-0 items-center">

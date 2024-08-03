@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/04 22:51:48
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <div class="flex items-center">
+<template>  <div class="flex items-center">
     <label v-if="label || label === 0" class="flex-shrink-0" :style="{ width: labelWidth + 'px' }">
       {{ label }}
     </label>

@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:27:55
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage show-footer>
+<template>  <CommonPage show-footer>
     <p>
       文档：
       <a c-blue hover-decoration-underline href="https://uno.antfu.me/" target="_blank">

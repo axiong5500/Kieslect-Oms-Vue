@@ -1,10 +1,4 @@
-/**********************************
- * @Author: Kieslect Fashion
- * @LastEditor: Kieslect Fashion
- * @LastEditTime: 2024/01/13 17:41:26
- * @Email: Kieslect Fashion@gmail.com
- * Copyright © 2024 专一 | https://www.kieslect.com
- **********************************/
+
 
 // 获取元素的CSS样式
 function getCss(element, key) {

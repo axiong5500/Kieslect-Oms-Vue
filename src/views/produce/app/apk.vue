@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:29:56
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
 <template>
   <CommonPage back>
     <template #title-suffix>
@@ -52,14 +44,7 @@
                 :max="1"
                 :show-download-button="true"
               >
-                <n-upload-dragger>
-                  <div style="margin-bottom: 12px">
-                    <i class="i-mdi:upload mb-12 text-68 color-primary" />
-                  </div>
-                  <n-text style="font-size: 14px">
-                    点击或者拖动文件到该区域来上传
-                  </n-text>
-                </n-upload-dragger>
+                <n-button>上传文件</n-button>
               </n-upload>
             </n-form-item>
             <n-form-item label="应用系统（apkSystem）" path="apkSystem">
@@ -178,12 +163,7 @@ Promise.all([
     }
 
   })
-]).then(() => {
-  console.log(11, apkSystemDic.value)
-  console.log(22, apkUpdateStatusDic.value)
-  console.log(33, apkChannelDic.value)
-  console.log(44, apkPromptDic.value)
-})
+])
 
 
 const formatType = (id, type) => {
@@ -230,13 +210,19 @@ async function handleUpload({ file, onFinish }) {
   }
 }
 
+const iconUrls = {
+  google: 'https://img.icons8.com/color/32/google-logo.png',
+  kieslect: new URL('../../../../src/assets/images/kieslect.png', import.meta.url).href,
+  huawei: 'https://img.icons8.com/external-tal-revivo-color-tal-revivo/32/external-huawei-technologies-company-a-chinese-multinational-technology-provides-telecommunications-equipment-and-consumer-electronics-logo-color-tal-revivo.png',
+  tencent: new URL('../../../../src/assets/images/apk/yingyongbao_icon.png', import.meta.url).href,
+};
 
 const columns = [
   {
     title: 'app名称',
     key: 'appName',
     align: 'center',
-    render(row) {
+    render() {
       return h('span', route.query.title)
     }
   },
@@ -256,8 +242,20 @@ const columns = [
   {
     title: '发布渠道',
     key: 'channel',
-    align: 'center'
-
+    align: 'center',
+    render(row) {
+      const iconUrl = iconUrls[row.channel] || new URL('../../../../src/assets/images/kieslect.png', import.meta.url).href; // 选择相应的图标 URL，如果没有找到则使用默认图标
+      return h('img', {
+        src: iconUrl,
+        width: 32,
+        height: 32,
+        alt: `${row.channel}-logo`,
+        style: {
+          display: 'inline-block',
+          verticalAlign: 'middle'
+        }
+      });
+    }
   },
   {
     title: '安装包名',

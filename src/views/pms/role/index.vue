@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2024/04/01 15:52:40
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage>
+<template>  <CommonPage>
     <template #action>
       <n-button type="primary" @click="handleAdd()">
         <i class="i-material-symbols:add mr-4 text-18" />

@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/16 18:50:28
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <router-link class="h-60 f-c-c" to="/">
+<template>  <router-link class="h-60 f-c-c" to="/">
     <!-- <img src="@/assets/images/logo.png" class="h-40" /> -->
 <!--    <TheLogo class="rounded-8!" />-->
     <TheLogo/>

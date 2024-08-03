@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2024/01/13 17:41:47
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage show-footer>
+<template>  <CommonPage show-footer>
     <n-button type="primary" @click="openModal1">打开第一个弹个窗</n-button>
     <MeModal ref="$modal1">
       <n-input v-model:value="text" />

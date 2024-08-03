@@ -1,23 +1,14 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:28:36
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <div class="wh-full flex-col bg-[url(@/assets/images/login_bg.webp)] bg-cover">
+<template>  <div class="wh-full flex-col bg-[url(@/assets/images/login_bg.webp)] bg-cover">
     <div
       class="m-auto max-w-700 min-w-345 f-c-c rounded-8 bg-opacity-20 bg-cover p-12 card-shadow auto-bg"
     >
       <div class="hidden w-380 px-20 py-35 md:block">
-        <img src="@/assets/images/login_banner.webp" class="w-full" alt="login_banner" />
+        <img src="@/assets/images/login_banner.png" class="w-full" alt="login_banner" />
       </div>
 
       <div class="w-320 flex-col px-20 py-32">
         <h2 class="f-c-c text-24 text-#6a6a6a font-normal">
-          <img src="@/assets/images/logo.png" class="mr-12 h-50" />
+<!--          <img src="@/assets/images/logo.png" class="mr-12 h-50" />-->
           {{ title }}
         </h2>
         <n-input
@@ -75,14 +66,14 @@
         />
 
         <div class="mt-20 flex items-center">
-          <n-button
-            class="h-40 flex-1 rounded-5 text-16"
-            type="primary"
-            ghost
-            @click="quickLogin()"
-          >
-            一键体验
-          </n-button>
+<!--          <n-button-->
+<!--            class="h-40 flex-1 rounded-5 text-16"-->
+<!--            type="primary"-->
+<!--            ghost-->
+<!--            @click="quickLogin()"-->
+<!--          >-->
+<!--            一键体验-->
+<!--          </n-button>-->
 
           <n-button
             class="ml-32 h-40 flex-1 rounded-5 text-16"
@@ -128,11 +119,11 @@ if (localLoginInfo) {
 }
 initCaptcha()
 
-function quickLogin() {
-  loginInfo.value.username = 'admin'
-  loginInfo.value.password = '123456'
-  handleLogin(true)
-}
+// function quickLogin() {
+//   loginInfo.value.username = 'admin'
+//   loginInfo.value.password = '123456'
+//   handleLogin(true)
+// }
 
 const isRemember = useStorage('isRemember', true)
 const loading = ref(false)

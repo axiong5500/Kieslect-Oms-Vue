@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/16 18:49:53
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <div>
+<template>  <div>
     <n-tooltip trigger="hover" placement="left">
       <template #trigger>
         <i class="i-fe:settings cursor-pointer text-32 color-primary" @click="modalRef.open()" />

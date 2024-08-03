@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Description: 底部
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/04 22:42:33
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
+|<template>
   <footer class="f-c-c text-14 text-gray-500">
     <div style="width:300px;margin:0 auto;text-align:left;white-space: nowrap;">
 

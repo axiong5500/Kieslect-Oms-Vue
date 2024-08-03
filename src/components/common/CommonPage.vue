@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/04 22:51:21
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <main class="h-full flex-1 overflow-hidden bg-#f5f6fb dark:bg-#121212">
+<template>  <main class="h-full flex-1 overflow-hidden bg-#f5f6fb dark:bg-#121212">
     <div class="h-full flex-col">
       <AppCard
         v-if="showHeader"

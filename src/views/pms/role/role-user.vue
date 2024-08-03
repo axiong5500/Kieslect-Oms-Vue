@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:29:43
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage back>
+<template>  <CommonPage back>
     <template #title-suffix>
       <n-tag class="ml-12" type="warning">{{ route.query.roleName }}</n-tag>
     </template>

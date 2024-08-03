@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/12 09:03:32
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <MeModal ref="modalRef" title="请选择角色" width="360px" class="p-12">
+<template>  <MeModal ref="modalRef" title="请选择角色" width="360px" class="p-12">
     <n-radio-group v-model:value="roleCode" class="cus-scroll-y max-h-420 w-full py-16">
       <n-space vertical :size="24" class="mx-12">
         <n-radio-button

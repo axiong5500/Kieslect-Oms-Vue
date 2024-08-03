@@ -1,10 +1,4 @@
-/**********************************
- * @Author: Kieslect Fashion
- * @LastEditor: Kieslect Fashion
- * @LastEditTime: 2023/12/05 21:31:02
- * @Email: Kieslect Fashion@gmail.com
- * Copyright © 2024 专一 | https://www.kieslect.com
- **********************************/
+
 
 import path from 'path'
 import { defineConfig, loadEnv } from 'vite'
@@ -72,6 +66,12 @@ export default defineConfig(({ command, mode }) => {
               proxyRes.headers['x-real-url'] = new URL(req.url || '', options.target)?.href || ''
             })
           },
+        },
+        '/aiChat/api/chat': {
+          target: 'http://localhost:11434',  // 新的目标服务器和端口
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/aiChat/, ''),
+          secure: false,
         },
       },
     },

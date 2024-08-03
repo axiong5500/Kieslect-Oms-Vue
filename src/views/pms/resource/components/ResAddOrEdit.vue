@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2024/04/01 15:52:31
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <MeModal ref="modalRef">
+<template>  <MeModal ref="modalRef">
     <n-form
       ref="modalFormRef"
       label-placement="left"

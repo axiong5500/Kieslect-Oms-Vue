@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2024/01/13 17:41:38
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <n-modal
+<template>  <n-modal
     v-model:show="show"
     class="modal-box"
     :style="{ width: modalOptions.width, ...modalOptions.modalStyle }"

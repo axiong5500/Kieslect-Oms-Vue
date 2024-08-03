@@ -1,13 +1,4 @@
-<!--------------------------------
- - @Author: Kieslect Fashion
- - @LastEditor: Kieslect Fashion
- - @LastEditTime: 2023/12/05 21:28:02
- - @Email: Kieslect Fashion@gmail.com
- - Copyright © 2024 专一 | https://www.kieslect.com
- --------------------------------->
-
-<template>
-  <CommonPage>
+<template>  <CommonPage>
     <n-upload
       class="mx-auto w-[75%] p-20 text-center"
       :custom-request="handleUpload"
@@ -58,7 +49,7 @@ defineOptions({ name: 'ImgUpload' })
 const { copy, copied } = useClipboard()
 
 const imgList = reactive([
-  { url: 'https://app.kieslect.top/kieslect-file/file/download/headimage/init/0/1.png' },
+  { url: 'https://testapp.kieslect.top/kieslect-file/file/download/headimage/init/0/1.png' },
   { url: 'https://app.kieslect.top/kieslect-file/file/download/headimage/init/1/1.png' },
   { url: 'https://app.kieslect.top/kieslect-file/file/download/headimage/init/1/2.png' },
   { url: 'https://app.kieslect.top/kieslect-file/file/download/headimage/init/1/3.png' },
