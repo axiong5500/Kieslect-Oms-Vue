@@ -23,19 +23,33 @@ export default {
 
   getAppDownload: (appMark) => request.get(`/public/app/sys/getAppDownload/${appMark}`, { noNeedToken: true }),
 
-
-  uploadFile: (file) => {
-    const formData = new FormData()
-    formData.append('file', file)
+  uploadFile: (file,fileType) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('pathType', fileType);
 
     return request.post('/file/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // 设置请求头，告诉后端是文件上传
+      }
+    });
+  },
+
+  uploadApkToLocal: (file,appId,onProgress) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('appId', appId)
+
+    return request.post('/apk/upload/local', formData, {
       headers: {
         'Content-Type': 'multipart/form-data' // 设置请求头，告诉后端是文件上传
       },
       timeout: 60000, // 自定义上传文件的超时时间为 60 秒
       onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        console.log(`Upload progress: ${percentCompleted}%`)
+        if (progressEvent.total) {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress({ percent: percentCompleted });
+        }
       }
     })
   }

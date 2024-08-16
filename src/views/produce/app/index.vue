@@ -195,8 +195,8 @@ import { useCrud } from '@/composables'
 import api from './api'
 import { h } from 'vue'
 import { CommonPage } from '@/components/index.js'
-import { router } from '@/router/index.js'
 import { message } from 'ant-design-vue'
+import { useRouter } from 'vue-router'
 
 defineOptions({ name: 'AppManage' })
 
@@ -292,10 +292,16 @@ Promise.all([
           label: `${item.name}`,
           value: Number(item.value),
         }));
-
+      appIdsOptions.value = data
+        .filter(item => item.type === 'device_manage_appIdsOptions_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
     } else {
       appChannelDic.value = [];
       appDescriptionDic.value = [];
+      appIdsOptions.value = [];
     }
 
   }),
@@ -336,25 +342,30 @@ async function handleUpload({ file, onFinish }) {
 }
 
 
-
+const router = useRouter()
 const columns = [
 
 
   {
-    title: 'app名称',
+    title: 'App名称',
     key: 'appName',
     align: 'center',
     ellipsis: { tooltip: true }
   },
   {
-    title: 'app标识',
+    title: 'App标识',
     key: 'appMark',
     align: 'center',
     ellipsis: { tooltip: true }
-
   },
   {
-    title: 'app二维码(带标)',
+    title: 'App内部约定标识',
+    key: 'userAppName',
+    align: 'center',
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: 'App二维码(带标)',
     key: 'qrCodeUrl',
     align: 'center',
     render: ( row ) =>
@@ -369,7 +380,7 @@ const columns = [
 
   },
   {
-    title: 'app二维码(不带标)',
+    title: 'App二维码(不带标)',
     key: 'qrCodeUrl',
     align: 'center',
     render: ( row ) =>

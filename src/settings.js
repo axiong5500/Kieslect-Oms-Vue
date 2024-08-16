@@ -98,7 +98,7 @@ export const basePermissions = [
         name: '爱都Gitee',
         type: 'MENU',
         path: 'https://gitee.com/idoosmart',
-        icon: 'i-simple-icons:juejin',
+        icon: 'i-me:gitee',
         order: 6,
         enable: true,
         show: true,

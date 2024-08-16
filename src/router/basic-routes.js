@@ -43,7 +43,7 @@ export const basicRoutes = [
     path: '/public/produce/app/qrcode/:appMark?',
     component: () => import('@/views/produce/app/qrcode.vue'),
     meta: {
-      title: 'QrCode',
+      title: ' ',
       layout: 'empty',
     },
   },
@@ -53,7 +53,7 @@ export const basicRoutes = [
     path: '/public/privacy/:articleId?/:languageType?',
     component: () => import('@/views/content/privacy/index.vue'),
     meta: {
-      title: 'Article',
+      title: ' ',
       layout: 'empty',
     },
   },
@@ -63,7 +63,7 @@ export const basicRoutes = [
     path: '/public/produce/app/helper/:langId?',
     component: () => import('@/views/produce/app/helper.vue'),
     meta: {
-      title: 'Helper',
+      title: ' ',
       layout: 'empty',
     },
   },
@@ -73,7 +73,7 @@ export const basicRoutes = [
     path: '/public/video/guide',
     component: () => import('@/views/content/video/guide.vue'),
     meta: {
-      title: 'VideoGuide',
+      title: ' ',
       layout: 'empty',
     },
   },

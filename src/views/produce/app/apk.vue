@@ -75,8 +75,8 @@
             >
               <n-input v-model:value="modalForm.versionCode" />
             </n-form-item>
-            <n-form-item label="apk文件大小（apkSize）" path="apkSize">
-              <n-input v-model:value="modalForm.apkSize" />
+            <n-form-item label="apk文件大小（apkSize）" path="apkSize" >
+              <n-input-number v-model:value="modalForm.apkSize" :disabled="true" class="w-full"/>
             </n-form-item>
             <n-form-item label="版本名称（versionName）" path="versionName">
               <n-input v-model:value="modalForm.versionName" />
@@ -166,30 +166,25 @@ Promise.all([
 ])
 
 
-const formatType = (id, type) => {
-  const foundType = type.find(item => item.value === id)
-  return foundType ? foundType.label : ''
-}
-
-async function handleUpload({ file, onFinish }) {
+async function handleUpload({ file, onFinish,onProgress }) {
   const packageDownloadUrl = modalForm.value.packageDownloadUrl
   console.log(packageDownloadUrl, file.file)
   if (!file || !file.type) {
     $message.error('请选择文件')
   }
 
-  // 创建 FormData 对象，用于包装要上传的文件
-  const formData = new FormData()
-  formData.append('file', file)
+
   try {
-    const response = await api.uploadFile(file.file)
+
+
+    const response = await api.uploadApkToLocal(file.file,modalForm.value.appId,onProgress )
 
     console.log(response)
 
 
     // 处理上传成功后的逻辑
     const responseData = await response
-    if (responseData.code !== 200) {
+    if (responseData.code !== 0) {
       throw new Error('文件上传失败')
     }
     // 提取上传成功后的文件信息
@@ -219,7 +214,7 @@ const iconUrls = {
 
 const columns = [
   {
-    title: 'app名称',
+    title: 'App名称',
     key: 'appName',
     align: 'center',
     render() {

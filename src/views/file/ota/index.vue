@@ -30,30 +30,39 @@
           :disabled="modalAction === 'view'"
         >
 
-          <n-form-item label="视频标题">
-            <n-input v-model:value="modalForm.videoTitle" placeholder="请输入视频标题" />
+          <n-form-item label="固件版本号" path="otaVersion">
+            <n-input v-model:value="modalForm.otaVersion" placeholder="请输入固件版本号" />
           </n-form-item>
+          <n-form-item label="固件文件">
 
-          <n-form-item label="封面">
-            <n-input
-              v-model:value="modalForm.videoCover"
-              placeholder="或输入封面地址"
+            <n-upload v-model:value="modalForm.fileUrl"
+                      :custom-request="handleUploadOtaFileUrl"
+                      :default-file-list="modalForm.fileUrl ? [{ url: domain_url + modalForm.fileUrl,status: 'finished' }] : []"
+                      :max="1"
+                      list-type="image-card"
+                      :show-download-button="true"
             />
           </n-form-item>
-          <n-form-item label="视频">
-            <n-input  v-model:value="modalForm.videoUrl" placeholder="或输入视频地址" />
+          <n-form-item label="固件描述">
+            <n-input v-model:value="modalForm.otaDesc" placeholder="请输入固件描述" />
+          </n-form-item>
+          <n-form-item label="设备内部ID">
+            <n-input v-model:value="modalForm.deviceInnerId" placeholder="请输入设备内部ID" />
           </n-form-item>
 
-          <n-form-item label="视频状态">
+          <n-form-item label="版本">
             <n-space>
-              <n-switch v-model:value="modalForm.status" :checked-value="1" :unchecked-value="2" size="large">
-                <template #checked>
-                  上架
-                </template>
-                <template #unchecked>
-                  下架
-                </template>
-              </n-switch>
+              <n-radio-group v-model:value="modalForm.mode">
+                <n-radio :value=0>
+                  内测
+                </n-radio>
+                <n-radio :value=1>
+                  公测
+                </n-radio>
+                <n-radio :value=2>
+                  正式
+                </n-radio>
+              </n-radio-group>
             </n-space>
           </n-form-item>
 
@@ -68,12 +77,13 @@
 
 <script setup>
 import { h, ref, onMounted } from 'vue'
-import { NButton } from 'naive-ui'
+import { NButton, NSpace, NSwitch,NTag } from 'naive-ui'
 import { MeCrud, MeModal } from '@/components'
 import { useCrud } from '@/composables'
 import { CommonPage } from '@/components/index.js'
 import api from './api'
 import { formatDateTime } from '@/utils/index.js'
+import { message } from 'ant-design-vue'
 
 
 const domain_url = 'https://app.kieslect.top'
@@ -86,7 +96,54 @@ onMounted(() => {
   $table.value?.handleSearch()
 })
 
+async function handleUploadOtaFileUrl({ file}){
+  if (!file || !file.type) {
+    $message.error('请选择文件')
+  }
 
+  // 创建 FormData 对象，用于包装要上传的文件
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await api.uploadFile(file.file);
+
+  console.log(response);
+
+
+  // 处理上传成功后的逻辑
+  const responseData = await response;
+  if (responseData.code !== 200) {
+    throw new Error('文件上传失败');
+  }
+  // 提取上传成功后的文件信息
+  const { fileUrl } = responseData.data;
+
+  console.log(fileUrl);
+
+  modalForm.value.fileUrl = fileUrl;
+
+  $message.success('上传成功');
+}
+
+const handleFileUrlFinish = ({file, event}) => {
+  console.log(event)
+  const response = event?.target?.response;
+  $message.success('文件上传成功')
+
+  try {
+    const parsedResponse = JSON.parse(response)
+    if (parsedResponse.code === 200) {
+      modalForm.value.fileUrl = parsedResponse.data.fileUrl;
+    } else {
+      $message.error('上传失败')
+    }
+  } catch (error) {
+    console.error('Failed to parse response', error)
+    $message.error('上传失败')
+  }
+
+  return file
+}
 
 
 const columns = [
@@ -101,14 +158,14 @@ const columns = [
   },
 
   {
-    title: 'OTA描述',
+    title: '固件描述',
     key: 'otaDesc',
     align: 'center',
     width: 200,
 
   },
   {
-    title: 'OTA版本号',
+    title: '固件版本号',
     key: 'otaVersion',
     align: 'center',
     width: 100,
@@ -119,29 +176,55 @@ const columns = [
     align: 'center',
     width: 100,
     render(row) {
-      return h('span', formatType(row['otaStatus'],otaStatuss))
+      if (row.otaStatus === null || row.otaStatus === undefined) {
+        // 如果 otaStatus 无效，返回一个占位符或默认值
+        return h('span', '无状态');
+      }
+      return h(NSpace, {
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }
+      }, {
+        default: () => [
+          h(NSwitch, {
+            value: row.otaStatus,
+            'checked-value': 1,
+            'unchecked-value': 0,
+            onUpdateValue: async (value) => {
+              row.otaStatus = value;
+              await api.update(row)
+            }
+          }, {
+            checked: () => '上架',
+            unchecked: () => '下架'
+          })
+        ]
+      });
     }
   },
   {
-    title: '版本',
+    title: '系统版本',
     key: 'mode',
     align: 'center',
     width: 100,
     render(row) {
-      return h('span', formatType(row['mode'],modes))
+      const label = formatType(row['mode'], modes); // 获取label
+      const type = row['mode'] === 0 ? 'warning' : row['mode'] === 1 ? 'default' : 'info';
+      return h(NTag, {
+          bordered: false,
+          type: type, // 动态设置type
+          size: 'medium',
+          strong: true
+        },
+        {
+          default: () => label,
+        })
     }
   },
   {
-    title: 'OTA升级策略',
-    key: 'otaUpgrade',
-    align: 'center',
-    width: 100,
-    render(row) {
-      return h('span', formatType(row['otaUpgrade'],otaUpgrades))
-    }
-  },
-  {
-    title: '创建时间',
+    title: '发布时间',
     key: 'releaseDate',
     align: 'center',
     width: 200,
@@ -236,7 +319,12 @@ const {
   handleDelete
 } = useCrud({
   name: 'ota',
-  initForm: {},
+  initForm: {
+    mode: 0,
+    otaStatus: 0,
+    otaUpgrade: 0,
+    sortId: 0,
+  },
   doCreate: api.create,
   doDelete: api.delete,
   doUpdate: api.update,

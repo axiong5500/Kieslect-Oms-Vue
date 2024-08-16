@@ -22,7 +22,8 @@
       :tableMaxHeight="550"
     >
       <MeQueryItem>
-
+        <n-button v-if='copyOne === 0' type="success" @click="handleCopyOne">复制条目</n-button>
+        <n-button v-if='copyOne === 1' type="warning" @click="handleParseOne">黏贴条目</n-button>
       </MeQueryItem>
 
 
@@ -104,6 +105,21 @@
           />
 
         </n-form-item>
+          <n-form-item
+            label="集成商（integrator）"
+            path="integrator"
+
+          >
+            <n-select
+              v-model:value="modalForm.integrator"
+              :options="integratorOptions"
+              label-field="label"
+              value-field="value"
+              clearable
+              filterable
+            />
+
+          </n-form-item>
         <n-form-item
           label="表盘形状（dialShape）"
           path="dialShape"
@@ -255,43 +271,10 @@
   </CommonPage>
 </template>
 
-<style scoped>
 
-.scroll-container {
-  height: 600px; /* 固定高度 */
-  overflow-y: auto; /* 垂直滚动条 */
-  margin-right: -22px; /* 调整右侧间距，为滚动条留出空间 */
-  padding-right: 22px;
-}
-/* 自定义滚动条样式 */
-.scroll-container::-webkit-scrollbar {
-  width: 6px; /* 设置滚动条宽度 */
-  height: 6px; /* 设置滚动条高度 */
-}
-
-.scroll-container::-webkit-scrollbar-track {
-  background: rgb(239, 239, 239);
-  border-radius: 2px;
-}
-
-.scroll-container::-webkit-scrollbar-thumb {
-  background: #bfbfbf;
-  border-radius: 3px;
-}
-
-.scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #bfbfbf;
-}
-
-/* 调整滚动条位置到靠右 */
-.scroll-container::-webkit-scrollbar {
-  background: #bfbfbf;
-}
-
-</style>
 
 <script setup>
-import { NButton,NTag  } from 'naive-ui'
+import { NButton, NRadio, NTag } from 'naive-ui'
 import { formatDateTime, request } from '@/utils'
 import { MeCrud, MeModal, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
@@ -299,11 +282,12 @@ import api from './api'
 import { h } from 'vue'
 import { CommonPage } from '@/components/index.js'
 import { message } from 'ant-design-vue'
+import { random } from 'lodash-es'
 
 
 defineOptions({ name: 'deviceManage' })
 
-
+const copyOne = ref(0);
 const items = ref([]); // 定义 ref 类型的 items 数组
 const otaUpgrade = ref([]);
 const dialShape = ref([]);
@@ -325,6 +309,8 @@ const paramGroup = ref([])
 const attributeType = ref([])
 // 默认展开
 const defaultExpandedNames = ref([])
+const integratorOptions = ref([])
+const deviceStatusOptions = ref([])
 
 Promise.all([
   api.getAllDicData().then(({ data = [] }) => {
@@ -353,11 +339,25 @@ Promise.all([
           label: `${item.name}`,
           value: Number(item.value),
         }));
+      integratorOptions.value = data
+        .filter(item => item.type === 'device_manage_integratorOptions_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
+      deviceStatusOptions.value = data
+        .filter(item => item.type === 'device_manage_deviceStatusOptions_values')
+        .map(item => ({
+          label: `${item.name}`,
+          value: Number(item.value),
+        }));
     } else {
       otaUpgrade.value = [];
       dialShape.value = [];
       form.value = [];
       appIdsOptions.value = [];
+      integratorOptions.value = [];
+      deviceStatusOptions.value = [];
     }
 
   }),
@@ -400,10 +400,21 @@ Promise.all([
 });
 const columns = [
   {
+    width: 50,
+    align: 'center',
+    render(row) {
+      return h(NRadio, {
+        value: row.id, // 根据具体的需求，可以用 row.id 或其他唯一标识符
+        checked: selectedRow.value?.id === row.id, // 判断是否选中
+        onUpdateChecked: () => handleRadioChange(row) // 当选中时调用
+      })
+    }
+  },
+  {
     title: 'ID',
     key: 'id',
     align: 'center',
-    width: 80,
+    width: 50,
     ellipsis: { tooltip: true }
   },
   { title: '设备名',
@@ -421,15 +432,15 @@ const columns = [
         return h(
           NTag,
           { type: 'error', round: true },
-          { default: () => formateForm(row['form']) }
+          { default: () => formatForm(row['form']) }
         )
       } else {
-        return h('span', formateForm(row['form']))
+        return h('span', formatForm(row['form']))
       }
     }
   },
   {
-    title: '设备id',
+    title: '设备ID',
     key: 'firmwareId',
     align: 'center',
     ellipsis: { tooltip: true }
@@ -448,6 +459,43 @@ const columns = [
       );
     }
   },
+  {
+    title: '集成商',
+    key: 'integrator',
+    align: 'center',
+    width: 100,
+    render(row) {
+      return h(NTag, {
+          bordered: false,
+          type: 'info',
+          size: 'medium',
+          strong: true
+        },
+        {
+          default: () => formatType(integratorOptions,row['integrator']),
+        })
+    }
+  },
+  {
+    title: '状态',
+    key: 'deviceStatus',
+    align: 'center',
+    width: 100,
+    render(row) {
+      const label = formatType(deviceStatusOptions, row['deviceStatus']); // 获取label
+      const type = row['deviceStatus'] === 0 ? 'default' : row['deviceStatus'] === 1 ? 'success' : 'default';
+      return h(NTag, {
+          bordered: false,
+          type: type,
+          size: 'medium',
+          strong: true
+        },
+        {
+          default: () => label,
+        })
+    }
+  },
+
   {
     title: '创建时间',
     key: 'createTime',
@@ -497,20 +545,62 @@ const columns = [
     }
   }
 ]
+function formatType(type,value) {
+  const status = type.value.find(item => item.value === value)
+  return status ? status.label : ''
+}
+function handleCopyOne(){
+  if (selectedRow.value == null){
+    copyOne.value = 0
+    return message.error('请选择需要拷贝的数据行');
+  }
+  copyOne.value = 1
+}
+function handleParseOne(){
+  // 检查有没有选中行数据
+  if (selectedRow.value == null){
+    copyOne.value = 0
+    return message.error('请选择需要拷贝的数据行');
+  }
+  //弹框确认
+  const d = $dialog.warning({
+    content: '确定黏贴？',
+    title: '提示',
+    positiveText: '确定',
+    negativeText: '取消',
+    async onPositiveClick() {
+      try {
+        d.loading = true
+        // 这里处理请求后端接口
+        await api.insertRow(selectedRow.value)
+        copyOne.value = 0
+        selectedRow.value = null
+        $message.success('黏贴成功')
+        d.loading = false
+        $table.value?.handleSearch()
+      } catch (error) {
+        d.loading = false
+      }
+    },
+  })
+}
 
+const selectedRow = ref(null); // 存储选中行
+function handleRadioChange(row) {
+  selectedRow.value = row;
+}
 
-function formateForm(formid) {
-  const foundItem = form.value.find(item => item.value === formid);
+function formatForm(formId) {
+  const foundItem = form.value.find(item => item.value === formId);
   return foundItem ? foundItem.label : '未知';
 }
 
 async function handleButtonClick(){
-  console.log('自定义按钮被点击了');
+  console.log('复制JSON按钮被点击了');
   try {
     let result = await  request.get('https://app.kieslect.top/kieslect-device/device/getList')
     if (result) {
       const jsonData = JSON.stringify(result, null, 2);
-      console.log(jsonData)
 
       // navigator clipboard 需要https等安全上下文
       if (navigator.clipboard && window.isSecureContext) {
@@ -543,42 +633,12 @@ async function handleButtonClick(){
         });
       }
     }
-    console.log('结束')
   } catch (error) {
     console.error('获取数据失败:', error);
     message.error('获取数据失败，请稍后重试');
   }
 }
 
-async function handleUploadStrapsPhoto({ file,photoType}) {
-  console.log(photoType)
-  if (!file || !file.type) {
-    $message.error('请选择文件')
-  }
-
-  // 创建 FormData 对象，用于包装要上传的文件
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const response = await api.uploadFile(file.file);
-
-  console.log(response);
-
-
-  // 处理上传成功后的逻辑
-  const responseData = await response;
-  if (responseData.code !== 200) {
-    throw new Error('文件上传失败');
-  }
-  // 提取上传成功后的文件信息
-  const { fileUrl } = responseData.data;
-
-  console.log(fileUrl);
-
-  modalForm.value.strapsPhoto = fileUrl;
-
-  $message.success('上传成功');
-}
 
 async function handleUploadDialPhoto({ file,photoType}){
   console.log(photoType)
@@ -590,7 +650,7 @@ async function handleUploadDialPhoto({ file,photoType}){
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await api.uploadFile(file.file);
+  const response = await api.uploadFile(file.file,5);
 
   console.log(response);
 
@@ -625,7 +685,10 @@ const {
   handleSave
 } = useCrud({
   name: '属性',
-  initForm: { enable: true },
+  initForm: {
+    enable: true,
+    deviceStatus : 0
+  },
   doCreate: api.create,
   doDelete: api.delete,
   doUpdate: api.update,
@@ -635,3 +698,37 @@ const {
 
 
 </script>
+<style scoped>
+
+.scroll-container {
+  height: 600px; /* 固定高度 */
+  overflow-y: auto; /* 垂直滚动条 */
+  margin-right: -22px; /* 调整右侧间距，为滚动条留出空间 */
+  padding-right: 22px;
+}
+/* 自定义滚动条样式 */
+.scroll-container::-webkit-scrollbar {
+  width: 6px; /* 设置滚动条宽度 */
+  height: 6px; /* 设置滚动条高度 */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: rgb(239, 239, 239);
+  border-radius: 2px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #bfbfbf;
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf;
+}
+
+/* 调整滚动条位置到靠右 */
+.scroll-container::-webkit-scrollbar {
+  background: #bfbfbf;
+}
+
+</style>

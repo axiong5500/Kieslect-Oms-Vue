@@ -3,11 +3,11 @@
 
 
 
-    <div class="mt-12 flex">
-    <n-card class="mt-12 w-50%" title="⚡️ 趋势" segmented>
+    <div class="flex">
+    <n-card class="w-50%" title="⚡️ 趋势" segmented>
       <VChart :option="trendOption" :init-options="{ height: 400 }" autoresize />
     </n-card>
-      <n-card class="mt-12 w-50%" title="⚡️ 趋势" segmented>
+      <n-card class="w-50%" title="⚡️ 趋势" segmented>
         <VChart :option="trendOption" :init-options="{ height: 400 }" autoresize />
       </n-card>
     </div>

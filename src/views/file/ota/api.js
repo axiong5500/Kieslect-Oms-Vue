@@ -10,4 +10,16 @@ export default {
 
   getAllDicData: (params = {}) => request.get('/dic', { params }),
 
+
+  uploadFile: (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return request.post('/file/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // 设置请求头，告诉后端是文件上传
+      }
+    });
+  }
+
 }
