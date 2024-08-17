@@ -65,6 +65,9 @@ const trendOption = {
       axisLabel: {
         formatter: '{value}',
       },
+      splitLine: {
+        show: false, // 隐藏横向网格线
+      },
     },
     {
       type: 'value',
@@ -74,12 +77,16 @@ const trendOption = {
       axisLabel: {
         formatter: '{value}',
       },
+      splitLine: {
+        show: false, // 隐藏横向网格线
+      },
     },
   ],
   series: [
     {
       name: 'star',
       type: 'line',
+      smooth: true, // 启用贝塞尔曲线
       data: [200, 320, 520, 550, 600, 805, 888, 950, 1300, 2503, 2702, 2712],
     },
     {
