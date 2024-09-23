@@ -38,44 +38,4 @@ export const basicRoutes = [
     },
   },
 
-  {
-    name: 'qrcode',
-    path: '/public/produce/app/qrcode/:appMark?',
-    component: () => import('@/views/produce/app/qrcode.vue'),
-    meta: {
-      title: ' ',
-      layout: 'empty',
-    },
-  },
-
-  {
-    name: 'privacy',
-    path: '/public/privacy/:articleId?/:languageType?',
-    component: () => import('@/views/content/privacy/index.vue'),
-    meta: {
-      title: ' ',
-      layout: 'empty',
-    },
-  },
-
-  {
-    name: 'helper',
-    path: '/public/produce/app/helper/:langId?',
-    component: () => import('@/views/produce/app/helper.vue'),
-    meta: {
-      title: ' ',
-      layout: 'empty',
-    },
-  },
-
-  {
-    name: 'videoGuide',
-    path: '/public/video/guide',
-    component: () => import('@/views/content/video/guide.vue'),
-    meta: {
-      title: ' ',
-      layout: 'empty',
-    },
-  },
-
 ]

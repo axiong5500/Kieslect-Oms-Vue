@@ -55,7 +55,7 @@
 import { NButton, NDataTable } from 'naive-ui'
 import { utils, writeFile } from 'xlsx'
 import { message } from 'ant-design-vue'
-import { request } from '@/utils'
+
 const isButtonLoading = ref(false);
 
 const props = defineProps({
@@ -155,6 +155,7 @@ async function handleQuery() {
       ...props.queryItems,
       ...paginationParams,
     })
+
     tableData.value = data?.pageData || data
     pagination.itemCount = data.total ?? data.length
   } catch (error) {
@@ -191,16 +192,49 @@ function onChecked(rowKeys) {
   }
 }
 function handleExport(columns = props.columns, data = tableData.value) {
-  if (!data?.length) return $message.warning('没有数据')
-  const columnsData = columns.filter((item) => !!item.title && !item.hideInExcel)
-  const thKeys = columnsData.map((item) => item.key)
-  const thData = columnsData.map((item) => item.title)
-  const trData = data.map((item) => thKeys.map((key) => item[key]))
-  const sheet = utils.aoa_to_sheet([thData, ...trData])
-  const workBook = utils.book_new()
-  utils.book_append_sheet(workBook, sheet, '数据报表')
-  writeFile(workBook, '数据报表.xlsx')
+  if (!data?.length) {
+    return $message.warning('没有数据');
+  }
+
+  // 生成包含序号列的列数据
+  const columnsData = [
+    ...columns.filter((item) => !!item.title && !item.hideInExcel)
+  ];
+
+  // 提取列标题和键
+  const thKeys = columnsData.map((item) => item.key);
+  const thData = columnsData.map((item) => item.title);
+
+
+  // 判断是否需要添加序号
+  const hasSerialNumber = thData.some((title) => title.includes("序号"));
+
+  // 生成数据行，如果没有序号标题，则在开头添加序号
+  const trData = data.map((item, index) => {
+    if (!hasSerialNumber) {
+      return thKeys.map((key) => item[key]); // 不添加序号
+    } else {
+      return [index + 1, ...thKeys.slice(1).map((key) => item[key])]; // 添加序号
+    }
+  });
+
+  // 生成工作表
+  const sheet = utils.aoa_to_sheet([thData, ...trData]);
+  const workBook = utils.book_new();
+  utils.book_append_sheet(workBook, sheet, '数据报表');
+
+  // 获取当前日期并格式化
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD 格式
+  const title = '数据报表'; // 替换为实际标题或动态标题
+
+  // 动态生成文件名
+  const fileName = `${title}_${formattedDate}.xlsx`;
+
+  // 导出 Excel 文件
+  writeFile(workBook, fileName);
 }
+
 
 async function handleButtonClick() {
   if (typeof props.handleButtonClick === 'function') {
@@ -208,7 +242,6 @@ async function handleButtonClick() {
     try {
       await props.handleButtonClick();
     } catch (error) {
-      console.error('按钮点击处理失败:', error);
       message.error('处理失败，请稍后重试');
     } finally {
       isButtonLoading.value = false;
@@ -220,6 +253,7 @@ async function handleButtonClick() {
 
 
 defineExpose({
+  tableData,
   handleSearch,
   handleReset,
   handleExport,
