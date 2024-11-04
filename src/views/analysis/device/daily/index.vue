@@ -11,12 +11,14 @@
     <MeCrud
       ref="$table"
       v-model:query-items="queryItems"
-      :scroll-x="1200"
+      :scroll-x="360"
       :columns="columns"
       :get-data="handleSearch"
+      :tableMaxHeight="465"
+      :isVirtualScroll=true
     >
 
-      <MeQueryItem label="日期" :label-width="70" :contentWidth="1050">
+      <MeQueryItem label="日期" :label-width="70" :contentWidth="980">
         <n-radio-group v-model:value="queryItems.rangeType" @update:value="onRangeTypeChange">
           <n-space>
             <n-radio v-for="song in songs" :key="song.value" :value="song.value">
@@ -26,7 +28,6 @@
         </n-radio-group>
       </MeQueryItem>
       <MeQueryItem label="日期" :label-width="70" >
-
         <n-date-picker v-model:value="queryItems.dateRange" type="daterange" clearable @update:value="onDateRangeChange"/>
       </MeQueryItem>
       <MeQueryItem label="国家" :label-width="70">
@@ -35,7 +36,7 @@
       <MeQueryItem label="不包含国家" :label-width="110">
         <n-select v-model:value="queryItems.noIncludeCountryCode" clearable :options="countryCodeOptions" :filterable="true" />
       </MeQueryItem>
-      <MeQueryItem label="总数量" :label-width="70" :contentWidth="1050" >
+      <MeQueryItem label="总数量" :label-width="70" :contentWidth="980" >
         <label class="font-900 items-center flex " style="font-size: 18px;"  >{{deviceAnalysisCount}}</label>
       </MeQueryItem>
     </MeCrud>
@@ -91,6 +92,7 @@ const songs = ref([
 ])
 const columns = ref([])
 
+
 async function handleSearch(params) {
   try {
     const { data } = await api.readCount(params)
@@ -135,26 +137,92 @@ function generateColumns(sample) {
     title: '日期',
     key: 'activationDate',
     align: 'center',
-    width: 50, // 可以根据需要调整列宽
+    width: 30, // 可以根据需要调整列宽
+
   }
   const totalSumColumn = {
     title: '总数',
     key: 'totalSum',
     align: 'center',
-    width: 50, // 可以根据需要调整列宽
+    width: 30, // 可以根据需要调整列宽
+
   }
 
-  const dynamicColumns = Object.keys(sample)
-    .filter(key => key !== 'activationDate' && key !== 'totalSum')
-    .map(key => ({
-      title: key,
-      key: key,
-      align: 'center',
-      width: 50, // 可以根据需要调整列宽
-    }))
+  const ActorColumn = {
+    title: 'Actor',
+    key: 'Actor',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  const KS3Column = {
+    title: 'KS3',
+    key: 'KS3',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  const BALANCSColumn = {
+    title: 'BALANCS',
+    key: 'Balancs',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  const PURAColumn = {
+    title: 'PURA',
+    key: 'Kieslect Pura',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  const KS2Column = {
+    title: 'KS2',
+    key: 'KS2',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  // const MOVISColumn = {
+  //   title: 'MOVIS',
+  //   key: 'MOVIS',
+  //   align: 'center',
+  //   width: 50, // 可以根据需要调整列宽
+  //
+  // }
+
+  const CIVISColumn = {
+    title: 'CIVIS',
+    key: 'Scykei Civis',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  const FEELColumn = {
+    title: 'FEEL',
+    key: 'Scykei Feel',
+    align: 'center',
+    width: 30, // 可以根据需要调整列宽
+
+  }
+
+  // const dynamicColumns = Object.keys(sample)
+  //   .filter(key => key !== 'activationDate' && key !== 'totalSum')
+  //   .map(key => ({
+  //     title: key,
+  //     key: key,
+  //     align: 'center',
+  //     width: 50, // 可以根据需要调整列宽
+  //   }))
 
 
-  return [fixedColumn,totalSumColumn, ...dynamicColumns]
+  return [fixedColumn,totalSumColumn, ActorColumn,KS3Column,BALANCSColumn,PURAColumn,KS2Column,CIVISColumn,FEELColumn]
 }
 
 const countryCodeOptions = ref([])

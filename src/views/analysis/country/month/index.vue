@@ -160,7 +160,7 @@ function generateColumns(sample) {
       width: 50, // 可以根据需要调整列宽
       render(row) {
         const totalCount = row[key] || 0;
-        const growthRateKey = `growth_rate_${key}_vs_0${key-1}`;
+        const growthRateKey = key > 10 ? `growth_rate_${key}_vs_${key-1}` : `growth_rate_${key}_vs_0${key-1}`;
         const growthRate = row[growthRateKey] || 0;
 
         // 根据增长率决定颜色和图标
@@ -302,6 +302,20 @@ function getCountryFlag(countryCn) {
     '海地': 'https://flagcdn.com/w320/ht.png',
     '南非': 'https://flagcdn.com/w320/za.png',
     '叙利亚': 'https://flagcdn.com/w320/sy.png',
+    '伯利兹': 'https://flagcdn.com/w320/bz.png',
+    '乌拉圭': 'https://flagcdn.com/w320/uy.png',
+    '韩国': 'https://flagcdn.com/w320/kr.png',
+    '马拉维': 'https://flagcdn.com/w320/mw.png',
+    '巴巴多斯': 'https://flagcdn.com/w320/bb.png',
+    '巴林': 'https://flagcdn.com/w320/bh.png',
+    '黑山': 'https://flagcdn.com/w320/me.png',
+    '阿鲁巴': 'https://flagcdn.com/w320/aw.png',
+    '吉布提': 'https://flagcdn.com/w320/dj.png',
+    '波斯尼亚和黑塞哥维那': 'https://flagcdn.com/w320/ba.png',
+    '毛里塔尼亚': 'https://flagcdn.com/w320/mr.png',
+    '尼日利亚': 'https://flagcdn.com/w320/ng.png',
+    '百慕大': 'https://flagcdn.com/w320/bm.png',
+    '葡萄牙': 'https://flagcdn.com/w320/pt.png',
     '荷属安的列斯': 'https://vip.helloimg.com/i/2024/08/29/66d03fb8f3413.png',
   };
 
