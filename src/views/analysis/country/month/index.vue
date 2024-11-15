@@ -317,6 +317,7 @@ function getCountryFlag(countryCn) {
     '百慕大': 'https://flagcdn.com/w320/bm.png',
     '葡萄牙': 'https://flagcdn.com/w320/pt.png',
     '荷属安的列斯': 'https://vip.helloimg.com/i/2024/08/29/66d03fb8f3413.png',
+    '古巴': 'https://flagcdn.com/w320/cu.png',
   };
 
 
