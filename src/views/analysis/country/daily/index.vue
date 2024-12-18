@@ -148,6 +148,7 @@ const columns = ref([
   { title: 'BALANCS', key: 'Balancs', align: 'center', width: 100 },
   { title: 'PURA', key: 'Kieslect Pura', align: 'center', width: 100 },
   { title: 'KS2', key: 'KS2', align: 'center', width: 100 },
+  { title: 'MOVIS', key: 'Scykei Movis', align: 'center', width: 100 },
   { title: 'CIVIS', key: 'Scykei Civis', align: 'center', width: 100 },
   { title: 'FEEL', key: 'Scykei Feel', align: 'center', width: 100 },
 

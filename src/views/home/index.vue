@@ -5,12 +5,13 @@
         <div class="flex justify-between items-center mb-4 ml-50">
           <n-radio-group v-model:value="selectedModel" @change="updateChartData">
             <n-radio value="Actor">Actor</n-radio>
-            <n-radio value="Scykei Feel">Scykei Feel</n-radio>
             <n-radio value="KS3">KS3</n-radio>
-            <n-radio value="KS2">KS2</n-radio>
             <n-radio value="Balancs">Balancs</n-radio>
-            <n-radio value="Kieslect Pura">Kieslect Pura</n-radio>
-            <n-radio value="Scykei Civis">Scykei Civis</n-radio>
+            <n-radio value="Scykei Feel">Feel</n-radio>
+            <n-radio value="Kieslect Pura">Pura</n-radio>
+            <n-radio value="KS2">KS2</n-radio>
+            <n-radio value="Scykei Movis">Movis</n-radio>
+            <n-radio value="Scykei Civis">Civis</n-radio>
           </n-radio-group>
         </div>
         <div class="flex justify-between items-center mb-4 ml-50">
@@ -66,12 +67,13 @@
         <div class="flex justify-between items-center mb-4 ml-50">
           <n-radio-group v-model:value="selectedModel" @change="updateChartData">
             <n-radio value="Actor">Actor</n-radio>
-            <n-radio value="Scykei Feel">Scykei Feel</n-radio>
             <n-radio value="KS3">KS3</n-radio>
-            <n-radio value="KS2">KS2</n-radio>
             <n-radio value="Balancs">Balancs</n-radio>
-            <n-radio value="Kieslect Pura">Kieslect Pura</n-radio>
-            <n-radio value="Scykei Civis">Scykei Civis</n-radio>
+            <n-radio value="Scykei Feel">Feel</n-radio>
+            <n-radio value="Kieslect Pura">Pura</n-radio>
+            <n-radio value="KS2">KS2</n-radio>
+            <n-radio value="Scykei Movis">Movis</n-radio>
+            <n-radio value="Scykei Civis">Civis</n-radio>
           </n-radio-group>
         </div>
         <div class="flex justify-between items-center mb-4 ml-50">
@@ -400,15 +402,27 @@ const updateMonthlyChartData = () => {
     );
   });
 
+  // 型号名称与别名映射关系
+  const modelNameAliasMap = {
+    'Actor': 'Actor',
+    'KS3': 'KS3',
+    'Balancs': 'Balancs',
+    'Kieslect Pura': 'Pura',
+    'KS2': 'KS2',
+    'Scykei Movis': 'Movis',
+    'Scykei Civis': 'Civis',
+    'Scykei Feel': 'Feel',
+  };
+
   // 获取不同型号的数据并映射到图表数据中
-  const modelNames = ['Actor', 'Scykei Feel', 'KS3', 'KS2', 'Balancs', 'Kieslect Pura', 'Scykei Civis'];
+  const modelNames = ['Actor', 'KS3', 'Balancs', 'Kieslect Pura', 'KS2', 'Scykei Movis', 'Scykei Civis', 'Scykei Feel'];
   const modelData = modelNames.map(model => {
     return filteredMonthlyData.reduce((sum, item) => sum + (item[model] || 0), 0);
   });
 
   // 更新柱状图的配置
   barChartOption.value.series[0].data = modelData; // 更新柱状图数据
-  barChartOption.value.xAxis[0].data = modelNames; // 更新X轴的型号名称
+  barChartOption.value.xAxis[0].data = modelNames.map(name => modelNameAliasMap[name]);
 
   // 如果需要重新渲染图表，这里可以直接操作组件的响应式变量或刷新图表
 };

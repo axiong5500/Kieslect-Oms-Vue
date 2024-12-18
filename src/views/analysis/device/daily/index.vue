@@ -63,7 +63,6 @@ const queryItems = ref({})
 const deviceAnalysisCount = ref(0)
 
 onMounted(() => {
-  fetchData()
   $table.value?.handleSearch()
 })
 
@@ -90,7 +89,78 @@ const songs = ref([
   { label: '本季度', value: 'current_quarter' },
   { label: '上一季度', value: 'last_quarter' }
 ])
-const columns = ref([])
+const columns = ref([
+  {
+    title: '日期',
+    key: 'activationDate',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: '总数',
+    key: 'totalSum',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'Actor',
+    key: 'Actor',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'KS3',
+    key: 'KS3',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'BALANCS',
+    key: 'Balancs',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'PURA',
+    key: 'Kieslect Pura',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'KS2',
+    key: 'KS2',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'MOVIS',
+    key: 'Scykei Movis',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'CIVIS',
+    key: 'Scykei Civis',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  },
+  {
+    title: 'FEEL',
+    key: 'Scykei Feel',
+    align: 'center',
+    width: 30 // 可以根据需要调整列宽
+
+  }
+])
 
 
 async function handleSearch(params) {
@@ -102,127 +172,6 @@ async function handleSearch(params) {
     console.error('数据请求失败:', error)
     return 0
   }
-}
-
-// 请求数据并生成列配置的函数
-async function fetchData(params) {
-  try {
-    const { data } = await api.read(params)
-
-    // 确保 data 是数组
-    if (!Array.isArray(data)) {
-      return []
-    }
-
-    // 动态生成列配置
-    if (data.length > 0) {
-      const sample = data[0]
-      columns.value = generateColumns(sample)
-    } else {
-      // 如果没有数据，设置一个默认的列配置（可选）
-      columns.value = []
-    }
-
-    return data
-  } catch (error) {
-    console.error('数据请求失败:', error)
-    return []
-  }
-}
-
-
-// 动态生成列配置的函数
-function generateColumns(sample) {
-  const fixedColumn = {
-    title: '日期',
-    key: 'activationDate',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-  const totalSumColumn = {
-    title: '总数',
-    key: 'totalSum',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const ActorColumn = {
-    title: 'Actor',
-    key: 'Actor',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const KS3Column = {
-    title: 'KS3',
-    key: 'KS3',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const BALANCSColumn = {
-    title: 'BALANCS',
-    key: 'Balancs',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const PURAColumn = {
-    title: 'PURA',
-    key: 'Kieslect Pura',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const KS2Column = {
-    title: 'KS2',
-    key: 'KS2',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  // const MOVISColumn = {
-  //   title: 'MOVIS',
-  //   key: 'MOVIS',
-  //   align: 'center',
-  //   width: 50, // 可以根据需要调整列宽
-  //
-  // }
-
-  const CIVISColumn = {
-    title: 'CIVIS',
-    key: 'Scykei Civis',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  const FEELColumn = {
-    title: 'FEEL',
-    key: 'Scykei Feel',
-    align: 'center',
-    width: 30, // 可以根据需要调整列宽
-
-  }
-
-  // const dynamicColumns = Object.keys(sample)
-  //   .filter(key => key !== 'activationDate' && key !== 'totalSum')
-  //   .map(key => ({
-  //     title: key,
-  //     key: key,
-  //     align: 'center',
-  //     width: 50, // 可以根据需要调整列宽
-  //   }))
-
-
-  return [fixedColumn,totalSumColumn, ActorColumn,KS3Column,BALANCSColumn,PURAColumn,KS2Column,CIVISColumn,FEELColumn]
 }
 
 const countryCodeOptions = ref([])
