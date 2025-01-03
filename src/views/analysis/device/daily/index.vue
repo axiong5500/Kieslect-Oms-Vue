@@ -36,6 +36,15 @@
       <MeQueryItem label="不包含国家" :label-width="110">
         <n-select v-model:value="queryItems.noIncludeCountryCode" clearable :options="countryCodeOptions" :filterable="true" />
       </MeQueryItem>
+      <MeQueryItem label="品牌" :label-width="70" :contentWidth="220" style="height: 34px;padding-top: 3px">
+        <n-radio-group v-model:value="queryItems.brand" @update:value="brandChange">
+          <n-space>
+            <n-radio v-for="brandKey in brandOptions" :key="brandKey.value" :value="brandKey.value">
+              {{ brandKey.label }}
+            </n-radio>
+          </n-space>
+        </n-radio-group>
+      </MeQueryItem>
       <MeQueryItem label="总数量" :label-width="70" :contentWidth="980" >
         <label class="font-900 items-center flex " style="font-size: 18px;"  >{{deviceAnalysisCount}}</label>
       </MeQueryItem>
@@ -50,6 +59,7 @@ import { MeCrud, MeQueryItem } from '@/components'
 import { useCrud } from '@/composables'
 import api from './api'
 import { CommonPage } from '@/components/index.js'
+import { ref } from 'vue'
 
 
 
@@ -76,6 +86,13 @@ function onDateRangeChange(newValue) {
   if (newValue) {
     queryItems.value.rangeType = null
   }
+}
+
+function brandChange(newValue) {
+  if (newValue) {
+    queryItems.value.brand = newValue
+  }
+  $table.value?.handleSearch()
 }
 
 const songs = ref([
@@ -105,61 +122,78 @@ const columns = ref([
 
   },
   {
-    title: 'Actor',
-    key: 'Actor',
+    title: 'Kieslect',
     align: 'center',
-    width: 30 // 可以根据需要调整列宽
+    children: [
+      {
+        title: 'Actor',
+        key: 'Actor',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
 
+      },
+      {
+        title: 'KS3',
+        key: 'KS3',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      },
+      {
+        title: 'BALANCS',
+        key: 'Balancs',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      },
+      {
+        title: 'PURA',
+        key: 'Kieslect Pura',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      },
+      {
+        title: 'KS2',
+        key: 'KS2',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      },
+    ]
   },
   {
-    title: 'KS3',
-    key: 'KS3',
+    title: 'Scykei',
     align: 'center',
-    width: 30 // 可以根据需要调整列宽
+    children: [
+      {
+        title: 'MOVIS',
+        key: 'Scykei Movis',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
 
+      },
+      {
+        title: 'CIVIS',
+        key: 'Scykei Civis',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      },
+      {
+        title: 'FEEL',
+        key: 'Scykei Feel',
+        align: 'center',
+        width: 30 // 可以根据需要调整列宽
+
+      }
+    ]
   },
-  {
-    title: 'BALANCS',
-    key: 'Balancs',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
 
-  },
-  {
-    title: 'PURA',
-    key: 'Kieslect Pura',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
-
-  },
-  {
-    title: 'KS2',
-    key: 'KS2',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
-
-  },
-  {
-    title: 'MOVIS',
-    key: 'Scykei Movis',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
-
-  },
-  {
-    title: 'CIVIS',
-    key: 'Scykei Civis',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
-
-  },
-  {
-    title: 'FEEL',
-    key: 'Scykei Feel',
-    align: 'center',
-    width: 30 // 可以根据需要调整列宽
-
-  }
+])
+const brandOptions = ref([
+  { label: 'Kieslect', value: 'kieslect' },
+  { label: 'Scykei', value: 'scykei' }
 ])
 
 

@@ -36,6 +36,7 @@
           <n-radio-group v-model:value="selectedYear" @change="updateMonthlyChartData">
             <n-radio value="2023">2023</n-radio>
             <n-radio value="2024">2024</n-radio>
+            <n-radio value="2025">2025</n-radio>
           </n-radio-group>
         </div>
         <!-- 月份选择 -->
